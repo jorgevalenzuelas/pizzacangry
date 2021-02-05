@@ -3,11 +3,11 @@
     
     <a href="index2.html" class="logo">
         <span class="logo-mini">
-            <img src="<?php echo RUTA_URL; ?>public/img/LogoPpaty.png" class="brand-image img-circle elevation-3" width="50" height="50">
+            <img src="<?php echo RUTA_URL; ?>public/img/LogoCangry.png" class="brand-image img-circle elevation-3" width="50" height="50">
         </span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg" style="font-size: 16px;">
-            <img src="<?php echo RUTA_URL; ?>public/img/LogoPpaty.png" class="brand-image img-circle elevation-3" width="50" height="50">
+            <img src="<?php echo RUTA_URL; ?>public/img/LogoCangry.png" class="brand-image img-circle elevation-3" width="50" height="50">
             Pastelería Dpatty
         </span>
     </a>

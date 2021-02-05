@@ -8,6 +8,6 @@ define ('RUTA_PUBLIC', $_SERVER['DOCUMENT_ROOT'] . "/pizzacangry/public");
 
 define ('RUTA_URL', 'http://' . $_SERVER[HTTP_HOST] . '/pizzacangry/');
 
-define ('NOMBRE_SITIO', 'Pasteleria DPatty');
+define ('NOMBRE_SITIO', 'Pizza Los Cangry');
 
 ?>

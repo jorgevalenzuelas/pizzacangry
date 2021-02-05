@@ -14,7 +14,7 @@
   	<link rel="stylesheet" href="<?php echo RUTA_URL; ?>public/bower_components/font-awesome/css/font-awesome.min.css">
   	<!-- Theme style -->
   	<link rel="stylesheet" href="<?php echo RUTA_URL; ?>public/dist/css/AdminLTE.min.css">
-  	<link rel="chortcut icon" type="image/png" href="<?php echo RUTA_URL; ?>public/img/LogoPpaty_icon.png" />
+  	<link rel="chortcut icon" type="image/png" href="<?php echo RUTA_URL; ?>public/img/LogoCangry_icon.png" />
 
   	<!-- Google Font -->
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -23,7 +23,7 @@
 
 <div class="login-box">
   	<div class="login-logo">
-  		<img src="img/LogoPpaty.png" width="140" height="140">
+  		<img src="img/LogoCangry.png" width="140" height="140">
   	</div>
   	<!-- /.login-logo -->
   	<div class="login-box-body">
