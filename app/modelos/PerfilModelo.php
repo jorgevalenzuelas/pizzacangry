@@ -20,7 +20,7 @@ class PerfilModelo
         $datosFiltrados = $this->filtrarDatos($datos);
 
         $ban  = $datosFiltrados['ban'];
-        $cve_perfil = (!empty($datosFiltrados['cve_perfil']) || $datosFiltrados['cve_perfil']!=null) ? $datosFiltrados['cve_perfil'] : '';
+        $cve_perfil = (!empty($datosFiltrados['cve_perfil']) || $datosFiltrados['cve_perfil']!=null) ? $datosFiltrados['cve_perfil'] : '0';
 
         $query = "CALL obtenPerfiles('$ban','$cve_perfil')";
 
