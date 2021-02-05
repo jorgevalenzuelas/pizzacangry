@@ -20,7 +20,7 @@ class UsuarioModelo
         $datosFiltrados = $this->filtrarDatos($datos);
 
         $ban  = $datosFiltrados['ban'];
-        $cve_usuario = (!empty($datosFiltrados['cve_usuario']) || $datosFiltrados['cve_usuario']!=null) ? $datosFiltrados['cve_usuario'] : '';
+        $cve_usuario = (!empty($datosFiltrados['cve_usuario']) || $datosFiltrados['cve_usuario']!=null) ? $datosFiltrados['cve_usuario'] : '0';
 
         $query = "CALL obtenUsuarios('$ban','$cve_usuario')";
 
