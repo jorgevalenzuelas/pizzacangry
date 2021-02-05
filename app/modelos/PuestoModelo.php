@@ -20,7 +20,7 @@ class PuestoModelo
         $datosFiltrados = $this->filtrarDatos($datos);
 
         $ban  = $datosFiltrados['ban'];
-        $cve_puesto = (!empty($datosFiltrados['cve_puesto']) || $datosFiltrados['cve_puesto']!=null) ? $datosFiltrados['cve_puesto'] : '';
+        $cve_puesto = (!empty($datosFiltrados['cve_puesto']) || $datosFiltrados['cve_puesto']!=null) ? $datosFiltrados['cve_puesto'] : '0';
 
         $query = "CALL obtenPuestos('$ban','$cve_puesto')";
 
