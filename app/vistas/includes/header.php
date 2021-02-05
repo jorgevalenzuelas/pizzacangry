@@ -8,7 +8,7 @@
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg" style="font-size: 16px;">
             <img src="<?php echo RUTA_URL; ?>public/img/LogoCangry.png" class="brand-image img-circle elevation-3" width="50" height="50">
-            Pastelería Dpatty
+            Pizza Los Cangry
         </span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
