@@ -20,7 +20,7 @@ class SucursalModelo
         $datosFiltrados = $this->filtrarDatos($datos);
 
         $ban  = $datosFiltrados['ban'];
-        $cve_sucursal = (!empty($datosFiltrados['cve_sucursal']) || $datosFiltrados['cve_sucursal']!=null) ? $datosFiltrados['cve_sucursal'] : '';
+        $cve_sucursal = (!empty($datosFiltrados['cve_sucursal']) || $datosFiltrados['cve_sucursal']!=null) ? $datosFiltrados['cve_sucursal'] : '0';
 
         $query = "CALL obtenSucursales('$ban','$cve_sucursal')";
         //echo $query;
