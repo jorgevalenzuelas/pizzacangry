@@ -446,6 +446,7 @@
     {
         $('#msgAlert').css("display", "block");
         $("#msgAlert").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
     }
 
 </script>
