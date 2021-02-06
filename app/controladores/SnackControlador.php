@@ -38,20 +38,9 @@ else
 			echo json_encode($envioDatos);
 		}
 
-
-
-		public function formSnack()
-		{
-
-			$this->vista('Snack/formSnack', $datos);
-		}
-
-
-
 		public function guardarSnack()
 		{
 			$datosCompletos = $this->validarDatosVaciosSnackGuardar($_POST);
-
 			if ($datosCompletos == "vacio")
 			{
 				$status = "error";
@@ -60,12 +49,11 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_snack = (empty($cve_snack)) ? $_POST["txtcveSnack"] : 0 ;
-
+				$cve_snack = (empty($cve_snack)) ? $_POST["cve_snack"] : 0 ;
 				$datosSnack =  array (
 									ban                => 1,
-									nombre_snack => $_POST["txtnombreSnack"],
 									cve_snack   => $cve_snack,
+									nombre_snack => $_POST["nombre_snack"],
 							     	cveusuario_accion  => $_SESSION["cve_usuario"]
 							     );
 				
@@ -96,7 +84,7 @@ else
 
 		public function validarDatosVaciosSnackGuardar($dataPost)
 		{
-			if(empty($dataPost["txtnombreSnack"]) || !trim($dataPost["txtnombreSnack"])){ $status = "vacio"; }
+			if(empty($dataPost["nombre_snack"]) || !trim($dataPost["nombre_snack"])){ $status = "vacio"; }
 			else{
 				$status = "completo";
 			}

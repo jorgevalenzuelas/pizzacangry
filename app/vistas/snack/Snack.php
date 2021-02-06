@@ -55,7 +55,7 @@
 
             <div id="msgAlert"></div>
 
-            <button class="btn btn-primary" id="btnMostraFormSucursal">Nuevo snack</button>
+            <button class="btn btn-primary" id="btnMostraFormSnack">Nuevo snack</button>
       
             <div class="box" style="margin-top: 20px;">
                 <!-- /.box-header -->
@@ -92,13 +92,28 @@
 
 <!-- modales -->
 <div class="modal fade" id="modal_formSnack" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" >
+    <div class="modal-dialog modal-dialog-centered" >
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="myModalLabel">Snack</h2>
             </div>
-            <div class="modal-body" id="muestra_formSnack"> 
-
+            <div class="modal-body" id="muestra_formSnack">
+                <input type="hidden" id="txtcveSnack" name="txtcveSnack">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <div id="msgAlert2"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>Nombre del snack*</label>
+                        <input type="text" class="form-control" id="txtNombreSnack" name="txtNombreSnack" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>
+                </div> 
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                <button class="btn btn-primary" id="btnCancelar">Cancelar</button>
             </div>
         </div>
     </div>
@@ -140,7 +155,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
         tableSnack = $('#gridSnack').DataTable( {    
             "responsive": true,
             "searching" : true,
@@ -176,10 +190,8 @@
                 }
             }
         });
-
         //Mandamos llamar la función para mostrar tabla al cargar la página
         cargarTablaSnack();
-
     });
 
     function cargarTablaSnack()
@@ -187,7 +199,9 @@
         $.ajax({
             url      : 'Snack/consultar',
             type     : "POST",
-            data    : { ban: 1 },
+            data    : { 
+                ban: 1 
+            },
             beforeSend: function() {
                 // setting a timeout
 
@@ -224,7 +238,7 @@
                             accion = "bloquearSnack('" + val.cve_snack + "','1')";
                         }
 
-                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Snack' onclick=\"mostrarSucursal('" + val.cve_snack + "')\"></i>";
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Snack' onclick=\"mostrarSnack('" + val.cve_snack + "')\"></i>";
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
                         tableSnack.row.add([
@@ -245,26 +259,69 @@
         });
     }
 
-    $('#btnMostraFormSucursal').click(function (e) {
-
+    $('#btnMostraFormSnack').click(function (e) {
         $('#modal_formSnack').modal({
             keyboard: false
         });
-
-        $("#muestra_formSnack").html('Cargando...');
-
-        $.ajax({
-            url: 'Snack/formSnack',
-            success: function(datos){
-
-                $("#muestra_formSnack").html(datos);
-
-            }
-        });
+        $('#txtcveSnack').val('');
+        $('#txtNombreSnack').val('');
         return false;
     });
 
-    function mostrarSucursal(cve_snack)
+    $('#btnCancelar').click(function (e) {
+        $('#modal_formSnack').modal('hide');
+        return false;
+    });
+
+    $('#btnGuardar').click(function (e) {
+        if ( $('#txtNombreSnack').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar el nombre del snack.","warning");
+        }
+        else
+        {
+            $("#btnGuardar").prop('disabled', true);
+            
+            $.ajax({
+                url      : 'Snack/guardarSnack',
+                data     : {
+                    cve_snack : $('#txtcveSnack').val() != null ? $('#txtcveSnack').val() : '',
+                    nombre_snack : $('#txtNombreSnack').val() != null ? $('#txtNombreSnack').val() : ''
+                },
+                type: "POST",
+                success: function(datos){
+                    var myJson = JSON.parse(datos);
+                    if(myJson.status == "success")
+                    {
+                        $('#modal_formSnack').modal('hide');
+                        $('#txtcveSnack').val('');
+                        //Reinicializamos tabla
+                        cargarTablaSnack();
+                        msgAlert(myJson.msg ,"success");
+                        //$('#msgAlert').css("display", "none");
+                        $("#btnGuardar").prop('disabled', false);
+                        $("#btnGuardar").html('Guardar');
+                    }
+                    else
+                    {
+                        $("#btnGuardar").prop('disabled', false);
+                        msgAlert2(myJson.msg ,"danger");
+                        
+                    }
+                }
+            }); 
+        }
+        return false;
+    });
+
+    function msgAlert2(msg,tipo)
+    {
+        $('#msgAlert2').css("display", "block");
+        $("#msgAlert2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlert2").fadeOut(1500); },3000);
+    }
+
+    function mostrarSnack(cve_snack)
     {
         $('#msgAlert').css("display", "none");
 
@@ -272,40 +329,21 @@
             url      : 'Snack/consultar',
             type     : "POST",
             data     : { 
-
                     ban: 2, 
                     cve_snack: cve_snack 
-
             },
             beforeSend: function() {
                 // setting a timeout
-
             },
             success  : function(datos) {
-
                 var myJson = JSON.parse(datos);
-
                 //console.log(myJson);
-
                 $('#modal_formSnack').modal({
                     keyboard: false
                 });
-
-                $("#muestra_formSnack").html('Cargando...');
-
-                $.ajax({
-                    url: 'Snack/formSnack',
-                    success: function(datos){
-
-                        $("#muestra_formSnack").html(datos);
-                        
-                        $('#txtNombreSnack').val(myJson.arrayDatos[0].nombre_snack);
-                        $('#txtcveSnack').val(myJson.arrayDatos[0].cve_snack);
-
-                        $("#btnGuardar").html('Actualizar Snack');
-                        
-                    }
-                });
+                $('#txtcveSnack').val(myJson.arrayDatos[0].cve_snack);
+                $('#txtNombreSnack').val(myJson.arrayDatos[0].nombre_snack);
+                $("#btnGuardar").html('Actualizar Snack');
 
             }
         });
@@ -313,7 +351,6 @@
 
     function bloquearSnack(cve_snack,bloqueo)
     {
-
         if (bloqueo == 0)
         {
             var msg = "Esta seguro de bloquear este snack?";
@@ -365,7 +402,6 @@
                                 cargarTablaSnack();
 
                                 msgAlert(myJson.msg ,"info");
-                                setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
 
                             }
 
@@ -379,7 +415,6 @@
         });
 
     }
-
 
     function msgAlert(msg,tipo)
     {
