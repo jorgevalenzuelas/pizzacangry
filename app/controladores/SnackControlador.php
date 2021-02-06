@@ -24,7 +24,7 @@ else
 		//Todo controlador debe tener un metodo index
 		public function index()
 		{
-			$this->vista('Snack/Snack');
+			$this->vista('snack/Snack');
 		}
 
 
