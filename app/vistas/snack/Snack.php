@@ -55,7 +55,7 @@
 
             <div id="msgAlert"></div>
 
-            <button class="btn btn-primary" id="btnMostraFormSnack">Nuevo snack</button>
+            <button class="btn btn-primary" id="btnMostraModalSnack">Nuevo snack</button>
       
             <div class="box" style="margin-top: 20px;">
                 <!-- /.box-header -->
@@ -64,6 +64,8 @@
                         <thead>
                             <tr>
                                 <th>Nombre snack</th>
+                                <th>Costo</th>
+                                <th>Precio publico</th>
                                 <th>Editar</th>
                                 <th>Status</th>
                             </tr>
@@ -105,9 +107,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-4">
                         <label>Nombre del snack*</label>
                         <input type="text" class="form-control" id="txtNombreSnack" name="txtNombreSnack" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Costo*</label>
+                        <input type="number" min='0' class="form-control" id="txtCostoSnack" name="txtCostoSnack" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Precio publico*</label>
+                        <input type="number" min='0' class="form-control" id="txtPrecioSnack" name="txtPrecioSnack" onkeyup='javascript:this.value=this.value.toUpperCase();'>
                     </div>
                 </div> 
             </div>
@@ -162,8 +172,8 @@
             "ordering"  : false,
             "info"      : true,
             "columnDefs": [
-                {"width": "10%","className": "text-center","targets": 1},
-                {"width": "10%","className": "text-center","targets": 2},
+                {"width": "10%","className": "text-center","targets": 3},
+                {"width": "10%","className": "text-center","targets": 4},
             ],
 
             "bJQueryUI":true,"oLanguage": {
@@ -243,6 +253,8 @@
 
                         tableSnack.row.add([
                             val.nombre_snack,
+                            val.costo_snack,
+                            val.precio_snack,
                             btn_editar,
                             btn_status,
                         ]).draw();
@@ -259,12 +271,14 @@
         });
     }
 
-    $('#btnMostraFormSnack').click(function (e) {
+    $('#btnMostraModalSnack').click(function (e) {
         $('#modal_formSnack').modal({
             keyboard: false
         });
         $('#txtcveSnack').val('');
         $('#txtNombreSnack').val('');
+        $('#txtCostoSnack').val('');
+        $('#txtPrecioSnack').val('');
         return false;
     });
 
@@ -278,6 +292,14 @@
         {
             msgAlert2("Favor de ingresar el nombre del snack.","warning");
         }
+        else if ( $('#txtCostoSnack').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar el costo del snack.","warning");
+        }
+        else if ( $('#txtPrecioSnack').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar el precio del snack.","warning");
+        }
         else
         {
             $("#btnGuardar").prop('disabled', true);
@@ -286,7 +308,9 @@
                 url      : 'Snack/guardarSnack',
                 data     : {
                     cve_snack : $('#txtcveSnack').val() != null ? $('#txtcveSnack').val() : '',
-                    nombre_snack : $('#txtNombreSnack').val() != null ? $('#txtNombreSnack').val() : ''
+                    nombre_snack : $('#txtNombreSnack').val() != null ? $('#txtNombreSnack').val() : '',
+                    costo_snack : $('#txtCostoSnack').val() != null ? $('#txtCostoSnack').val() : '',
+                    precio_snack : $('#txtPrecioSnack').val() != null ? $('#txtPrecioSnack').val() : ''
                 },
                 type: "POST",
                 success: function(datos){
@@ -343,6 +367,8 @@
                 });
                 $('#txtcveSnack').val(myJson.arrayDatos[0].cve_snack);
                 $('#txtNombreSnack').val(myJson.arrayDatos[0].nombre_snack);
+                $('#txtCostoSnack').val(myJson.arrayDatos[0].costo_snack);
+                $('#txtPrecioSnack').val(myJson.arrayDatos[0].precio_snack);
                 $("#btnGuardar").html('Actualizar Snack');
 
             }

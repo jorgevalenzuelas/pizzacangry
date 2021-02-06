@@ -38,14 +38,18 @@ class SnackModelo
         $datosFiltrados = $this->filtrarDatos($datosSnack);
 
         $ban                = $datosFiltrados['ban'];
-        $nombre_snack = $datosFiltrados['nombre_snack'];
         $cve_snack    = $datosFiltrados['cve_snack'];
+        $nombre_snack = $datosFiltrados['nombre_snack'];
+        $costo_snack = $datosFiltrados['costo_snack'];
+        $precio_snack = $datosFiltrados['precio_snack'];
         $cveusuario_accion  = $datosFiltrados['cveusuario_accion'];
 
         $query = "CALL guardarSnack(
                                             '$ban',
                                             '$cve_snack',
                                             '$nombre_snack',
+                                            '$costo_snack',
+                                            '$precio_snack',
                                             '$cveusuario_accion'
                                         )";
 

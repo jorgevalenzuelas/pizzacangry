@@ -54,6 +54,8 @@ else
 									ban                => 1,
 									cve_snack   => $cve_snack,
 									nombre_snack => $_POST["nombre_snack"],
+									costo_snack => $_POST["costo_snack"],
+									precio_snack => $_POST["precio_snack"],
 							     	cveusuario_accion  => $_SESSION["cve_usuario"]
 							     );
 				
@@ -85,6 +87,8 @@ else
 		public function validarDatosVaciosSnackGuardar($dataPost)
 		{
 			if(empty($dataPost["nombre_snack"]) || !trim($dataPost["nombre_snack"])){ $status = "vacio"; }
+			else if(empty($dataPost["costo_snack"]) || !trim($dataPost["costo_snack"])){ $status = "vacio"; }
+			else if(empty($dataPost["precio_snack"]) || !trim($dataPost["precio_snack"])){ $status = "vacio"; }
 			else{
 				$status = "completo";
 			}
