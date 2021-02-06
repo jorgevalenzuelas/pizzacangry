@@ -1,6 +1,6 @@
 <?php
 
-class DepartamentoModelo
+class SnackModelo
 {
 
 	//creamos la variable donde se instanciará la clase "conectar"
@@ -20,9 +20,9 @@ class DepartamentoModelo
         $datosFiltrados = $this->filtrarDatos($datos);
 
         $ban  = $datosFiltrados['ban'];
-        $cve_departamento = (!empty($datosFiltrados['cve_departamento']) || $datosFiltrados['cve_departamento']!=null) ? $datosFiltrados['cve_departamento'] : '';
+        $cve_snack = (!empty($datosFiltrados['cve_snack']) || $datosFiltrados['cve_snack']!=null) ? $datosFiltrados['cve_snack'] : '0';
 
-        $query = "CALL obtenDepartamentos('$ban','$cve_departamento')";
+        $query = "CALL obtenSnack('$ban','$cve_snack')";
 
         $c_departamento = $this->conexion->query($query);
         $r_departamento = $this->conexion->consulta_array($c_departamento);
@@ -32,20 +32,20 @@ class DepartamentoModelo
 
 
 
-    public function guardarDepartamento($datosDepartamento)
+    public function guardarSnack($datosSnack)
     {
 
-        $datosFiltrados = $this->filtrarDatos($datosDepartamento);
+        $datosFiltrados = $this->filtrarDatos($datosSnack);
 
         $ban                = $datosFiltrados['ban'];
-        $nombreDepartamento = $datosFiltrados['nombreDepartamento'];
-        $cveDepartamento    = $datosFiltrados['cve_departamento'];
+        $nombre_snack = $datosFiltrados['nombre_snack'];
+        $cve_snack    = $datosFiltrados['cve_snack'];
         $cveusuario_accion  = $datosFiltrados['cveusuario_accion'];
 
-        $query = "CALL guardarDepartamento(
+        $query = "CALL guardarSnack(
                                             '$ban',
-                                            '$cveDepartamento',
-                                            '$nombreDepartamento',
+                                            '$cve_snack',
+                                            '$nombre_snack',
                                             '$cveusuario_accion'
                                         )";
 
@@ -59,15 +59,15 @@ class DepartamentoModelo
 
 
 
-    public function bloquearDepartamento($datosDepartamento)
+    public function bloquearSnack($datosSnack)
     {
-        $datosFiltrados = $this->filtrarDatos($datosDepartamento);
+        $datosFiltrados = $this->filtrarDatos($datosSnack);
 
         $ban               = $datosFiltrados['ban'];
-        $cve_departamento  = $datosFiltrados['cve_departamento'];
+        $cve_snack  = $datosFiltrados['cve_snack'];
         $cveusuario_accion = $datosFiltrados['cveusuario_accion'];
 
-        $query = "CALL eliminarDepartamento('$ban','$cve_departamento','$cveusuario_accion')";
+        $query = "CALL eliminarSnack('$ban','$cve_snack','$cveusuario_accion')";
 
         $respuesta = $this->conexion->query($query);
 
