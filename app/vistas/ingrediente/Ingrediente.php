@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?php echo NOMBRE_SITIO; ?> | Tamaños</title>
+    <title><?php echo NOMBRE_SITIO; ?> | Ingredientes</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -45,7 +45,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Tamaños
+                Ingredientes
             </h1>
 
         </section>
@@ -55,15 +55,15 @@
 
             <div id="msgAlert"></div>
 
-            <button class="btn btn-primary" id="btnMostraModalTamano">Nuevo tamano</button>
+            <button class="btn btn-primary" id="btnMostraModalIngrediente">Nuevo ingrediente</button>
       
             <div class="box" style="margin-top: 20px;">
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table id="gridTamano" class="table table-bordered table-striped" style="font-size: 12px;">
+                    <table id="gridIngrediente" class="table table-bordered table-striped" style="font-size: 12px;">
                         <thead>
                             <tr>
-                                <th>Nombre tamano</th>
+                                <th>Nombre ingrediente</th>
                                 <th>Editar</th>
                                 <th>Status</th>
                             </tr>
@@ -91,14 +91,14 @@
 <!-- ./wrapper -->
 
 <!-- modales -->
-<div class="modal fade" id="modal_formTamano" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_formIngrediente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" >
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="myModalLabel">Tamaño</h2>
+                <h2 class="modal-title" id="myModalLabel">Ingrediente</h2>
             </div>
-            <div class="modal-body" id="muestra_formTamano">
-                <input type="hidden" id="txtcveTamano" name="txtcveTamano">
+            <div class="modal-body" id="muestra_formIngrediente">
+                <input type="hidden" id="txtcveIngrediente" name="txtcveIngrediente">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <div id="msgAlert2"></div>
@@ -106,8 +106,8 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label>Nombre del tamaño*</label>
-                        <input type="text" class="form-control" id="txtNombreTamano" name="txtNombreTamano" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                        <label>Nombre del ingrediente*</label>
+                        <input type="text" class="form-control" id="txtNombreIngrediente" name="txtNombreIngrediente" onkeyup='javascript:this.value=this.value.toUpperCase();'>
                     </div>
                 </div> 
             </div>
@@ -155,7 +155,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        tableTamano = $('#gridTamano').DataTable( {    
+        tableIngrediente = $('#gridIngrediente').DataTable( {    
             "responsive": true,
             "searching" : true,
             "paging"    : true,
@@ -191,13 +191,13 @@
             }
         });
         //Mandamos llamar la función para mostrar tabla al cargar la página
-        cargarTablaTamano();
+        cargarTablaIngrediente();
     });
 
-    function cargarTablaTamano()
+    function cargarTablaIngrediente()
     {
         $.ajax({
-            url      : 'Tamano/consultar',
+            url      : 'Ingrediente/consultar',
             type     : "POST",
             data    : { 
                 ban: 1 
@@ -210,7 +210,7 @@
 
                 var myJson = JSON.parse(datos);
 
-                tableTamano.clear().draw();
+                tableIngrediente.clear().draw();
 
                 if(myJson.arrayDatos.length > 0)
                 {
@@ -223,26 +223,26 @@
                     $(myJson.arrayDatos).each( function(key, val)
                     {
 
-                        if (parseInt(val.estatus_tamano) == 1)
+                        if (parseInt(val.estatus_ingrediente) == 1)
                         {
-                            title = 'Tamaño activo';
+                            title = 'Ingrediente activo';
                             icon = 'fa fa-dot-circle-o';
                             color_icon = "color: #4ad129;"
-                            accion = "bloquearTamano('" + val.cve_tamano + "','0')";
+                            accion = "bloquearIngrediente('" + val.cve_ingrediente + "','0')";
                         }
                         else
                         {
-                            title = 'Tamaño bloqueado';
+                            title = 'Ingrediente bloqueado';
                             icon = 'fa fa-circle';
                             color_icon = "color: #f00;"
-                            accion = "bloquearTamano('" + val.cve_tamano + "','1')";
+                            accion = "bloquearIngrediente('" + val.cve_ingrediente + "','1')";
                         }
 
-                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Tamaño' onclick=\"mostrarTamano('" + val.cve_tamano + "')\"></i>";
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Ingrediente' onclick=\"mostrarIngrediente('" + val.cve_ingrediente + "')\"></i>";
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
-                        tableTamano.row.add([
-                            val.nombre_tamano,
+                        tableIngrediente.row.add([
+                            val.nombre_ingrediente,
                             btn_editar,
                             btn_status,
                         ]).draw();
@@ -251,7 +251,7 @@
                 }
                 else
                 {
-                    tableTamano = $('#gridTamano').DataTable();
+                    tableIngrediente = $('#gridIngrediente').DataTable();
                     
                 }
 
@@ -259,45 +259,45 @@
         });
     }
 
-    $('#btnMostraModalTamano').click(function (e) {
-        $('#modal_formTamano').modal({
+    $('#btnMostraModalIngrediente').click(function (e) {
+        $('#modal_formIngrediente').modal({
             keyboard: false
         });
-        $('#txtcveTamano').val('');
-        $('#txtNombreTamano').val('');
+        $('#txtcveIngrediente').val('');
+        $('#txtNombreIngrediente').val('');
         $("#btnGuardar").html('Guardar');
         return false;
     });
 
     $('#btnCancelar').click(function (e) {
-        $('#modal_formTamano').modal('hide');
+        $('#modal_formIngrediente').modal('hide');
         return false;
     });
 
     $('#btnGuardar').click(function (e) {
-        if ( $('#txtNombreTamano').val()  == "" )
+        if ( $('#txtNombreIngrediente').val()  == "" )
         {
-            msgAlert2("Favor de ingresar el nombre del tamaño.","warning");
+            msgAlert2("Favor de ingresar el nombre del ingrediente.","warning");
         }
         else
         {
             $("#btnGuardar").prop('disabled', true);
             
             $.ajax({
-                url      : 'Tamano/guardarTamano',
+                url      : 'Ingrediente/guardarIngrediente',
                 data     : {
-                    cve_tamano : $('#txtcveTamano').val() != null ? $('#txtcveTamano').val() : '',
-                    nombre_tamano : $('#txtNombreTamano').val() != null ? $('#txtNombreTamano').val() : ''
+                    cve_ingrediente : $('#txtcveIngrediente').val() != null ? $('#txtcveIngrediente').val() : '',
+                    nombre_ingrediente : $('#txtNombreIngrediente').val() != null ? $('#txtNombreIngrediente').val() : ''
                 },
                 type: "POST",
                 success: function(datos){
                     var myJson = JSON.parse(datos);
                     if(myJson.status == "success")
                     {
-                        $('#modal_formTamano').modal('hide');
-                        $('#txtcveTamano').val('');
+                        $('#modal_formIngrediente').modal('hide');
+                        $('#txtcveIngrediente').val('');
                         //Reinicializamos tabla
-                        cargarTablaTamano();
+                        cargarTablaIngrediente();
                         msgAlert(myJson.msg ,"success");
                         //$('#msgAlert').css("display", "none");
                         $("#btnGuardar").prop('disabled', false);
@@ -322,16 +322,16 @@
         setTimeout(function() { $("#msgAlert2").fadeOut(1500); },3000);
     }
 
-    function mostrarTamano(cve_tamano)
+    function mostrarIngrediente(cve_ingrediente)
     {
         $('#msgAlert').css("display", "none");
 
         $.ajax({
-            url      : 'Tamano/consultar',
+            url      : 'Ingrediente/consultar',
             type     : "POST",
             data     : { 
                     ban: 2, 
-                    cve_tamano: cve_tamano 
+                    cve_ingrediente: cve_ingrediente 
             },
             beforeSend: function() {
                 // setting a timeout
@@ -339,25 +339,25 @@
             success  : function(datos) {
                 var myJson = JSON.parse(datos);
                 //console.log(myJson);
-                $('#modal_formTamano').modal({
+                $('#modal_formIngrediente').modal({
                     keyboard: false
                 });
-                $('#txtcveTamano').val(myJson.arrayDatos[0].cve_tamano);
-                $('#txtNombreTamano').val(myJson.arrayDatos[0].nombre_tamano);
-                $("#btnGuardar").html('Actualizar Tamaño');
+                $('#txtcveIngrediente').val(myJson.arrayDatos[0].cve_ingrediente);
+                $('#txtNombreIngrediente').val(myJson.arrayDatos[0].nombre_ingrediente);
+                $("#btnGuardar").html('Actualizar Ingrediente');
 
             }
         });
     }
 
-    function bloquearTamano(cve_tamano,bloqueo)
+    function bloquearIngrediente(cve_ingrediente,bloqueo)
     {
         if (bloqueo == 0)
         {
-            var msg = "Esta seguro de bloquear este tamaño?";
+            var msg = "Esta seguro de bloquear este ingrediente?";
             var ban = 2;
         }else{
-            var msg = "Esta seguro de desbloquear este tamaño?";
+            var msg = "Esta seguro de desbloquear este ingrediente?";
             var ban = 3;
         }
 
@@ -375,12 +375,12 @@
                 if (result == true){
 
                     $.ajax({
-                        url      : 'Tamano/bloquearTamano',
+                        url      : 'Ingrediente/bloquearIngrediente',
                         type     : "POST",
                         data     : { 
 
                                 ban: ban, 
-                                cve_tamano: cve_tamano 
+                                cve_ingrediente: cve_ingrediente 
 
                         },
                         beforeSend: function() {
@@ -394,13 +394,13 @@
                             if(myJson.status == "success")
                             {
 
-                                //var table = $('#gridTamano').DataTable();
+                                //var table = $('#gridIngrediente').DataTable();
                                         
                                 //table.clear();
                                 //table.destroy();
 
                                 //Reinicializamos tabla
-                                cargarTablaTamano();
+                                cargarTablaIngrediente();
 
                                 msgAlert(myJson.msg ,"info");
 

@@ -279,6 +279,7 @@
         $('#txtNombreSnack').val('');
         $('#txtCostoSnack').val('');
         $('#txtPrecioSnack').val('');
+        $("#btnGuardar").html('Guardar');
         return false;
     });
 

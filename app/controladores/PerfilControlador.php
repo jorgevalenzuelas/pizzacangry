@@ -85,6 +85,7 @@ else
 									chk2_bebida             => $_POST["chk2_bebida"],
 									chk2_tamano             => $_POST["chk2_tamano"],
 									chk2_ingrediente        => $_POST["chk2_ingrediente"],
+									chk2_ingrediente        => $_POST["chk2_ingrediente"],
 									chk2_inidadmedida       => $_POST["chk2_inidadmedida"],
 									chk2_usuario              => $_POST["chk2_usuario"],
 									chk2_perfil               => $_POST["chk2_perfil"],
