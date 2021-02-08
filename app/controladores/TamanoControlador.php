@@ -49,10 +49,9 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_tamano = (empty($cve_tamano)) ? $_POST["cve_tamano"] : 0 ;
 				$datosTamano =  array (
 									ban                => 1,
-									cve_tamano   => $cve_tamano,
+									cve_tamano   => $_POST["cve_tamano"],
 									nombre_tamano => $_POST["nombre_tamano"],
 							     	cveusuario_accion  => $_SESSION["cve_usuario"]
 							     );

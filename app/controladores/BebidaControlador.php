@@ -49,10 +49,9 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_bebida = (empty($cve_bebida)) ? $_POST["cve_bebida"] : 0 ;
 				$datosBebida =  array (
 									ban                => 1,
-									cve_bebida   => $cve_bebida,
+									cve_bebida   => $_POST["cve_bebida"],
 									nombre_bebida => $_POST["nombre_bebida"],
 									costo_bebida => $_POST["costo_bebida"],
 									precio_bebida => $_POST["precio_bebida"],

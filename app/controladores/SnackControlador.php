@@ -49,10 +49,9 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_snack = (empty($cve_snack)) ? $_POST["cve_snack"] : 0 ;
 				$datosSnack =  array (
 									ban                => 1,
-									cve_snack   => $cve_snack,
+									cve_snack   => $_POST["cve_snack"],
 									nombre_snack => $_POST["nombre_snack"],
 									costo_snack => $_POST["costo_snack"],
 									precio_snack => $_POST["precio_snack"],

@@ -286,8 +286,8 @@
             $.ajax({
                 url      : 'Tamano/guardarTamano',
                 data     : {
-                    cve_tamano : $('#txtcveTamano').val() != null ? $('#txtcveTamano').val() : '',
-                    nombre_tamano : $('#txtNombreTamano').val() != null ? $('#txtNombreTamano').val() : ''
+                    cve_tamano : $('#txtcveTamano').val() != '' ? $('#txtcveTamano').val() : '0',
+                    nombre_tamano : $('#txtNombreTamano').val() != '' ? $('#txtNombreTamano').val() : ''
                 },
                 type: "POST",
                 success: function(datos){

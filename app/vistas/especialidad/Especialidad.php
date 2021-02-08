@@ -375,11 +375,11 @@
             $.ajax({
                 url      : 'Especialidad/guardarEspecialidad',
                 data     : {
-                    cve_especialidad : $('#txtcveEspecialidad').val() != null ? $('#txtcveEspecialidad').val() : '',
-                    nombre_especialidad : $('#txtNombreEspecialidad').val() != null ? $('#txtNombreEspecialidad').val() : '',
-                    costo_especialidad : $('#txtCostoEspecialidad').val() != null ? $('#txtCostoEspecialidad').val() : '',
-                    precio_especialidad : $('#txtPrecioEspecialidad').val() != null ? $('#txtPrecioEspecialidad').val() : '',
-                    descripcion_especialidad : $('#txtDescripcionEspecialidad').val() != null ? $('#txtDescripcionEspecialidad').val() : '',
+                    cve_especialidad : $('#txtcveEspecialidad').val() != '' ? $('#txtcveEspecialidad').val() : '0',
+                    nombre_especialidad : $('#txtNombreEspecialidad').val() != '' ? $('#txtNombreEspecialidad').val() : '',
+                    costo_especialidad : $('#txtCostoEspecialidad').val() != '' ? $('#txtCostoEspecialidad').val() : '',
+                    precio_especialidad : $('#txtPrecioEspecialidad').val() != '' ? $('#txtPrecioEspecialidad').val() : '',
+                    descripcion_especialidad : $('#txtDescripcionEspecialidad').val() != '' ? $('#txtDescripcionEspecialidad').val() : '',
                     cvetamano_especialidad : $('#cmbTamanoEspecialidad').val() != -1 ? $('#cmbTamanoEspecialidad').val() : '-1'
                 },
                 type: "POST",

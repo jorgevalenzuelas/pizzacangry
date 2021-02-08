@@ -375,12 +375,12 @@
             $.ajax({
                 url      : 'Bebida/guardarBebida',
                 data     : {
-                    cve_bebida : $('#txtcveBebida').val() != null ? $('#txtcveBebida').val() : '',
-                    nombre_bebida : $('#txtNombreBebida').val() != null ? $('#txtNombreBebida').val() : '',
-                    costo_bebida : $('#txtCostoBebida').val() != null ? $('#txtCostoBebida').val() : '',
-                    precio_bebida : $('#txtPrecioBebida').val() != null ? $('#txtPrecioBebida').val() : '',
-                    stock_bebida : $('#txtStockBebida').val() != null ? $('#txtStockBebida').val() : '',
-                    cveunidadmedia_bebida : $('#cmbUnidadmedidaBebida').val() != null ? $('#cmbUnidadmedidaBebida').val() : '',
+                    cve_bebida : $('#txtcveBebida').val() != '' ? $('#txtcveBebida').val() : '0',
+                    nombre_bebida : $('#txtNombreBebida').val() != '' ? $('#txtNombreBebida').val() : '',
+                    costo_bebida : $('#txtCostoBebida').val() != '' ? $('#txtCostoBebida').val() : '',
+                    precio_bebida : $('#txtPrecioBebida').val() != '' ? $('#txtPrecioBebida').val() : '',
+                    stock_bebida : $('#txtStockBebida').val() != '' ? $('#txtStockBebida').val() : '',
+                    cveunidadmedia_bebida : $('#cmbUnidadmedidaBebida').val() != '' ? $('#cmbUnidadmedidaBebida').val() : '',
                 },
                 type: "POST",
                 success: function(datos){

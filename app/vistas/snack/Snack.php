@@ -308,10 +308,10 @@
             $.ajax({
                 url      : 'Snack/guardarSnack',
                 data     : {
-                    cve_snack : $('#txtcveSnack').val() != null ? $('#txtcveSnack').val() : '',
-                    nombre_snack : $('#txtNombreSnack').val() != null ? $('#txtNombreSnack').val() : '',
-                    costo_snack : $('#txtCostoSnack').val() != null ? $('#txtCostoSnack').val() : '',
-                    precio_snack : $('#txtPrecioSnack').val() != null ? $('#txtPrecioSnack').val() : ''
+                    cve_snack : $('#txtcveSnack').val() != '' ? $('#txtcveSnack').val() : '0',
+                    nombre_snack : $('#txtNombreSnack').val() != '' ? $('#txtNombreSnack').val() : '',
+                    costo_snack : $('#txtCostoSnack').val() != '' ? $('#txtCostoSnack').val() : '',
+                    precio_snack : $('#txtPrecioSnack').val() != '' ? $('#txtPrecioSnack').val() : ''
                 },
                 type: "POST",
                 success: function(datos){

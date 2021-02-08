@@ -49,10 +49,9 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_tradicional = (empty($cve_tradicional)) ? $_POST["cve_tradicional"] : 0 ;
 				$datosTradicional =  array (
 									ban                => 1,
-									cve_tradicional   => $cve_tradicional,
+									cve_tradicional   => $_POST["cve_tradicional"],
 									nombre_tradicional => $_POST["nombre_tradicional"],
 									costo_tradicional => $_POST["costo_tradicional"],
 									precio_tradicional => $_POST["precio_tradicional"],

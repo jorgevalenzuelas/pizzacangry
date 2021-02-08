@@ -49,10 +49,9 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_ingrediente = (empty($cve_ingrediente)) ? $_POST["cve_ingrediente"] : 0 ;
 				$datosIngrediente =  array (
 									ban                => 1,
-									cve_ingrediente   => $cve_ingrediente,
+									cve_ingrediente   => $_POST["cve_ingrediente"],
 									nombre_ingrediente => $_POST["nombre_ingrediente"],
 							     	cveusuario_accion  => $_SESSION["cve_usuario"]
 							     );

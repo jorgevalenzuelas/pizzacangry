@@ -286,8 +286,8 @@
             $.ajax({
                 url      : 'Unidadmedida/guardarUnidadmedida',
                 data     : {
-                    cve_unidadmedida : $('#txtcveUnidadmedida').val() != null ? $('#txtcveUnidadmedida').val() : '',
-                    nombre_unidadmedida : $('#txtNombreUnidadmedida').val() != null ? $('#txtNombreUnidadmedida').val() : ''
+                    cve_unidadmedida : $('#txtcveUnidadmedida').val() != '' ? $('#txtcveUnidadmedida').val() : '0',
+                    nombre_unidadmedida : $('#txtNombreUnidadmedida').val() != '' ? $('#txtNombreUnidadmedida').val() : ''
                 },
                 type: "POST",
                 success: function(datos){

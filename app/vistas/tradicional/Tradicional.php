@@ -373,12 +373,12 @@
             $.ajax({
                 url      : 'Tradicional/guardarTradicional',
                 data     : {
-                    cve_tradicional  : $('#txtcveTradicional').val() != null ? $('#txtcveTradicional').val() : '',
-                    nombre_tradicional  : $('#txtNombreTradicional').val() != null ? $('#txtNombreTradicional').val() : '',
-                    costo_tradicional  : $('#txtCostoTradicional').val() != null ? $('#txtCostoTradicional').val() : '',
-                    precio_tradicional  : $('#txtPrecioTradicional').val() != null ? $('#txtPrecioTradicional').val() : '',
-                    cantidadingrediente_tradicional : $('#txtCantidadingredienteTradicional').val() != null ? $('#txtCantidadingredienteTradicional').val() : '',
-                    cvetamano_tradicional : $('#cmbTamanoTradicional').val() != -1 ? $('#cmbTamanoTradicional').val() : '-1'
+                    cve_tradicional  : $('#txtcveTradicional').val() != '' ? $('#txtcveTradicional').val() : '0',
+                    nombre_tradicional  : $('#txtNombreTradicional').val() != '' ? $('#txtNombreTradicional').val() : '',
+                    costo_tradicional  : $('#txtCostoTradicional').val() != '' ? $('#txtCostoTradicional').val() : '',
+                    precio_tradicional  : $('#txtPrecioTradicional').val() != '' ? $('#txtPrecioTradicional').val() : '',
+                    cantidadingrediente_tradicional : $('#txtCantidadingredienteTradicional').val() != '' ? $('#txtCantidadingredienteTradicional').val() : '',
+                    cvetamano_tradicional : $('#cmbTamanoTradicional').val() != '-1' ? $('#cmbTamanoTradicional').val() : '-1'
                 },
                 type: "POST",
                 success: function(datos){

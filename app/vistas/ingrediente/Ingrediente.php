@@ -286,8 +286,8 @@
             $.ajax({
                 url      : 'Ingrediente/guardarIngrediente',
                 data     : {
-                    cve_ingrediente : $('#txtcveIngrediente').val() != null ? $('#txtcveIngrediente').val() : '',
-                    nombre_ingrediente : $('#txtNombreIngrediente').val() != null ? $('#txtNombreIngrediente').val() : ''
+                    cve_ingrediente : $('#txtcveIngrediente').val() != '' ? $('#txtcveIngrediente').val() : '0',
+                    nombre_ingrediente : $('#txtNombreIngrediente').val() != '' ? $('#txtNombreIngrediente').val() : ''
                 },
                 type: "POST",
                 success: function(datos){

@@ -49,10 +49,9 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_especialidad = (empty($cve_especialidad)) ? $_POST["cve_especialidad"] : 0 ;
 				$datosEspecialidad =  array (
 									ban                => 1,
-									cve_especialidad   => $cve_especialidad,
+									cve_especialidad   => $_POST["cve_especialidad"],
 									nombre_especialidad => $_POST["nombre_especialidad"],
 									costo_especialidad => $_POST["costo_especialidad"],
 									precio_especialidad => $_POST["precio_especialidad"],

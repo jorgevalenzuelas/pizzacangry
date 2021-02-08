@@ -106,8 +106,8 @@ else
 				$cvepaquete_depaquete = (empty($cvepaquete_depaquete)) ? $_POST["cvepaquete_depaquete"] : 0 ;
 				$datosDetallePaquete =  array (
 									ban                => 1,
-									cve_paquete   => $cve_paquete,
-									cvepaquete_depaquete	=> $cvepaquete_depaquete,
+									cve_paquete   => $_POST["cve_paquete"],
+									cvepaquete_depaquete	=> $_POST["cvepaquete_depaquete"],
 									cvema_depaquete => $_POST["cvema_depaquete"],
 									cantidad_depaquete => $_POST["cantidad_depaquete"],
 									cveproducto_depaquete => $_POST["cveproducto_depaquete"],
