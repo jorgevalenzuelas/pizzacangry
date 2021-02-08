@@ -418,42 +418,34 @@
         if ( $('#txtNombreUsuario').val()  == "" )
         {
             msgAlert("Favor de ingresar el nombre del usuario.","warning");
-            setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
         }
         else if ( $('#txtApellidoPaterno').val() == "" )
         {
             msgAlert("Favor de ingresar el apellido paterno del usuario.","warning");
-            setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
         }
         else if ( $('#txtApellidoMaterno').val() == "" )
         {
             msgAlert("Favor de ingresar el apellido materno del usuario.","warning");
-            setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
         }
         else if ( $('#txtLogin').val() == "" )
         {
             msgAlert("Favor de ingresar el login del usuario.","warning");
-            setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
         }
         else if ( $('#txtAccion').val() == "A" &&  $('#txtPass').val() == "" )
         {
             msgAlert("Favor de ingresar la contraseña de usuario.","warning");
-            setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
         }
         else if ( $('#cmbPerfil').val() == -1 )
         {
             msgAlert("Favor de seleccionar un perfil de usuario.","warning");
-            setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
         }
         else if ( $('#cmbSucursal').val() == -1 && $('#cmbPerfil').val() != 1)
         {
             msgAlert("Favor de seleccionar una sucursal.","warning");
-            setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
         }
         else if ( $('#cmbPuesto').val() == -1 )
         {
             msgAlert("Favor de seleccionar un puesto.","warning");
-            setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
         }
         else
         {
@@ -476,7 +468,6 @@
                         cargarTablaUsuario();
 
                         msgAlert(myJson.msg ,"success");
-                        setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
 
                         //Limpiamos
                         $('#txtNombreUsuario').val('');
@@ -602,7 +593,6 @@
                                 cargarTablaUsuario();
 
                                 msgAlert(myJson.msg ,"info");
-                                setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
 
                             }
 
@@ -650,6 +640,7 @@
     {
         $('#msgAlert').css("display", "block");
         $("#msgAlert").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlert").fadeOut(1500); },1500);
     }
 
 </script>

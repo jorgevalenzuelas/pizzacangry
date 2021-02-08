@@ -319,7 +319,7 @@
     {
         $('#msgAlert2').css("display", "block");
         $("#msgAlert2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
-        setTimeout(function() { $("#msgAlert2").fadeOut(1500); },3000);
+        setTimeout(function() { $("#msgAlert2").fadeOut(1500); },1500);
     }
 
     function mostrarUnidadmedida(cve_unidadmedida)
@@ -421,7 +421,7 @@
     {
         $('#msgAlert').css("display", "block");
         $("#msgAlert").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
-        setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
+        setTimeout(function() { $("#msgAlert").fadeOut(1500); },1500);
     }
 
 </script>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?php echo NOMBRE_SITIO; ?> | Tamaños</title>
+    <title><?php echo NOMBRE_SITIO; ?> | Bebidas</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -45,7 +45,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Tamaños
+                Bebidas
             </h1>
 
         </section>
@@ -55,15 +55,18 @@
 
             <div id="msgAlert"></div>
 
-            <button class="btn btn-primary" id="btnMostraModalTamano">Nuevo tamaño</button>
+            <button class="btn btn-primary" id="btnMostraModalBebida">Nueva bebida</button>
       
             <div class="box" style="margin-top: 20px;">
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table id="gridTamano" class="table table-bordered table-striped" style="font-size: 12px;">
+                    <table id="gridBebida" class="table table-bordered table-striped" style="font-size: 12px;">
                         <thead>
                             <tr>
-                                <th>Nombre tamaño</th>
+                                <th>Nombre bebida</th>
+                                <th>Costo</th>
+                                <th>Precio publico</th>
+                                <th>Stock</th>
                                 <th>Editar</th>
                                 <th>Status</th>
                             </tr>
@@ -91,23 +94,41 @@
 <!-- ./wrapper -->
 
 <!-- modales -->
-<div class="modal fade" id="modal_formTamano" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_formBebida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" >
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="myModalLabel">Tamaño</h2>
+                <h2 class="modal-title" id="myModalLabel">Bebida</h2>
             </div>
-            <div class="modal-body" id="muestra_formTamano">
-                <input type="hidden" id="txtcveTamano" name="txtcveTamano">
+            <div class="modal-body" id="muestra_formBebida">
+                <input type="hidden" id="txtcveBebida" name="txtcveBebida">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <div id="msgAlert2"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-12">
-                        <label>Nombre del tamaño*</label>
-                        <input type="text" class="form-control" id="txtNombreTamano" name="txtNombreTamano" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    <div class="form-group col-md-4">
+                        <label>Nombre de la bebida*</label>
+                        <input type="text" class="form-control" id="txtNombreBebida" name="txtNombreBebida" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Unidad de medida*</label>
+                        <select id="cmbUnidadmedidaBebida" name="cmbUnidadmedidaBebida" class="form-control ns_"></select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Costo*</label>
+                        <input type="number" min='0' class="form-control" id="txtCostoBebida" name="txtCostoBebida" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Precio publico*</label>
+                        <input type="number" min='0' class="form-control" id="txtPrecioBebida" name="txtPrecioBebida" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Stock*</label>
+                        <input type="number" min='0' class="form-control" id="txtStockBebida" name="txtStockBebida" onkeyup='javascript:this.value=this.value.toUpperCase();'>
                     </div>
                 </div> 
             </div>
@@ -155,15 +176,15 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        tableTamano = $('#gridTamano').DataTable( {    
+        tableBebida = $('#gridBebida').DataTable( {    
             "responsive": true,
             "searching" : true,
             "paging"    : true,
             "ordering"  : false,
             "info"      : true,
             "columnDefs": [
-                {"width": "10%","className": "text-center","targets": 1},
-                {"width": "10%","className": "text-center","targets": 2},
+                {"width": "10%","className": "text-center","targets": 4},
+                {"width": "10%","className": "text-center","targets": 5},
             ],
 
             "bJQueryUI":true,"oLanguage": {
@@ -191,13 +212,13 @@
             }
         });
         //Mandamos llamar la función para mostrar tabla al cargar la página
-        cargarTablaTamano();
+        cargarTablaBebida();
     });
 
-    function cargarTablaTamano()
+    function cargarTablaBebida()
     {
         $.ajax({
-            url      : 'Tamano/consultar',
+            url      : 'Bebida/consultar',
             type     : "POST",
             data    : { 
                 ban: 1 
@@ -210,7 +231,7 @@
 
                 var myJson = JSON.parse(datos);
 
-                tableTamano.clear().draw();
+                tableBebida.clear().draw();
 
                 if(myJson.arrayDatos.length > 0)
                 {
@@ -223,26 +244,29 @@
                     $(myJson.arrayDatos).each( function(key, val)
                     {
 
-                        if (parseInt(val.estatus_tamano) == 1)
+                        if (parseInt(val.estatus_bebida) == 1)
                         {
-                            title = 'Tamaño activo';
+                            title = 'Bebida activo';
                             icon = 'fa fa-dot-circle-o';
                             color_icon = "color: #4ad129;"
-                            accion = "bloquearTamano('" + val.cve_tamano + "','0')";
+                            accion = "bloquearBebida('" + val.cve_bebida + "','0')";
                         }
                         else
                         {
-                            title = 'Tamaño bloqueado';
+                            title = 'Bebida bloqueado';
                             icon = 'fa fa-circle';
                             color_icon = "color: #f00;"
-                            accion = "bloquearTamano('" + val.cve_tamano + "','1')";
+                            accion = "bloquearBebida('" + val.cve_bebida + "','1')";
                         }
 
-                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Tamaño' onclick=\"mostrarTamano('" + val.cve_tamano + "')\"></i>";
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Bebida' onclick=\"mostrarBebida('" + val.cve_bebida + "')\"></i>";
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
-                        tableTamano.row.add([
-                            val.nombre_tamano,
+                        tableBebida.row.add([
+                            val.nombrecompleto_bebida,
+                            val.costo_bebida,
+                            val.precio_bebida,
+                            val.stock_bebida,
                             btn_editar,
                             btn_status,
                         ]).draw();
@@ -251,7 +275,7 @@
                 }
                 else
                 {
-                    tableTamano = $('#gridTamano').DataTable();
+                    tableBebida = $('#gridBebida').DataTable();
                     
                 }
 
@@ -259,45 +283,114 @@
         });
     }
 
-    $('#btnMostraModalTamano').click(function (e) {
-        $('#modal_formTamano').modal({
+    $('#btnMostraModalBebida').click(function (e) {
+        $('#modal_formBebida').modal({
             keyboard: false
         });
-        $('#txtcveTamano').val('');
-        $('#txtNombreTamano').val('');
+        $('#txtcveBebida').val('');
+        $('#txtNombreBebida').val('');
+        $('#txtCostoBebida').val('');
+        $('#txtPrecioBebida').val('');
+        $('#txtStockBebida').val('');
+        cargarUnidadMedida();
+        document.getElementById("cmbUnidadmedidaBebida").selectedIndex = "0";
         $("#btnGuardar").html('Guardar');
         return false;
     });
 
+    function cargarUnidadMedida(){
+        $.ajax({
+            url      : 'Unidadmedida/consultar',
+            type     : "POST",
+            data    : { 
+                ban: 3 
+            },
+            beforeSend: function() {
+                // setting a timeout
+
+            },
+            success  : function(datos) {
+
+                var myJson = JSON.parse(datos);
+
+                if(myJson.arrayDatos.length > 0)
+                {
+
+                    var title;
+                    var icon;
+                    var color_icon;
+                    var accion;
+
+                    select = $("#cmbUnidadmedidaBebida");
+                    select.attr('disabled',false);
+                    select.find('option').remove();
+                    select.append('<option value="-1">-- Selecciona --</option>');
+
+                    $(myJson.arrayDatos).each( function(key, val)
+                    {
+                        select.append('<option value="' + val.cve_unidadmedida + '">' + val.nombre_unidadmedida + '</option>');
+                    })
+
+                }
+                else
+                {
+                    document.getElementById("cmbUnidadmedidaBebida").selectedIndex = "0";
+                    
+                }
+
+            }
+        });
+    }
+
     $('#btnCancelar').click(function (e) {
-        $('#modal_formTamano').modal('hide');
+        $('#modal_formBebida').modal('hide');
         return false;
     });
 
     $('#btnGuardar').click(function (e) {
-        if ( $('#txtNombreTamano').val()  == "" )
+        if ( $('#txtNombreBebida').val()  == "" )
         {
-            msgAlert2("Favor de ingresar el nombre del tamaño.","warning");
+            msgAlert2("Favor de ingresar el nombre de la bebida.","warning");
+        }
+        else if ( $('#txtCostoBebida').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar el costo de la bebida.","warning");
+        }
+        else if ( $('#txtPrecioBebida').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar el precio de la bebida.","warning");
+        }
+        else if ( $('#txtStockBebida').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar el precio de la bebida.","warning");
+        }
+        else if ( $('#cmbUnidadmedidaBebida').val()  == "-1" )
+        {
+            msgAlert2("Favor de ingresar la unidad de medida de la bebida","warning");
         }
         else
         {
             $("#btnGuardar").prop('disabled', true);
             
             $.ajax({
-                url      : 'Tamano/guardarTamano',
+                url      : 'Bebida/guardarBebida',
                 data     : {
-                    cve_tamano : $('#txtcveTamano').val() != null ? $('#txtcveTamano').val() : '',
-                    nombre_tamano : $('#txtNombreTamano').val() != null ? $('#txtNombreTamano').val() : ''
+                    cve_bebida : $('#txtcveBebida').val() != null ? $('#txtcveBebida').val() : '',
+                    nombre_bebida : $('#txtNombreBebida').val() != null ? $('#txtNombreBebida').val() : '',
+                    costo_bebida : $('#txtCostoBebida').val() != null ? $('#txtCostoBebida').val() : '',
+                    precio_bebida : $('#txtPrecioBebida').val() != null ? $('#txtPrecioBebida').val() : '',
+                    stock_bebida : $('#txtStockBebida').val() != null ? $('#txtStockBebida').val() : '',
+                    cveunidadmedia_bebida : $('#cmbUnidadmedidaBebida').val() != null ? $('#cmbUnidadmedidaBebida').val() : '',
                 },
                 type: "POST",
                 success: function(datos){
                     var myJson = JSON.parse(datos);
                     if(myJson.status == "success")
                     {
-                        $('#modal_formTamano').modal('hide');
-                        $('#txtcveTamano').val('');
+                        $('#modal_formBebida').modal('hide');
+                        $('#txtcveBebida').val('');
                         //Reinicializamos tabla
-                        cargarTablaTamano();
+                        cargarTablaBebida();
                         msgAlert(myJson.msg ,"success");
                         //$('#msgAlert').css("display", "none");
                         $("#btnGuardar").prop('disabled', false);
@@ -322,16 +415,16 @@
         setTimeout(function() { $("#msgAlert2").fadeOut(1500); },1500);
     }
 
-    function mostrarTamano(cve_tamano)
+    function mostrarBebida(cve_bebida)
     {
         $('#msgAlert').css("display", "none");
-
+        cargarUnidadMedida();
         $.ajax({
-            url      : 'Tamano/consultar',
+            url      : 'Bebida/consultar',
             type     : "POST",
             data     : { 
                     ban: 2, 
-                    cve_tamano: cve_tamano 
+                    cve_bebida: cve_bebida 
             },
             beforeSend: function() {
                 // setting a timeout
@@ -339,25 +432,29 @@
             success  : function(datos) {
                 var myJson = JSON.parse(datos);
                 //console.log(myJson);
-                $('#modal_formTamano').modal({
+                $('#modal_formBebida').modal({
                     keyboard: false
                 });
-                $('#txtcveTamano').val(myJson.arrayDatos[0].cve_tamano);
-                $('#txtNombreTamano').val(myJson.arrayDatos[0].nombre_tamano);
-                $("#btnGuardar").html('Actualizar Tamaño');
+                $('#txtcveBebida').val(myJson.arrayDatos[0].cve_bebida);
+                $('#txtNombreBebida').val(myJson.arrayDatos[0].nombre_bebida);
+                $('#txtCostoBebida').val(myJson.arrayDatos[0].costo_bebida);
+                $('#txtPrecioBebida').val(myJson.arrayDatos[0].precio_bebida);
+                $('#txtStockBebida').val(myJson.arrayDatos[0].stock_bebida);
+                $('#cmbUnidadmedidaBebida').val(myJson.arrayDatos[0].cveunidadmedida_bebida);
+                $("#btnGuardar").html('Actualizar Bebida');
 
             }
         });
     }
 
-    function bloquearTamano(cve_tamano,bloqueo)
+    function bloquearBebida(cve_bebida,bloqueo)
     {
         if (bloqueo == 0)
         {
-            var msg = "Esta seguro de bloquear este tamaño?";
+            var msg = "Esta seguro de bloquear este bebida?";
             var ban = 2;
         }else{
-            var msg = "Esta seguro de desbloquear este tamaño?";
+            var msg = "Esta seguro de desbloquear este bebida?";
             var ban = 3;
         }
 
@@ -375,12 +472,12 @@
                 if (result == true){
 
                     $.ajax({
-                        url      : 'Tamano/bloquearTamano',
+                        url      : 'Bebida/bloquearBebida',
                         type     : "POST",
                         data     : { 
 
                                 ban: ban, 
-                                cve_tamano: cve_tamano 
+                                cve_bebida: cve_bebida 
 
                         },
                         beforeSend: function() {
@@ -394,13 +491,13 @@
                             if(myJson.status == "success")
                             {
 
-                                //var table = $('#gridTamano').DataTable();
+                                //var table = $('#gridBebida').DataTable();
                                         
                                 //table.clear();
                                 //table.destroy();
 
                                 //Reinicializamos tabla
-                                cargarTablaTamano();
+                                cargarTablaBebida();
 
                                 msgAlert(myJson.msg ,"info");
 

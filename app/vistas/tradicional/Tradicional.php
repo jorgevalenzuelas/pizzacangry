@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?php echo NOMBRE_SITIO; ?> | Tamaños</title>
+    <title><?php echo NOMBRE_SITIO; ?> | Tradicionales</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -45,7 +45,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Tamaños
+                Tradicionales
             </h1>
 
         </section>
@@ -55,15 +55,17 @@
 
             <div id="msgAlert"></div>
 
-            <button class="btn btn-primary" id="btnMostraModalTamano">Nuevo tamaño</button>
+            <button class="btn btn-primary" id="btnMostraModalTradicional">Nueva tradicional</button>
       
             <div class="box" style="margin-top: 20px;">
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table id="gridTamano" class="table table-bordered table-striped" style="font-size: 12px;">
+                    <table id="gridTradicional" class="table table-bordered table-striped" style="font-size: 12px;">
                         <thead>
                             <tr>
-                                <th>Nombre tamaño</th>
+                                <th>Nombre tradicional</th>
+                                <th>Costo</th>
+                                <th>Precio publico</th>
                                 <th>Editar</th>
                                 <th>Status</th>
                             </tr>
@@ -91,25 +93,43 @@
 <!-- ./wrapper -->
 
 <!-- modales -->
-<div class="modal fade" id="modal_formTamano" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_formTradicional" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" >
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="myModalLabel">Tamaño</h2>
+                <h2 class="modal-title" id="myModalLabel">Tradicional</h2>
             </div>
-            <div class="modal-body" id="muestra_formTamano">
-                <input type="hidden" id="txtcveTamano" name="txtcveTamano">
+            <div class="modal-body" id="muestra_formTradicional">
+                <input type="hidden" id="txtcveTradicional" name="txtcveTradicional">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <div id="msgAlert2"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-12">
-                        <label>Nombre del tamaño*</label>
-                        <input type="text" class="form-control" id="txtNombreTamano" name="txtNombreTamano" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    <div class="form-group col-md-4">
+                        <label>Nombre tradicional*</label>
+                        <input type="text" class="form-control" id="txtNombreTradicional" name="txtNombreTradicional" onkeyup='javascript:this.value=this.value.toUpperCase();'>
                     </div>
-                </div> 
+                    <div class="form-group col-md-4">
+                        <label>Costo*</label>
+                        <input type="number" min='0' class="form-control" id="txtCostoTradicional" name="txtCostoTradicional" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Precio publico*</label>
+                        <input type="number" min='0' class="form-control" id="txtPrecioTradicional" name="txtPrecioTradicional" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Tamaño*</label>
+                        <select id="cmbTamanoTradicional" name="cmbTamanoTradicional" class="form-control ns_"></select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Cantidad de ingredientes*</label>
+                        <input type="number" min='0' class="form-control" id="txtCantidadingredienteTradicional" name="txtCantidadingredienteTradicional" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>                     
+                </div>  
             </div>
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
@@ -155,15 +175,15 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        tableTamano = $('#gridTamano').DataTable( {    
+        tableTradicional = $('#gridTradicional').DataTable( {    
             "responsive": true,
             "searching" : true,
             "paging"    : true,
             "ordering"  : false,
             "info"      : true,
             "columnDefs": [
-                {"width": "10%","className": "text-center","targets": 1},
-                {"width": "10%","className": "text-center","targets": 2},
+                {"width": "10%","className": "text-center","targets": 3},
+                {"width": "10%","className": "text-center","targets": 4},
             ],
 
             "bJQueryUI":true,"oLanguage": {
@@ -191,13 +211,13 @@
             }
         });
         //Mandamos llamar la función para mostrar tabla al cargar la página
-        cargarTablaTamano();
+        cargarTablaTradicional();
     });
 
-    function cargarTablaTamano()
+    function cargarTablaTradicional()
     {
         $.ajax({
-            url      : 'Tamano/consultar',
+            url      : 'Tradicional/consultar',
             type     : "POST",
             data    : { 
                 ban: 1 
@@ -210,7 +230,7 @@
 
                 var myJson = JSON.parse(datos);
 
-                tableTamano.clear().draw();
+                tableTradicional.clear().draw();
 
                 if(myJson.arrayDatos.length > 0)
                 {
@@ -223,26 +243,28 @@
                     $(myJson.arrayDatos).each( function(key, val)
                     {
 
-                        if (parseInt(val.estatus_tamano) == 1)
+                        if (parseInt(val.estatus_tradicional) == 1)
                         {
-                            title = 'Tamaño activo';
+                            title = 'Tradicional activo';
                             icon = 'fa fa-dot-circle-o';
                             color_icon = "color: #4ad129;"
-                            accion = "bloquearTamano('" + val.cve_tamano + "','0')";
+                            accion = "bloquearTradicional ('" + val.cve_tradicional  + "','0')";
                         }
                         else
                         {
-                            title = 'Tamaño bloqueado';
+                            title = 'Tradicional bloqueado';
                             icon = 'fa fa-circle';
                             color_icon = "color: #f00;"
-                            accion = "bloquearTamano('" + val.cve_tamano + "','1')";
+                            accion = "bloquearTradicional ('" + val.cve_tradicional  + "','1')";
                         }
 
-                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Tamaño' onclick=\"mostrarTamano('" + val.cve_tamano + "')\"></i>";
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Especiaidad' onclick=\"mostrarTradicional('" + val.cve_tradicional  + "')\"></i>";
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
-                        tableTamano.row.add([
-                            val.nombre_tamano,
+                        tableTradicional.row.add([
+                            val.nombrepizza_tradicional ,
+                            val.costo_tradicional ,
+                            val.precio_tradicional ,
                             btn_editar,
                             btn_status,
                         ]).draw();
@@ -251,7 +273,7 @@
                 }
                 else
                 {
-                    tableTamano = $('#gridTamano').DataTable();
+                    tableTradicional = $('#gridTradicional').DataTable();
                     
                 }
 
@@ -259,45 +281,114 @@
         });
     }
 
-    $('#btnMostraModalTamano').click(function (e) {
-        $('#modal_formTamano').modal({
+    $('#btnMostraModalTradicional').click(function (e) {
+        $('#modal_formTradicional').modal({
             keyboard: false
         });
-        $('#txtcveTamano').val('');
-        $('#txtNombreTamano').val('');
+        $('#txtcveTradicional').val('');
+        $('#txtNombreTradicional').val('');
+        $('#txtCostoTradicional').val('');
+        $('#txtPrecioTradicional').val('');
+        $('#txtCantidadingredienteTradicional').val('');
+        document.getElementById("cmbTamanoTradicional").selectedIndex = "0";
+        cargarTamano();
         $("#btnGuardar").html('Guardar');
         return false;
     });
 
+    function cargarTamano(){
+        $.ajax({
+            url      : 'Tamano/consultar',
+            type     : "POST",
+            data    : { 
+                ban: 3
+            },
+            beforeSend: function() {
+                // setting a timeout
+
+            },
+            success  : function(datos) {
+
+                var myJson = JSON.parse(datos);
+
+                if(myJson.arrayDatos.length > 0)
+                {
+
+                    var title;
+                    var icon;
+                    var color_icon;
+                    var accion;
+
+                    select = $("#cmbTamanoTradicional");
+                    select.attr('disabled',false);
+                    select.find('option').remove();
+                    select.append('<option value="-1">-- Selecciona --</option>');
+
+                    $(myJson.arrayDatos).each( function(key, val)
+                    {
+                        select.append('<option value="' + val.cve_tamano + '">' + val.nombre_tamano + '</option>');
+                    })
+
+                }
+                else
+                {
+                    document.getElementById("cmbTamanoTradicional").selectedIndex = "0";
+                    
+                }
+
+            }
+        });
+    }
+
     $('#btnCancelar').click(function (e) {
-        $('#modal_formTamano').modal('hide');
+        $('#modal_formTradicional').modal('hide');
         return false;
     });
 
     $('#btnGuardar').click(function (e) {
-        if ( $('#txtNombreTamano').val()  == "" )
+        if ( $('#txtNombreTradicional').val()  == "" )
         {
-            msgAlert2("Favor de ingresar el nombre del tamaño.","warning");
+            msgAlert2("Favor de ingresar el nombre de la pizza tradicional.","warning");
+        }
+        else if ( $('#txtCostoTradicional').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar el costo de la pizza tradicional.","warning");
+        }
+        else if ( $('#txtPrecioTradicional').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar el precio de la pizza tradicional.","warning");
+        }
+        else if ( $('#txtCantidadingredienteTradicional').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar la cantidad de la pizza tradicional","warning");
+        }
+        else if ( $('#cmbTamanoTradicional').val()  == "-1" )
+        {
+            msgAlert2("Favor de ingresar el tamaño de la pizza tradicional","warning");
         }
         else
         {
             $("#btnGuardar").prop('disabled', true);
             
             $.ajax({
-                url      : 'Tamano/guardarTamano',
+                url      : 'Tradicional/guardarTradicional',
                 data     : {
-                    cve_tamano : $('#txtcveTamano').val() != null ? $('#txtcveTamano').val() : '',
-                    nombre_tamano : $('#txtNombreTamano').val() != null ? $('#txtNombreTamano').val() : ''
+                    cve_tradicional  : $('#txtcveTradicional').val() != null ? $('#txtcveTradicional').val() : '',
+                    nombre_tradicional  : $('#txtNombreTradicional').val() != null ? $('#txtNombreTradicional').val() : '',
+                    costo_tradicional  : $('#txtCostoTradicional').val() != null ? $('#txtCostoTradicional').val() : '',
+                    precio_tradicional  : $('#txtPrecioTradicional').val() != null ? $('#txtPrecioTradicional').val() : '',
+                    cantidadingrediente_tradicional : $('#txtCantidadingredienteTradicional').val() != null ? $('#txtCantidadingredienteTradicional').val() : '',
+                    cvetamano_tradicional : $('#cmbTamanoTradicional').val() != -1 ? $('#cmbTamanoTradicional').val() : '-1'
                 },
                 type: "POST",
                 success: function(datos){
                     var myJson = JSON.parse(datos);
                     if(myJson.status == "success")
                     {
-                        $('#modal_formTamano').modal('hide');
-                        $('#txtcveTamano').val('');
+                        $('#modal_formTradicional').modal('hide');
+                        $('#txtcveTradicional').val('');
                         //Reinicializamos tabla
-                        cargarTablaTamano();
+                        cargarTablaTradicional();
                         msgAlert(myJson.msg ,"success");
                         //$('#msgAlert').css("display", "none");
                         $("#btnGuardar").prop('disabled', false);
@@ -322,16 +413,16 @@
         setTimeout(function() { $("#msgAlert2").fadeOut(1500); },1500);
     }
 
-    function mostrarTamano(cve_tamano)
+    function mostrarTradicional(cve_tradicional )
     {
         $('#msgAlert').css("display", "none");
-
+        cargarTamano();
         $.ajax({
-            url      : 'Tamano/consultar',
+            url      : 'Tradicional/consultar',
             type     : "POST",
             data     : { 
                     ban: 2, 
-                    cve_tamano: cve_tamano 
+                    cve_tradicional : cve_tradicional  
             },
             beforeSend: function() {
                 // setting a timeout
@@ -339,25 +430,30 @@
             success  : function(datos) {
                 var myJson = JSON.parse(datos);
                 //console.log(myJson);
-                $('#modal_formTamano').modal({
+                $('#modal_formTradicional').modal({
                     keyboard: false
                 });
-                $('#txtcveTamano').val(myJson.arrayDatos[0].cve_tamano);
-                $('#txtNombreTamano').val(myJson.arrayDatos[0].nombre_tamano);
-                $("#btnGuardar").html('Actualizar Tamaño');
+                $('#txtcveTradicional').val(myJson.arrayDatos[0].cve_tradicional );
+                $('#txtNombreTradicional').val(myJson.arrayDatos[0].nombre_tradicional );
+                $('#txtCostoTradicional').val(myJson.arrayDatos[0].costo_tradicional );
+                $('#txtPrecioTradicional').val(myJson.arrayDatos[0].precio_tradicional );
+                $('#txtCantidadingredienteTradicional').val(myJson.arrayDatos[0].cantidadingrediente_tradicional);
+                
+                $("#cmbTamanoTradicional").val(myJson.arrayDatos[0].cvetamano_tradicional);
+                $("#btnGuardar").html('Actualizar tradicional');
 
             }
         });
     }
 
-    function bloquearTamano(cve_tamano,bloqueo)
+    function bloquearTradicional (cve_tradicional ,bloqueo)
     {
         if (bloqueo == 0)
         {
-            var msg = "Esta seguro de bloquear este tamaño?";
+            var msg = "Esta seguro de bloquear esta pizza tradicional?";
             var ban = 2;
         }else{
-            var msg = "Esta seguro de desbloquear este tamaño?";
+            var msg = "Esta seguro de desbloquear esta pizza tradicional?";
             var ban = 3;
         }
 
@@ -375,12 +471,12 @@
                 if (result == true){
 
                     $.ajax({
-                        url      : 'Tamano/bloquearTamano',
+                        url      : 'Tradicional/bloquearTradicional ',
                         type     : "POST",
                         data     : { 
 
                                 ban: ban, 
-                                cve_tamano: cve_tamano 
+                                cve_tradicional : cve_tradicional  
 
                         },
                         beforeSend: function() {
@@ -394,13 +490,13 @@
                             if(myJson.status == "success")
                             {
 
-                                //var table = $('#gridTamano').DataTable();
+                                //var table = $('#gridTradicional').DataTable();
                                         
                                 //table.clear();
                                 //table.destroy();
 
                                 //Reinicializamos tabla
-                                cargarTablaTamano();
+                                cargarTablaTradicional();
 
                                 msgAlert(myJson.msg ,"info");
 
