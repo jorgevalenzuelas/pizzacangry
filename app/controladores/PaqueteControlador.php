@@ -58,10 +58,10 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_paquete = (empty($cve_paquete)) ? $_POST["cve_paquete"] : 0 ;
+				//$cve_paquete = (empty($cve_paquete)) ? $_POST["cve_paquete"] : 0 ;
 				$datosPaquete =  array (
 									ban                => 1,
-									cve_paquete   => $cve_paquete,
+									cve_paquete   => $_POST["cve_paquete"],
 									nombre_paquete => $_POST["nombre_paquete"],
 									costo_paquete => $_POST["costo_paquete"],
 									precio_paquete => $_POST["precio_paquete"],

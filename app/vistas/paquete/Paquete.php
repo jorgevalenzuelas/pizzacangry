@@ -897,10 +897,10 @@
             $.ajax({
                 url      : 'Paquete/guardarPaquete',
                 data     : {
-                    cve_paquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
-                    nombre_paquete : $('#txtNombrePaquete').val() != null ? $('#txtNombrePaquete').val() : '',
-                    costo_paquete : $('#txtCostoPaquete').val() != null ? $('#txtCostoPaquete').val() : '',
-                    precio_paquete : $('#txtPrecioPaquete').val() != null ? $('#txtPrecioPaquete').val() : ''
+                    cve_paquete : $('#txtcvePaquete').val() != '' ? $('#txtcvePaquete').val() : '0',
+                    nombre_paquete : $('#txtNombrePaquete').val() != '' ? $('#txtNombrePaquete').val() : '',
+                    costo_paquete : $('#txtCostoPaquete').val() != '' ? $('#txtCostoPaquete').val() : '',
+                    precio_paquete : $('#txtPrecioPaquete').val() != '' ? $('#txtPrecioPaquete').val() : ''
                 },
                 type: "POST",
                 success: function(datos){
