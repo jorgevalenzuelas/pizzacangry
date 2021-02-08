@@ -567,10 +567,10 @@
             $.ajax({
                 url      : 'Paquete/guardarDetallePaquete',
                 data     : {
-                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
-                    cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != null ? $('#txtcveDetallePaquete').val() : '0',
+                    cve_depaquete : $('#txtcvePaquete').val() != '' ? $('#txtcvePaquete').val() : '0',
+                    cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != '' ? $('#txtcveDetallePaquete').val() : '0',
                     cvema_depaquete : $('#cmbPizzaTradicional').val() != -1 ? $('#cmbPizzaTradicional').val() : '-1',
-                    cantidad_depaquete  : $('#txtCantidadPizzaTradicional').val() != null ? $('#txtCantidadPizzaTradicional').val() : '',
+                    cantidad_depaquete  : $('#txtCantidadPizzaTradicional').val() != '' ? $('#txtCantidadPizzaTradicional').val() : '',
                     cveproducto_depaquete : '1'
                 },
                 type: "POST",
@@ -654,10 +654,10 @@
             $.ajax({
                 url      : 'Paquete/guardarDetallePaquete',
                 data     : {
-                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
-                    cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != null ? $('#txtcveDetallePaquete').val() : '0',
+                    cve_depaquete : $('#txtcvePaquete').val() != '' ? $('#txtcvePaquete').val() : '0',
+                    cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != '' ? $('#txtcveDetallePaquete').val() : '0',
                     cvema_depaquete : $('#cmbPizzaEspecialidad').val() != -1 ? $('#cmbPizzaEspecialidad').val() : '-1',
-                    cantidad_depaquete  : $('#txtCantidadPizzaEspecialidad').val() != null ? $('#txtCantidadPizzaEspecialidad').val() : '',
+                    cantidad_depaquete  : $('#txtCantidadPizzaEspecialidad').val() != '' ? $('#txtCantidadPizzaEspecialidad').val() : '',
                     cveproducto_depaquete : '2'
                 },
                 type: "POST",
@@ -742,10 +742,10 @@
             $.ajax({
                 url      : 'Paquete/guardarDetallePaquete',
                 data     : {
-                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
-                    cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != null ? $('#txtcveDetallePaquete').val() : '0',
+                    cve_depaquete : $('#txtcvePaquete').val() != '' ? $('#txtcvePaquete').val() : '0',
+                    cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != '' ? $('#txtcveDetallePaquete').val() : '0',
                     cvema_depaquete : $('#cmbBebida').val() != -1 ? $('#cmbBebida').val() : '-1',
-                    cantidad_depaquete  : $('#txtCantidadBebida').val() != null ? $('#txtCantidadBebida').val() : '',
+                    cantidad_depaquete  : $('#txtCantidadBebida').val() != '' ? $('#txtCantidadBebida').val() : '',
                     cveproducto_depaquete : '3'
                 },
                 type: "POST",
@@ -830,10 +830,10 @@
             $.ajax({
                 url      : 'Paquete/guardarDetallePaquete',
                 data     : {
-                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
-                    cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != null ? $('#txtcveDetallePaquete').val() : '0',
+                    cve_depaquete : $('#txtcvePaquete').val() != '' ? $('#txtcvePaquete').val() : '0',
+                    cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != '' ? $('#txtcveDetallePaquete').val() : '0',
                     cvema_depaquete : $('#cmbSnack').val() != -1 ? $('#cmbSnack').val() : '-1',
-                    cantidad_depaquete  : $('#txtCantidadSnack').val() != null ? $('#txtCantidadSnack').val() : '',
+                    cantidad_depaquete  : $('#txtCantidadSnack').val() != '' ? $('#txtCantidadSnack').val() : '',
                     cveproducto_depaquete : '4'
                 },
                 type: "POST",
