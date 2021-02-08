@@ -567,7 +567,7 @@
             $.ajax({
                 url      : 'Paquete/guardarDetallePaquete',
                 data     : {
-                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '',
+                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
                     cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != null ? $('#txtcveDetallePaquete').val() : '',
                     cvema_depaquete : $('#cmbPizzaTradicional').val() != -1 ? $('#cmbPizzaTradicional').val() : '-1',
                     cantidad_depaquete  : $('#txtCantidadPizzaTradicional').val() != null ? $('#txtCantidadPizzaTradicional').val() : '',
