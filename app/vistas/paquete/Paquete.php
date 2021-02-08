@@ -654,7 +654,7 @@
             $.ajax({
                 url      : 'Paquete/guardarDetallePaquete',
                 data     : {
-                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '',
+                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
                     cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != null ? $('#txtcveDetallePaquete').val() : '',
                     cvema_depaquete : $('#cmbPizzaEspecialidad').val() != -1 ? $('#cmbPizzaEspecialidad').val() : '-1',
                     cantidad_depaquete  : $('#txtCantidadPizzaEspecialidad').val() != null ? $('#txtCantidadPizzaEspecialidad').val() : '',
@@ -742,7 +742,7 @@
             $.ajax({
                 url      : 'Paquete/guardarDetallePaquete',
                 data     : {
-                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '',
+                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
                     cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != null ? $('#txtcveDetallePaquete').val() : '',
                     cvema_depaquete : $('#cmbBebida').val() != -1 ? $('#cmbBebida').val() : '-1',
                     cantidad_depaquete  : $('#txtCantidadBebida').val() != null ? $('#txtCantidadBebida').val() : '',
@@ -830,7 +830,7 @@
             $.ajax({
                 url      : 'Paquete/guardarDetallePaquete',
                 data     : {
-                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '',
+                    cve_depaquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
                     cvepaquete_depaquete  : $('#txtcveDetallePaquete').val() != null ? $('#txtcveDetallePaquete').val() : '',
                     cvema_depaquete : $('#cmbSnack').val() != -1 ? $('#cmbSnack').val() : '-1',
                     cantidad_depaquete  : $('#txtCantidadSnack').val() != null ? $('#txtCantidadSnack').val() : '',
@@ -897,7 +897,7 @@
             $.ajax({
                 url      : 'Paquete/guardarPaquete',
                 data     : {
-                    cve_paquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '',
+                    cve_paquete : $('#txtcvePaquete').val() != null ? $('#txtcvePaquete').val() : '0',
                     nombre_paquete : $('#txtNombrePaquete').val() != null ? $('#txtNombrePaquete').val() : '',
                     costo_paquete : $('#txtCostoPaquete').val() != null ? $('#txtCostoPaquete').val() : '',
                     precio_paquete : $('#txtPrecioPaquete').val() != null ? $('#txtPrecioPaquete').val() : ''
