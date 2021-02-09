@@ -224,7 +224,7 @@
                                         <select id="cmbSnack" name="cmbSnack" class="form-control ns_"></select>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>Cantidad de bebidas*</label>
+                                        <label>Cantidad de snack's*</label>
                                         <input type="number" min='0' class="form-control" id="txtCantidadSnack" name="txtCantidadSnack" onkeyup='javascript:this.value=this.value.toUpperCase();'>
                                     </div>                     
                                 </div>
