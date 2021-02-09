@@ -120,6 +120,20 @@ class PaqueteModelo
         return $respuesta;
     }
 
+    public function eliminarDetallePaquete($datosDetallePaquete)
+    {
+        $datosFiltrados = $this->filtrarDatos($datosDetallePaquete);
+
+        $ban               = $datosFiltrados['ban'];
+        $cve_depaquete  = $datosFiltrados['cve_depaquete'];
+
+        $query = "CALL eliminarDetallePaquete('$ban','$cve_depaquete')";
+
+        $respuesta = $this->conexion->query($query);
+
+        return $respuesta;
+    }
+
     
 
     public function filtrarDatos($datosFiltrar){

@@ -475,7 +475,7 @@
                             title = 'Producto activo';
                             icon = 'fa fa-minus-circle';
                             color_icon = "color: #d12929;"
-                            accion = "eliminarDetallePaquete('" + val.cve_depaquete + "','0')";
+                            accion = "eliminarDetallePaquete('" + val.cve_depaquete + "')";
                         
 
                         var btn_eliminar = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
@@ -920,7 +920,7 @@
                     else
                     {
                         $("#btnGuardar").prop('disabled', false);
-                        msgAlert3(myJson.msg ,"danger");
+                        msgAlert2(myJson.msg ,"danger");
                         
                     }
                 }
@@ -1012,6 +1012,65 @@
                                 cargarTablaPaquete();
 
                                 msgAlert(myJson.msg ,"info");
+
+                            }
+
+                        }
+                    });
+
+                }else{
+                    //No se hace nada...
+                }
+            }
+        });
+
+    }
+
+    function eliminarDetallePaquete(cve_depaquete)
+    {
+        var msg = "Esta seguro de eliminar este detalle del paquete?";
+        bootbox.confirm({
+            message: msg,
+            buttons: {
+                confirm: {
+                    label: 'Si'
+                },
+                cancel: {
+                    label: 'No'
+                }
+            },
+            callback: function (result) {
+                if (result == true){
+
+                    $.ajax({
+                        url      : 'Paquete/eliminarDetallePaquete',
+                        type     : "POST",
+                        data     : { 
+
+                                ban: 1, 
+                                cve_depaquete: cve_depaquete 
+
+                        },
+                        beforeSend: function() {
+                            // setting a timeout
+
+                        },
+                        success  : function(datos) {
+
+                            var myJson = JSON.parse(datos);
+                    
+                            if(myJson.status == "success")
+                            {
+
+                                //var table = $('#gridPaquete').DataTable();
+                                        
+                                //table.clear();
+                                //table.destroy();
+
+                                //Reinicializamos tabla
+                                cargarTablaDetallePaquete($('#txtcveDetallePaquete').val());
+
+                                msgAlert3(myJson.msg ,"info");
 
                             }
 

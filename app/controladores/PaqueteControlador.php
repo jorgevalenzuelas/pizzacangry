@@ -191,6 +191,34 @@ else
 			$envioDatos["msg"] = $msg;
 			echo json_encode($envioDatos);
 		}
+
+		public function eliminarDetallePaquete()
+		{
+			$datosDetallePaquete =  array (
+								ban                => $_POST["ban"],
+								cve_depaquete   => $_POST["cve_depaquete"],
+								cveusuario_accion  => $_SESSION["cve_usuario"]
+						     );
+
+			$respuesta = $this->PaqueteModelo->eliminarDetallePaquete($datosDetallePaquete);
+
+			if ($respuesta == true)
+			{
+				$msg = "Se ha eliminado el detalle del paquete.";
+			
+				$status = "success";
+			}
+			else
+			{
+				//Este error se presenta por un error en el query
+				$msg = "Hubo un error al eliminar el registro.";
+				$status = "error";
+			}
+
+			$envioDatos["status"] = $status;
+			$envioDatos["msg"] = $msg;
+			echo json_encode($envioDatos);
+		}
 		
 	}
 
