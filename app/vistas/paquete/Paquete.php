@@ -583,7 +583,7 @@
                         cargarTablaDetallePaquete($('#txtcveDetallePaquete').val());
                         //Reinicializamos tabla
                         //cargarTablaTradicional();
-                        //msgAlert(myJson.msg ,"success");
+                        msgAlert3(myJson.msg ,"success");
                         //$('#msgAlert').css("display", "none");
                     }
                     else
@@ -671,7 +671,7 @@
                         cargarTablaDetallePaquete($('#txtcveDetallePaquete').val());
                         //Reinicializamos tabla
                         //cargarTablaTradicional();
-                        //msgAlert(myJson.msg ,"success");
+                        msgAlert3(myJson.msg ,"success");
                         //$('#msgAlert').css("display", "none");
                     }
                     else
@@ -759,7 +759,7 @@
                         document.getElementById("cmbBebida").selectedIndex = "0";
                         //Reinicializamos tabla
                         //cargarTablaTradicional();
-                        //msgAlert(myJson.msg ,"success");
+                        msgAlert3(myJson.msg ,"success");
                         //$('#msgAlert').css("display", "none");
                     }
                     else
@@ -847,7 +847,7 @@
                         document.getElementById("cmbSnack").selectedIndex = "0";
                         //Reinicializamos tabla
                         //cargarTablaTradicional();
-                        //msgAlert(myJson.msg ,"success");
+                        msgAlert3(myJson.msg ,"success");
                         //$('#msgAlert').css("display", "none");
                     }
                     else
