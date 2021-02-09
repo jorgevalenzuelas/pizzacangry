@@ -580,6 +580,7 @@
                     {
                         $('#txtCantidadPizzaTradicional').val('');
                         document.getElementById("cmbPizzaTradicional").selectedIndex = "0";
+                        cargarTablaDetallePaquete($('#txtcveDetallePaquete').val());
                         //Reinicializamos tabla
                         //cargarTablaTradicional();
                         //msgAlert(myJson.msg ,"success");
@@ -665,9 +666,9 @@
                     var myJson = JSON.parse(datos);
                     if(myJson.status == "success")
                     {
-                        cargarTablaDetallePaquete($('#txtcveDetallePaquete').val());
                         $('#txtCantidadPizzaEspecialidad').val('');
                         document.getElementById("cmbPizzaEspecialidad").selectedIndex = "0";
+                        cargarTablaDetallePaquete($('#txtcveDetallePaquete').val());
                         //Reinicializamos tabla
                         //cargarTablaTradicional();
                         //msgAlert(myJson.msg ,"success");
