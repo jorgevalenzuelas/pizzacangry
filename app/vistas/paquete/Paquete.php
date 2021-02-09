@@ -524,19 +524,13 @@
 
                 var myJson = JSON.parse(datos);
 
+                select = $("#cmbPizzaTradicional");
+                select.attr('disabled',false);
+                select.find('option').remove();
+                select.append('<option value="-1">-- Selecciona --</option>');
+
                 if(myJson.arrayDatos.length > 0)
                 {
-
-                    var title;
-                    var icon;
-                    var color_icon;
-                    var accion;
-
-                    select = $("#cmbPizzaTradicional");
-                    select.attr('disabled',false);
-                    select.find('option').remove();
-                    select.append('<option value="-1">-- Selecciona --</option>');
-
                     $(myJson.arrayDatos).each( function(key, val)
                     {
                         select.append('<option value="' + val.cve_tradicional + '">' + val.nombrepizza_tradicional + '</option>');
@@ -612,19 +606,13 @@
 
                 var myJson = JSON.parse(datos);
 
+                select = $("#cmbPizzaEspecialidad");
+                select.attr('disabled',false);
+                select.find('option').remove();
+                select.append('<option value="-1">-- Selecciona --</option>');
+
                 if(myJson.arrayDatos.length > 0)
                 {
-
-                    var title;
-                    var icon;
-                    var color_icon;
-                    var accion;
-
-                    select = $("#cmbPizzaEspecialidad");
-                    select.attr('disabled',false);
-                    select.find('option').remove();
-                    select.append('<option value="-1">-- Selecciona --</option>');
-
                     $(myJson.arrayDatos).each( function(key, val)
                     {
                         select.append('<option value="' + val.cve_especialidad + '">' + val.nombrepizza_especialidad + '</option>');
@@ -700,19 +688,13 @@
 
                 var myJson = JSON.parse(datos);
 
+                select = $("#cmbBebida");
+                select.attr('disabled',false);
+                select.find('option').remove();
+                select.append('<option value="-1">-- Selecciona --</option>');
+
                 if(myJson.arrayDatos.length > 0)
                 {
-
-                    var title;
-                    var icon;
-                    var color_icon;
-                    var accion;
-
-                    select = $("#cmbBebida");
-                    select.attr('disabled',false);
-                    select.find('option').remove();
-                    select.append('<option value="-1">-- Selecciona --</option>');
-
                     $(myJson.arrayDatos).each( function(key, val)
                     {
                         select.append('<option value="' + val.cve_bebida + '">' + val.nombrecompleto_bebida + '</option>');
@@ -788,19 +770,13 @@
 
                 var myJson = JSON.parse(datos);
 
+                select = $("#cmbSnack");
+                select.attr('disabled',false);
+                select.find('option').remove();
+                select.append('<option value="-1">-- Selecciona --</option>');
+
                 if(myJson.arrayDatos.length > 0)
                 {
-
-                    var title;
-                    var icon;
-                    var color_icon;
-                    var accion;
-
-                    select = $("#cmbSnack");
-                    select.attr('disabled',false);
-                    select.find('option').remove();
-                    select.append('<option value="-1">-- Selecciona --</option>');
-
                     $(myJson.arrayDatos).each( function(key, val)
                     {
                         select.append('<option value="' + val.cve_snack + '">' + val.nombre_snack+ '</option>');

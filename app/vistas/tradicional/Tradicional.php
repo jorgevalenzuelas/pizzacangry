@@ -311,19 +311,13 @@
 
                 var myJson = JSON.parse(datos);
 
+                select = $("#cmbTamanoTradicional");
+                select.attr('disabled',false);
+                select.find('option').remove();
+                select.append('<option value="-1">-- Selecciona --</option>');
+
                 if(myJson.arrayDatos.length > 0)
                 {
-
-                    var title;
-                    var icon;
-                    var color_icon;
-                    var accion;
-
-                    select = $("#cmbTamanoTradicional");
-                    select.attr('disabled',false);
-                    select.find('option').remove();
-                    select.append('<option value="-1">-- Selecciona --</option>');
-
                     $(myJson.arrayDatos).each( function(key, val)
                     {
                         select.append('<option value="' + val.cve_tamano + '">' + val.nombre_tamano + '</option>');
