@@ -102,11 +102,9 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_paquete = (empty($cve_paquete)) ? $_POST["cve_paquete"] : 0 ;
-				$cvepaquete_depaquete = (empty($cvepaquete_depaquete)) ? $_POST["cvepaquete_depaquete"] : 0 ;
 				$datosDetallePaquete =  array (
 									ban                => 1,
-									cve_paquete   => $_POST["cve_paquete"],
+									cve_paquete   => $_POST["cve_depaquete"],
 									cvepaquete_depaquete	=> $_POST["cvepaquete_depaquete"],
 									cvema_depaquete => $_POST["cvema_depaquete"],
 									cantidad_depaquete => $_POST["cantidad_depaquete"],
