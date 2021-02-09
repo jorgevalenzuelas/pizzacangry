@@ -912,7 +912,7 @@
                         $('#txtcvePaquete').val('');
                         //Reinicializamos tabla
                         cargarTablaPaquete();
-                        msgAlert(myJson.msg ,"success");
+                        msgAlert3(myJson.msg ,"success");
                         //$('#msgAlert').css("display", "none");
                         $("#btnGuardar").prop('disabled', false);
                         $("#btnGuardar").html('Guardar');
@@ -920,7 +920,7 @@
                     else
                     {
                         $("#btnGuardar").prop('disabled', false);
-                        msgAlert2(myJson.msg ,"danger");
+                        msgAlert3(myJson.msg ,"danger");
                         
                     }
                 }
