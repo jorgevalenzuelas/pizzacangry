@@ -87,6 +87,7 @@ $(document).ready(function () {
     $('#btnCancelar2').click(function (e) {
         $('#cmbProductos').val('');
         $('#txtCantidadProductos').val('');
+        $('#cmbProductos').focus();
         $('#modal_formCantidadProductos').modal('hide');
         $('#modal_formIngredientes').modal('hide');
         $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
@@ -145,6 +146,7 @@ $(document).ready(function () {
             tableTradicional.draw( false );
             $('#cmbProductos').val('');
             $('#txtCantidadProductos').val('');
+            $('#cmbProductos').focus();
             $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
             $("#modal_formIngredientes").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll

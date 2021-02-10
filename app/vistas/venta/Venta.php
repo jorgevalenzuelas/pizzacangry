@@ -215,6 +215,7 @@
         });
         
         cargarProductos();
+        $('#cmbProductos').focus();
     });
 
     function cargarProductos(){

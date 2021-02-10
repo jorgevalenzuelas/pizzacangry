@@ -39,13 +39,8 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-        <div class="row">
-            <div class="form-group col-md-1">
-            </div>
-            <div class="form-group col-md-11">
-                <img src="<?php echo RUTA_URL; ?>public/img/MenuCangry.jpg" class="img-fluid" alt="Responsive image">
-            </div>
-        </div>
+                <img src="<?php echo RUTA_URL; ?>public/img/MenuCangry.jpg" class="img-fluid" alt="Responsive image" width="100%" height="100%">
+        
         </section>
 
         <!-- Main content -->
