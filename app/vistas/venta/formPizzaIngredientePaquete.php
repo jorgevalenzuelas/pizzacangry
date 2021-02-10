@@ -102,8 +102,8 @@ function cargarIngrediente(){
     }
 
     $('#btnCancelar2').click(function (e) {
-    
-        $('#modal_formSnack').modal('hide');
+        $('#cmbProductos').val('');
+        $('#modal_formCantidadProductos').modal('hide');
         $('#modal_formIngredientesPaquete').modal('hide');
         $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
         $('.modal-backdrop').remove();
@@ -114,7 +114,7 @@ function cargarIngrediente(){
     $('#btnAgregarTabla').click(function (e) {
 
 
-        var val = $('#CMBCONTACTOS').val() ? $('#CMBCONTACTOS').val() : '';
+        var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';
         // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
         if(val.indexOf("\"") !== -1){
             var valueCombo = $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") ? $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") : "";
@@ -153,15 +153,14 @@ function cargarIngrediente(){
         var btn_eliminar = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
         var myNumeroAleatorio = Math.floor(Math.random()*10001);
         tableTradicional.row.add([
-                valueCombo.nombre_producto ,
+                valueCombo.nombrecompleto_producto ,
                 valueCombo.precio_producto ,
                 cantidad_productos ,
                 btn_eliminar
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+","+Valores+","+myNumeroAleatorio;
             tableTradicional.draw( false );
-            modal_formIngredientes
-            $("#modal_formSnack").modal('hide');//ocultamos el modal
-            $("#modal_formIngredientes").modal('hide');//ocultamos el modal
+            $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
+            $("#modal_formIngredientesPaquete").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
             $('.modal-backdrop').remove();
     });

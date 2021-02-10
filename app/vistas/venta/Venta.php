@@ -48,11 +48,11 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <div id="msgAlert2"></div>
-                    <label for="CMBCONTACTOS">Buscar contactos</label>
+                    <label for="cmbProductos">Buscar productos</label>
                     <datalist id="cmbContactosListMod">
                         <!--option value="0" selected="selected"> -- Seleccione -- </option-->
                     </datalist>
-                    <input list="cmbContactosListMod" id="CMBCONTACTOS" name="CMBCONTACTOS" type="text" class="form-control" placeholder=" -- Escriba -- " onkeyup="javascript:this.value=this.value.toUpperCase();" onchange="AgregarProductoTabla();">
+                    <input list="cmbContactosListMod" id="cmbProductos" name="cmbProductos" type="text" class="form-control" placeholder=" -- Escriba -- " onkeyup="javascript:this.value=this.value.toUpperCase();" onchange="AgregarProductoTabla();">
                 </div>
                 <div id="msgAlert"></div>
                 <div class="box" style="margin-top: 20px;">
@@ -90,11 +90,11 @@
 
 </div>
 <!-- ./wrapper -->
-<div class="modal fade" id="modal_formSnack" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" >
+<div class="modal fade" id="modal_formCantidadProductos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" >
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="myModalLabel">Snack</h2>
+                <h3 class="modal-title" id="myModalLabel">Cantidad de productos</h3>
             </div>
             <div class="modal-body" id="muestra_formSnack">
                 <div class="row">
@@ -103,15 +103,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-12">
                         <label>Cantidad*</label>
-                        <input type="text" class="form-control" id="txtNombreSnack" name="txtNombreSnack" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                        <input type="number" min="0" class="form-control" id="txtCantidadProductos" name="txtCantidadProductos" onkeyup='javascript:this.value=this.value.toUpperCase();'>
                     </div>
                 </div> 
             </div>
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary" id="btnGuardar">Aceptar</button>
-                <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" data-dismiss="modal" id="btnCancelarCantidad">Cancelar</button>
             </div>
         </div>
     </div>
@@ -257,14 +257,18 @@
 
     function AgregarProductoTabla(){
 
-        $('#modal_formSnack').modal({
+        $('#modal_formCantidadProductos').modal({
+            backdrop: 'static',
             keyboard: false
         });
+        $('#modal_formCantidadProductos').on('shown.bs.modal', function () {
+            $('#txtCantidadProductos').focus();
+        }) 
     }
 
     $('#btnGuardar').click(function (e) {
 
-        var val = $('#CMBCONTACTOS').val() ? $('#CMBCONTACTOS').val() : '';
+        var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';
         // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
         if(val.indexOf("\"") !== -1){
             var valueCombo = $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") ? $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") : "";
@@ -281,7 +285,7 @@
 
         var btn_eliminar = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
         var myNumeroAleatorio = Math.floor(Math.random()*10001);
-        cantidad_productos = $('#txtNombreSnack').val();;
+        cantidad_productos = $('#txtCantidadProductos').val();;
 
         if(valueCombo.cveproducto_producto == '1'){
             //pizza tradicional tiene ingredientes por elegir
@@ -320,12 +324,12 @@
                         cantidadingrediente_producto : valueCombo.cantidadingrediente_producto 
                     },
                 success: function(datos){
-                    $("#muestra_formInputs").html(datos);
+                    $("#muestra_formInputsPaquete").html(datos);
                 }
             });
 
         }else{
-            $('#CMBCONTACTOS').val('');
+            $('#cmbProductos').val('');
             tableTradicional.row.add([
                 valueCombo.nombrecompleto_producto ,
                 valueCombo.precio_producto ,
@@ -334,7 +338,7 @@
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+",0,"+myNumeroAleatorio;
             tableTradicional.draw( false );
 
-            $("#modal_formSnack").modal('hide');//ocultamos el modal
+            $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
             $('.modal-backdrop').remove();
 
@@ -370,6 +374,17 @@
             count = count + 1;        
         })
     }
+
+    $('#btnCancelarCantidad').click(function (e) {
+        $('#cmbProductos').val('');
+        $('#txtCantidadProductos').val('');
+        $('#modal_formCantidadProductos').modal('hide');
+        $('#modal_formIngredientes').modal('hide');
+        $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+        $('.modal-backdrop').remove();
+
+        return false;
+    });
 
 
 </script>

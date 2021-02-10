@@ -85,8 +85,9 @@ $(document).ready(function () {
     }
 
     $('#btnCancelar2').click(function (e) {
-    
-        $('#modal_formSnack').modal('hide');
+        $('#cmbProductos').val('');
+        $('#txtCantidadProductos').val('');
+        $('#modal_formCantidadProductos').modal('hide');
         $('#modal_formIngredientes').modal('hide');
         $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
         $('.modal-backdrop').remove();
@@ -97,7 +98,7 @@ $(document).ready(function () {
     $('#btnAgregarTabla').click(function (e) {
 
 
-        var val = $('#CMBCONTACTOS').val() ? $('#CMBCONTACTOS').val() : '';
+        var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';
         // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
         if(val.indexOf("\"") !== -1){
             var valueCombo = $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") ? $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") : "";
@@ -142,8 +143,9 @@ $(document).ready(function () {
                 btn_eliminar
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+","+Valores+","+myNumeroAleatorio;
             tableTradicional.draw( false );
-           $('#CMBCONTACTOS').val('');
-            $("#modal_formSnack").modal('hide');//ocultamos el modal
+            $('#cmbProductos').val('');
+            $('#txtCantidadProductos').val('');
+            $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
             $("#modal_formIngredientes").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
             $('.modal-backdrop').remove();
