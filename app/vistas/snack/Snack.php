@@ -171,6 +171,7 @@
             "paging"    : true,
             "ordering"  : false,
             "info"      : true,
+            "bLengthChange": false,
             "columnDefs": [
                 {"width": "10%","className": "text-center","targets": 3},
                 {"width": "10%","className": "text-center","targets": 4},

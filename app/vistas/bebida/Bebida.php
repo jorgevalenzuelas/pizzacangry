@@ -181,6 +181,7 @@
             "searching" : true,
             "paging"    : true,
             "ordering"  : false,
+            "bLengthChange": false,
             "info"      : true,
             "columnDefs": [
                 {"width": "10%","className": "text-center","targets": 4},

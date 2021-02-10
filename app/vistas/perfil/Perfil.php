@@ -148,6 +148,7 @@
             "paging"    : true,
             "ordering"  : false,
             "info"      : true,
+            "bLengthChange": false,
             "columnDefs": [
                 {"width": "10%","className": "text-center","targets": 2},
                 {"width": "10%","className": "text-center","targets": 3},

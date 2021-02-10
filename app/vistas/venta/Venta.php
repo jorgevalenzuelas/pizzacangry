@@ -185,6 +185,7 @@
             "paging"    : false,
             "ordering"  : false,
             "info"      : false,
+            "bLengthChange": false,
             "columnDefs": [
                 {"width": "10%","className": "text-center","targets": 3},
             ],
