@@ -159,6 +159,8 @@ function cargarIngrediente(){
                 btn_eliminar
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+","+Valores+","+myNumeroAleatorio;
             tableTradicional.draw( false );
+            $('#cmbProductos').val('');
+            $('#txtCantidadProductos').val('');
             $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
             $("#modal_formIngredientesPaquete").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
