@@ -78,6 +78,7 @@ else
 							     );
 
 				$datosPerfil[1] = array (
+									chk2_venta              => $_POST["chk2_venta"],
 									chk2_snack              => $_POST["chk2_snack"],
 									chk2_especialidad       => $_POST["chk2_especialidad"],
 									chk2_paquete            => $_POST["chk2_paquete"],
