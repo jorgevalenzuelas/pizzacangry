@@ -33,6 +33,11 @@ else
 			$this->vista('venta/formPizzaIngrediente');
 		}
 
+		public function formPizzaIngredientePaquete()
+		{
+			$this->vista('venta/formPizzaIngredientePaquete');
+		}
+
 		public function consultarProductos()
 		{
 			$data = $this->VentaModelo->consultarProductos($_POST);

@@ -65,9 +65,6 @@
                                     <th>precio</th>
                                     <th>cantidad</th>
                                     <th>Eliminar</th>
-                                    <th>cvema_producto</th>
-                                    <th>cveproducto_producto</th>
-                                    <th>cantidadingrediente_producto</th>
                                 </tr>
                             </thead>
                             
@@ -120,13 +117,26 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal_formIngredientes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_formIngredientesPaquete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" >
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="myModalLabel">Ingredientes</h2>
             </div>
             <div class="modal-body" id="muestra_formInputs"> 
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_formIngredientesPaquete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabel">Ingredientes</h2>
+            </div>
+            <div class="modal-body" id="muestra_formInputsPaquete"> 
 
             </div>
         </div>
@@ -177,9 +187,6 @@
             "info"      : false,
             "columnDefs": [
                 {"width": "10%","className": "text-center","targets": 3},
-                { "targets" : [4], "visible": false},
-                { "targets" : [5], "visible": false},
-                { "targets" : [6], "visible": false},
             ],
 
             "bJQueryUI":true,"oLanguage": {
@@ -233,8 +240,8 @@
                 {
                     $(myJson.arrayDatos).each( function(key, val)
                     {
-                        value = '{"cvema_producto":"'+val.cvema_producto+'","nombre_producto":"'+val.nombre_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","precio_producto":"'+val.precio_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","cveproducto_producto":"'+val.cveproducto_producto+'","cantidadingrediente_producto":"'+val.cantidadingrediente_producto+'"}';
-							select.append("<option data-value='"+value+"' value='"+val.nombre_producto.replace(/'/g, "&#x27;")+"'>");
+                        value = '{"cvema_producto":"'+val.cvema_producto+'","nombrecompleto_producto":"'+val.nombrecompleto_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","precio_producto":"'+val.precio_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","cveproducto_producto":"'+val.cveproducto_producto+'","cantidadingrediente_producto":"'+val.cantidadingrediente_producto+'"}';
+							select.append("<option data-value='"+value+"' value='"+val.nombrecompleto_producto.replace(/'/g, "&#x27;")+"'>");
                     })
 
                 }
@@ -265,42 +272,71 @@
         else{
         var valueCombo = $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") ? $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") : "";
         }
+
+        title = 'Eliminar productos de la comanda';
+        icon = 'fa fa-minus-circle';
+        color_icon = "color: #d12929;"
+        accion = "eliminarProductoTabla(this,'1')";
         
-        cantidad_productos = $('#txtNombreSnack').val();
-        //$("#modal_formSnack").modal('hide');//ocultamos el modal
-        //$('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
-        //$('.modal-backdrop').remove();
+
+        var btn_eliminar = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
+        var myNumeroAleatorio = Math.floor(Math.random()*10001);
+        cantidad_productos = $('#txtNombreSnack').val();;
+
         if(valueCombo.cveproducto_producto == '1'){
             //pizza tradicional tiene ingredientes por elegir
-
             $('#modal_formIngredientes').modal({
                 backdrop: 'static',
-                    keyboard: false
+                keyboard: false
             });
-
             $("#muestra_formInputs").html('Cargando...');
-
             $.ajax({
                 url: 'Venta/formPizzaIngrediente',
                 type     : "POST",
                     data     : { 
-
                         cantidad_productos: cantidad_productos ,
                         cantidadingrediente_producto : valueCombo.cantidadingrediente_producto 
-
                     },
                 success: function(datos){
-
                     $("#muestra_formInputs").html(datos);
-
                 }
             });
-
         }
         else if(valueCombo.cveproducto_producto == '5'){
             //el paquete piiede tener varias pizzas tradicionales con diferentes ingredientes
+            $('#modal_formIngredientesPaquete').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $("#muestra_formInputsPaquete").html('Cargando...');
+            var pizzas = valueCombo.cantidadingrediente_producto;
+            var arraypizzas = pizzas.split(",");
+            $.ajax({
+                url: 'Venta/formPizzaIngredientePaquete',
+                type     : "POST",
+                    data     : { 
+                        cantidad_productos : cantidad_productos ,
+                        cantidad_pizzas : arraypizzas.length,
+                        cantidadingrediente_producto : valueCombo.cantidadingrediente_producto 
+                    },
+                success: function(datos){
+                    $("#muestra_formInputs").html(datos);
+                }
+            });
 
         }else{
+            $('#CMBCONTACTOS').val('');
+            tableTradicional.row.add([
+                valueCombo.nombrecompleto_producto ,
+                valueCombo.precio_producto ,
+                cantidad_productos ,
+                btn_eliminar
+            ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+",0,"+myNumeroAleatorio;
+            tableTradicional.draw( false );
+
+            $("#modal_formSnack").modal('hide');//ocultamos el modal
+            $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+            $('.modal-backdrop').remove();
 
         }
         
@@ -327,7 +363,7 @@
             estrenos[count] = {
                 "cvema_producto": res[0],
                 "cveproducto_producto": res[1],
-                "cantidad_productos": $('#txtCantidadProductos').val(),
+                "cantidad_productos": cantidad_productos,
                 "cve_ingredientes": "1,2|3,3"
             };
             alert(JSON.stringify(estrenos[count]));

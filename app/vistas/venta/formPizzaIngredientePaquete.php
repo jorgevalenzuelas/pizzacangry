@@ -1,26 +1,39 @@
 <?php
-//print_r($_POST);
+print_r($_POST);
 ?>
 <div id="msgAlert2"></div>
-    <div class="box-body">
+<div class="box-body">
         <div class="row">
         <?php
         for($i = 1; $i <= $_POST["cantidad_productos"]; $i++){
         ?>
             <div class="row">
                 <div class="form-group col-md-12">
-                    <label>Pizza <?php echo $i;?>*</label>
+                    <label>Paquete <?php echo $i;?>*</label>
                 </div>
             </div>
             <?php
-            for($j = 1; $j <= $_POST["cantidadingrediente_producto"]; $j++){
             ?>
-                <div class="form-group col-md-4">
-                    <label>Ingrediente <?php echo $j;?>*</label>
-
-                    <select id="<?php echo $i;?>_<?php echo $j;?>" name="<?php echo $i;?>_<?php echo $j;?>" class="form-control ns_"></select>
+                
+                <?php
+                $porciones = explode(",", $_POST["cantidadingrediente_producto"]);
+                foreach ($porciones as $key=>$valor) {
+                ?>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>Pizza <?php echo $key+1;?>*</label>
+                    </div>
                 </div>
+                <?php
+                for($j = 1; $j <= $valor; $j++){
+                ?>
+                    <div class="form-group col-md-4">
+                        <label>Ingrediente <?php echo $j;?>*</label>
+
+                        <select id="<?php echo $i;?>_<?php echo $key+1;?>_<?php echo $j;?>" name="<?php echo $i;?>_<?php echo $key+1;?>_<?php echo $j;?>" class="form-control ns_"></select>
+                    </div>
         <?php 
+                }
             }
         }
         ?>
@@ -37,12 +50,14 @@
 
 
 <script type="text/javascript">
-var cantidad_productos = '<?php echo $_POST["cantidad_productos"];?>'
+var cantidad_productos = '<?php echo $_POST["cantidad_productos"];?>';
 var cantidadingrediente_producto = '<?php echo $_POST["cantidadingrediente_producto"]?>';
+var pizzas = cantidadingrediente_producto;
+var arraypizzas = pizzas.split(",");
 $(document).ready(function () {
     cargarIngrediente();
 });
-    function cargarIngrediente(){
+function cargarIngrediente(){
         $.ajax({
             url      : 'Ingrediente/consultar',
             type     : "POST",
@@ -57,24 +72,26 @@ $(document).ready(function () {
 
                 var myJson = JSON.parse(datos);
                 for(var k = 1; k <= cantidad_productos; k++){
-                    for(var l = 1; l <= cantidadingrediente_producto; l++){
-                        select = $("#"+k+"_"+l);
-                        select.attr('disabled',false);
-                        select.find('option').remove();
-                        select.append('<option value="-1">-- Selecciona --</option>');
+                    for (var index = 1; index <= arraypizzas.length; index++) {
+                        for(var l = 1; l <= arraypizzas[index-1]; l++){
+                            select = $("#"+k+"_"+index+"_"+l);
+                            select.attr('disabled',false);
+                            select.find('option').remove();
+                            select.append('<option value="-1">-- Selecciona --</option>');
 
-                        if(myJson.arrayDatos.length > 0)
-                        {
-                            $(myJson.arrayDatos).each( function(key, val)
+                            if(myJson.arrayDatos.length > 0)
                             {
-                                select.append('<option value="' + val.cve_ingrediente + '">' + val.nombre_ingrediente + '</option>');
-                            })
+                                $(myJson.arrayDatos).each( function(key, val)
+                                {
+                                    select.append('<option value="' + val.cve_ingrediente + '">' + val.nombre_ingrediente + '</option>');
+                                })
 
-                        }
-                        else
-                        {
-                            document.getElementById("#"+k+"_"+l).selectedIndex = "0";
-                            
+                            }
+                            else
+                            {
+                                document.getElementById("#"+k+"_"+index+"_"+l).selectedIndex = "0";
+                                
+                            }
                         }
                     }
                 }
@@ -87,7 +104,7 @@ $(document).ready(function () {
     $('#btnCancelar2').click(function (e) {
     
         $('#modal_formSnack').modal('hide');
-        $('#modal_formIngredientes').modal('hide');
+        $('#modal_formIngredientesPaquete').modal('hide');
         $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
         $('.modal-backdrop').remove();
 
@@ -136,13 +153,13 @@ $(document).ready(function () {
         var btn_eliminar = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
         var myNumeroAleatorio = Math.floor(Math.random()*10001);
         tableTradicional.row.add([
-                valueCombo.nombrecompleto_producto ,
+                valueCombo.nombre_producto ,
                 valueCombo.precio_producto ,
                 cantidad_productos ,
                 btn_eliminar
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+","+Valores+","+myNumeroAleatorio;
             tableTradicional.draw( false );
-           $('#CMBCONTACTOS').val('');
+            modal_formIngredientes
             $("#modal_formSnack").modal('hide');//ocultamos el modal
             $("#modal_formIngredientes").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
