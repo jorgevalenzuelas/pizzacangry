@@ -73,7 +73,7 @@ $(document).ready(function () {
                         }
                         else
                         {
-                            document.getElementById("#"+k+"_"+l).selectedIndex = "0";
+                            document.getElementById("cmbIngredienteTradicional_1_1").selectedIndex = "0";
                             
                         }
                     }
