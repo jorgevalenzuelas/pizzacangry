@@ -38,7 +38,7 @@ class PerfilModelo
         $datosFiltrados = $this->filtrarDatos($datosPerfil);
         $cvePerfil = $datosFiltrados['cvePerfil'];
 
-        $query = "CALL obten_opcionesperfil('3','','')";
+        $query = "CALL obten_opcionesperfil('3','0','0')";
 
         $c_opcionMenu = $this->conexion->query($query);
         $r_opcionMenu = $this->conexion->consulta_array($c_opcionMenu);
