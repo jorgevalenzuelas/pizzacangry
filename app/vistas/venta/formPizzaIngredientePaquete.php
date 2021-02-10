@@ -1,5 +1,5 @@
 <?php
-print_r($_POST);
+//print_r($_POST);
 ?>
 <div id="msgAlert2"></div>
 <div class="box-body">
