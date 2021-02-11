@@ -268,7 +268,7 @@ width: 150px;
                 }
                 else
                 {
-                    document.getElementById("cmbTamanoTradicional").selectedIndex = "0";
+                    document.getElementById("cmbContactosListMod").selectedIndex = "0";
                     
                 }
 
