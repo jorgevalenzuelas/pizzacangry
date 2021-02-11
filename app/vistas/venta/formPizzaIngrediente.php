@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     $('#btnCancelar2').click(function (e) {
         $('#cmbProductos').val('');
-        $('#txtCantidadProductos').val('');
+        $('#txtCantidadProductos').val('1');
         $('#cmbProductos').focus();
         $('#modal_formCantidadProductos').modal('hide');
         $('#modal_formIngredientes').modal('hide');
@@ -145,7 +145,7 @@ $(document).ready(function () {
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+","+Valores+","+myNumeroAleatorio;
             tableTradicional.draw( false );
             $('#cmbProductos').val('');
-            $('#txtCantidadProductos').val('');
+            $('#txtCantidadProductos').val('1');
             $('#cmbProductos').focus();
             $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
             $("#modal_formIngredientes").modal('hide');//ocultamos el modal

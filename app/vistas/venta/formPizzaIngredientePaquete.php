@@ -9,7 +9,7 @@
         ?>
             <div class="row">
                 <div class="form-group col-md-12">
-                    <label>Paquete <?php echo $i;?>*</label>
+                    <label>PAQUETE <?php echo $i;?>*</label>
                 </div>
             </div>
             <?php
@@ -18,14 +18,15 @@
                 <?php
                 $porciones = explode(",", $_POST["cantidadingrediente_producto"]);
                 foreach ($porciones as $key=>$valor) {
+                    $porciones2 = explode("|", $valor);
                 ?>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label>Pizza <?php echo $key+1;?>*</label>
+                        <label><?php echo $porciones2[1];?>*</label>
                     </div>
                 </div>
                 <?php
-                for($j = 1; $j <= $valor; $j++){
+                for($j = 1; $j <= $porciones2[0]; $j++){
                 ?>
                     <div class="form-group col-md-4">
                         <label>Ingrediente <?php echo $j;?>*</label>
@@ -73,7 +74,8 @@ function cargarIngrediente(){
                 var myJson = JSON.parse(datos);
                 for(var k = 1; k <= cantidad_productos; k++){
                     for (var index = 1; index <= arraypizzas.length; index++) {
-                        for(var l = 1; l <= arraypizzas[index-1]; l++){
+                        var arraypizzas2 = arraypizzas[index-1].split("|");
+                        for(var l = 1; l <= arraypizzas2[0]; l++){
                             select = $("#"+k+"_"+index+"_"+l);
                             select.attr('disabled',false);
                             select.find('option').remove();
@@ -103,7 +105,7 @@ function cargarIngrediente(){
 
     $('#btnCancelar2').click(function (e) {
         $('#cmbProductos').val('');
-        $('#txtCantidadProductos').val('');
+        $('#txtCantidadProductos').val('1');
         $('#cmbProductos').focus();
         $('#modal_formCantidadProductos').modal('hide');
         $('#modal_formIngredientesPaquete').modal('hide');
@@ -162,7 +164,7 @@ function cargarIngrediente(){
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+","+Valores+","+myNumeroAleatorio;
             tableTradicional.draw( false );
             $('#cmbProductos').val('');
-            $('#txtCantidadProductos').val('');
+            $('#txtCantidadProductos').val('1');
             $('#cmbProductos').focus();
             $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
             $("#modal_formIngredientesPaquete").modal('hide');//ocultamos el modal
