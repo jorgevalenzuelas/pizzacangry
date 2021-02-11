@@ -89,11 +89,6 @@ function cargarIngrediente(){
                                 })
 
                             }
-                            else
-                            {
-                                document.getElementById("#"+k+"_"+index+"_"+l).selectedIndex = "0";
-                                
-                            }
                         }
                     }
                 }

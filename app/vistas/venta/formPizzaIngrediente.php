@@ -71,11 +71,6 @@ $(document).ready(function () {
                             })
 
                         }
-                        else
-                        {
-                            document.getElementById("#"+k+"_"+l).selectedIndex = "0";
-                            
-                        }
                     }
                 }
                 

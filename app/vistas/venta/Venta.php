@@ -266,11 +266,6 @@ width: 150px;
                     })
 
                 }
-                else
-                {
-                    document.getElementById("cmbContactosListMod").selectedIndex = "0";
-                    
-                }
 
             }
         });
