@@ -1,4 +1,6 @@
 
 /app/core/ConexionBD.php
 app/core/ConexionBD.php
+/app/config/Configurar.php
+app/config/Configurar.php
 *.txt
