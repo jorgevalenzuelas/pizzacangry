@@ -1,7 +1,7 @@
 <header class="main-header">
     <!-- Logo -->
     
-    <a href="index2.html" class="logo">
+    <a href="home" class="logo">
         <span class="logo-mini">
             <img src="<?php echo RUTA_URL; ?>public/img/LogoCangry.png" class="brand-image img-circle elevation-3" width="50" height="50">
         </span>
