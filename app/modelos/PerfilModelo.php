@@ -89,9 +89,9 @@ class PerfilModelo
         $descipcionPerfil          = $datosFiltrados['descipcionPerfil'];
         //$cvePerfil                 = $datosFiltrados['cvePerfil'];
         $cvePerfil = (!empty($datosFiltrados['cvePerfil']) || $datosFiltrados['cvePerfil']!='') ? $datosFiltrados['cvePerfil'] : '0';
-        $cveusuario_accion         = $datosFiltrados['cveusuario_accion'];
+        $cveusuario_accion         = (!empty($datosFiltrados['cveusuario_accion']) || $datosFiltrados['cveusuario_accion']!='') ? $datosFiltrados['cvePerfil'] : '0';
 
-        $query = "CALL guardarPerfil('$ban','$cvePerfil','$nombrePerfil','$descipcionPerfil','0','$cveusuario_accion')";
+        $query = "CALL guardarPerfil('$ban','$cvePerfil','$nombrePerfil','$descipcionPerfil','','$cveusuario_accion')";
 
         $c_perfil = $this->conexion->query($query) or die ($this->conexion->error());
         $r_perfil = $this->conexion->consulta_assoc($c_perfil);
