@@ -4,26 +4,27 @@
 <div id="msgAlert3"></div>
     <div class="box-body">
         <div class="row">
-        <?php
-        for($i = 1; $i <= $_POST["cantidad_productos"]; $i++){
-        ?>
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label>Pizza <?php echo $i;?>*</label>
-                </div>
-            </div>
             <?php
-            for($j = 1; $j <= $_POST["cantidadingrediente_producto"]; $j++){
+            for($i = 1; $i <= $_POST["cantidad_productos"]; $i++){
             ?>
-                <div class="form-group col-md-4">
-                    <label>Ingrediente <?php echo $j;?>*</label>
-
-                    <select id="<?php echo $i;?>_<?php echo $j;?>" name="<?php echo $i;?>_<?php echo $j;?>" class="form-control ns_"></select>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>Pizza <?php echo $i;?>*</label>
+                    </div>
                 </div>
-        <?php 
+                <?php
+                for($j = 1; $j <= $_POST["cantidadingrediente_producto"]; $j++){
+                ?>
+                    <div class="form-group col-md-4">
+                        <label>Ingrediente <?php echo $j;?>*</label>
+
+                        <select id="<?php echo $i;?>_<?php echo $j;?>" name="<?php echo $i;?>_<?php echo $j;?>" class="form-control ns_"></select>
+                    </div>
+            <?php 
+                }
             }
-        }
-        ?>
+            ?>
+        </div>
     <div class="box-footer">
                 <button type="submit" class="btn btn-primary" id="btnAgregarTabla">Agregar</button>
                 <button class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" id="btnCancelar2">Cancelar</button>
