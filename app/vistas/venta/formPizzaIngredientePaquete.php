@@ -1,7 +1,7 @@
 <?php
 //print_r($_POST);
 ?>
-<div id="msgAlert2"></div>
+<div id="msgAlert4"></div>
 <div class="box-body">
         <div class="row">
         <?php
@@ -124,26 +124,37 @@ function cargarIngrediente(){
 
         var Pizza = '';
         var Valores = [];
-
-        if(valueCombo.cveproducto_producto == 1){
-            Pizza = ''
+        var entro = false;
+        if(valueCombo.cveproducto_producto == 5){
+            Pizza = '';
             Valores = [];
-            for(var k = cantidad_productos; k >= 1; k--){
+            for(var k = 1; k <= cantidad_productos; k++){
                 Pizza = '';
-                for(var l = 1; l <= cantidadingrediente_producto; l++){ 
-                    Pizza += $("#"+k+"_"+l).val() + "|";
+                for (var index = 1; index <= arraypizzas.length; index++) {
+                        var arraypizzas2 = arraypizzas[index-1].split("|");
+                        for(var l = 1; l <= arraypizzas2[0]; l++){ 
+                        Pizza += $("#"+k+"_"+index+"_"+l).val() + "|";
+                        if($("#"+k+"_"+index+"_"+l).val() == '-1'){
+                            entro = true;
+                        }
+                    }
+                    Pizza = Pizza.substring(0, Pizza.length - 1)+"+";
+                   
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
-                Valores[k-1] = Pizza;
+                Valores[k-1] = k+"["+Pizza+"]";
             }
             Valores = Valores.join('-');
         }
-        else if(valueCombo.cveproducto_producto == '5'){
+
+        //tradicional es : 1|3-1|2
+            //paquete es : 1[1|2-2|3]
+        else {
             //el paquete piiede tener varias pizzas tradicionales con diferentes ingredientes
             Valores = 0;
         }
-        
-        var title = 'Tradicional bloqueado';
+        if(entro != true){
+            var title = 'Tradicional bloqueado';
         var icon = 'fa fa-minus-circle';
         var color_icon = "color: #d12929;"
         var accion = "eliminarProductoTabla(this,'1')";
@@ -151,13 +162,13 @@ function cargarIngrediente(){
 
         var btn_eliminar = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
         var myNumeroAleatorio = Math.floor(Math.random()*10001);
-        tableTradicional.row.add([
+        tableProductos.row.add([
                 valueCombo.nombrecompleto_producto ,
                 valueCombo.precio_producto ,
                 cantidad_productos ,
                 btn_eliminar
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+","+Valores+","+myNumeroAleatorio;
-            tableTradicional.draw( false );
+            tableProductos.draw( false );
             $('#cmbProductos').val('');
             $('#txtCantidadProductos').val('1');
             $('#cmbProductos').focus();
@@ -165,14 +176,21 @@ function cargarIngrediente(){
             $("#modal_formIngredientesPaquete").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
             $('.modal-backdrop').remove();
+        }
+        else{
+            msgAlert4("Favor de ingresar todos los ingredientes","warning");
+        }
+        
+        
     });
     
 
 
-    function msgAlert2(msg,tipo)
+    function msgAlert4(msg,tipo)
     {
-        $('#msgAlert2').css("display", "block");
-        $("#msgAlert2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        $('#msgAlert4').css("display", "block");
+        $("#msgAlert4").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlert4").fadeOut(1500); },1500);
     }
 
 </script>

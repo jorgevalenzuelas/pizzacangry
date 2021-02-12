@@ -1,7 +1,7 @@
 <?php
 //print_r($_POST);
 ?>
-<div id="msgAlert2"></div>
+<div id="msgAlert3"></div>
     <div class="box-body">
         <div class="row">
         <?php
@@ -25,7 +25,7 @@
         }
         ?>
     <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="btnAgregarTabla">Aceptar</button>
+                <button type="submit" class="btn btn-primary" id="btnAgregarTabla">Agregar</button>
                 <button class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" id="btnCancelar2">Cancelar</button>
             </div>
         </div>
@@ -105,26 +105,31 @@ $(document).ready(function () {
 
         var Pizza = '';
         var Valores = [];
+        var entro = false;
 
         if(valueCombo.cveproducto_producto == 1){
-            Pizza = ''
+            Pizza = '';
             Valores = [];
             for(var k = cantidad_productos; k >= 1; k--){
                 Pizza = '';
                 for(var l = 1; l <= cantidadingrediente_producto; l++){ 
                     Pizza += $("#"+k+"_"+l).val() + "|";
+                    if ($("#"+k+"_"+l).val() == '-1'){
+                        entro = true;
+                    }
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
-                Valores[k-1] = Pizza;
+                Valores[k-1] = k+"["+Pizza+"]";
             }
             Valores = Valores.join('-');
         }
-        else if(valueCombo.cveproducto_producto == '5'){
+        else {
             //el paquete piiede tener varias pizzas tradicionales con diferentes ingredientes
             Valores = 0;
         }
-        
-        var title = 'Tradicional bloqueado';
+
+        if(entro != true){
+            var title = 'Elimnar producto';
         var icon = 'fa fa-minus-circle';
         var color_icon = "color: #d12929;"
         var accion = "eliminarProductoTabla(this,'1')";
@@ -132,13 +137,13 @@ $(document).ready(function () {
 
         var btn_eliminar = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
         var myNumeroAleatorio = Math.floor(Math.random()*10001);
-        tableTradicional.row.add([
+        tableProductos.row.add([
                 valueCombo.nombrecompleto_producto ,
                 valueCombo.precio_producto ,
                 cantidad_productos ,
                 btn_eliminar
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+","+Valores+","+myNumeroAleatorio;
-            tableTradicional.draw( false );
+            tableProductos.draw( false );
             $('#cmbProductos').val('');
             $('#txtCantidadProductos').val('1');
             $('#cmbProductos').focus();
@@ -146,14 +151,21 @@ $(document).ready(function () {
             $("#modal_formIngredientes").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
             $('.modal-backdrop').remove();
+        }
+        else{
+            msgAlert3("Favor de ingresar todos los ingredientes","warning");
+        }
+        
+        
     });
     
 
 
-    function msgAlert2(msg,tipo)
+    function msgAlert3(msg,tipo)
     {
-        $('#msgAlert2').css("display", "block");
-        $("#msgAlert2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        $('#msgAlert3').css("display", "block");
+        $("#msgAlert3").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlert3").fadeOut(1500); },1500);
     }
 
 </script>

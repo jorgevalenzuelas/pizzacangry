@@ -29,33 +29,25 @@ class VentaModelo
 
 
 
-    public function guardarSnack($datosSnack)
+    public function generarFolio($datosFolio)
     {
 
-        $datosFiltrados = $this->filtrarDatos($datosSnack);
+        $datosFiltrados = $this->filtrarDatos($datosFolio);
 
         $ban                = $datosFiltrados['ban'];
-        $cve_snack    = $datosFiltrados['cve_snack'];
-        $nombre_snack = $datosFiltrados['nombre_snack'];
-        $costo_snack = $datosFiltrados['costo_snack'];
-        $precio_snack = $datosFiltrados['precio_snack'];
+        $folo_venta    = $datosFiltrados['folo_venta'];
         $cveusuario_accion  = $datosFiltrados['cveusuario_accion'];
 
-        $query = "CALL guardarSnack(
+        $query = "CALL generarFolio(
                                             '$ban',
-                                            '$cve_snack',
-                                            '$nombre_snack',
-                                            '$costo_snack',
-                                            '$precio_snack',
+                                            '$folo_venta',
                                             '$cveusuario_accion'
                                         )";
 
-        $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
-        
-        $this->conexion->close_conexion();
-        
-        return $respuesta;
+        $c_folio = $this->conexion->query($query);
+        $r_folio = $this->conexion->consulta_array($c_folio);
 
+        return $r_folio;
     }
 
 

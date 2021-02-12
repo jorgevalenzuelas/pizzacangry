@@ -47,49 +47,20 @@ else
 			echo json_encode($envioDatos);
 		}
 
-		public function guardarBebida()
+		public function generarFolio()
 		{
-			$datosCompletos = $this->validarDatosVaciosBebidaGuardar($_POST);
-			if ($datosCompletos == "vacio")
-			{
-				$status = "error";
-				$msg = "Favor de revisar el formulario, hay campos requeridos vacios.";
-			}
-			else
-			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$datosBebida =  array (
-									ban                => 1,
-									cve_bebida   => $_POST["cve_bebida"],
-									nombre_bebida => $_POST["nombre_bebida"],
-									costo_bebida => $_POST["costo_bebida"],
-									precio_bebida => $_POST["precio_bebida"],
-									stock_bebida => $_POST["stock_bebida"],
-									cveunidadmedia_bebida => $_POST["cveunidadmedia_bebida"],
+				$datosFolio =  array (
+									ban                => $_POST["ban"],
+									folo_venta                => $_POST["folo_venta"],
 							     	cveusuario_accion  => $_SESSION["cve_usuario"]
 							     );
 				
-				$respuesta = $this->BebidaModelo->guardarBebida($datosBebida);
+				$respuesta = $this->VentaModelo->generarFolio($datosFolio);
 
-				
-				if ($respuesta == true)
-				{
-					$msg = "Bebida guardado con Éxito.";
-					$status = "success";
-				}
-				else
-				{
-					$msg = "Hubo un error al guardar el registro.";
-					$status = "error";
-				}
-				
-			}
+				$envioDatos["arrayDatos"] = $respuesta;
 
-			
-			$envioDatos["status"] = $status;
-			$envioDatos["msg"] = $msg;
-			echo json_encode($envioDatos);
-			
+				echo json_encode($envioDatos);
 		}
 
 

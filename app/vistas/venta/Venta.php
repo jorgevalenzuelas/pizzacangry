@@ -45,20 +45,22 @@
         <!-- Main content -->
         <section class="content">
         <div class="row">
+        <div id="msgAlert1"></div>
             <div class="col-md-4">
+                <button type="button" class="btn btn-primary" onclick="GenerarFolio()" id="txtbtnNuevaVenta">Nueva venta</button>
                 <div class="form-group">
-                    <div id="msgAlert2"></div>
                     <label for="cmbProductos">Buscar productos</label>
                     <datalist id="cmbContactosListMod">
                         <!--option value="0" selected="selected"> -- Seleccione -- </option-->
                     </datalist>
                     <input list="cmbContactosListMod" id="cmbProductos" name="cmbProductos" type="text" class="form-control" placeholder=" -- Escriba -- " onkeyup="javascript:this.value=this.value.toUpperCase();" onchange="AgregarProductoTabla();">
                 </div>
-                <div id="msgAlert"></div>
+                
                 <div class="box" style="margin-top: 20px;">
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table id="gridTradicional" class="table table-bordered table-striped" style="font-size: 12px;">
+                    <label>Folo:&nbsp;&nbsp;</label><label id="txtFolioVenta"></label>
+                        <table id="gridProductos" class="table table-bordered table-striped" style="font-size: 12px;">
                             <thead>
                                 <tr>
                                     <th>Nombre produco</th>
@@ -70,6 +72,7 @@
                             
                         </table>
                         <button type="button" class="btn btn-primary" onclick="guardarProductos()">Guardar</button>
+                        <button type="button" class="btn btn-primary" onclick="cancelarVenta()" id="btncancelarFolioVenta">Cancelar</button>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -194,11 +197,14 @@ width: 150px;
 <script src="<?php echo RUTA_URL; ?>public/js/main.js"></script>
 
 <script type="text/javascript">
+
     var cantidad_ingredientes = 0;
     var cantidad_productos = 0;
     $(document).ready(function () {
-
-        tableTradicional = $('#gridTradicional').DataTable( {    
+        $("#cmbProductos").prop( "disabled", true );
+        $("#btncancelarFolioVenta").prop( "disabled", true );
+        
+        tableProductos = $('#gridProductos').DataTable( {    
             "responsive": true,
             "searching" : false,
             "paging"    : false,
@@ -238,6 +244,32 @@ width: 150px;
         $('#cmbProductos').focus();
     });
 
+    function GenerarFolio(){
+
+        $.ajax({
+            url      : 'Venta/generarFolio',
+            type     : "POST",
+            data    : { 
+                ban: 1,
+                folo_venta: ''
+            },
+            success  : function(datos) {
+
+                var myJson = JSON.parse(datos);
+
+                if(myJson.arrayDatos.length > 0)
+                {
+                    $("#cmbProductos").prop( "disabled", false );
+                    $("#txtbtnNuevaVenta").prop( "disabled", true );
+                    $("#txtFolioVenta").text(myJson.arrayDatos[0].folio_venta);
+                    $("#btncancelarFolioVenta").prop( "disabled", false );
+                    
+                }
+
+            }
+        });
+    }
+
     function cargarProductos(){
         $.ajax({
             url      : 'Venta/consultarProductos',
@@ -273,13 +305,27 @@ width: 150px;
 
     function AgregarProductoTabla(){
 
-        $('#modal_formCantidadProductos').modal({
+        var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';
+        // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
+        if(val.indexOf("\"") !== -1){
+            var valueCombo = $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") ? $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") : "";
+        }
+        else{
+        var valueCombo = $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") ? $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") : "";
+        }
+        if(valueCombo.cvema_producto != null){
+            $('#modal_formCantidadProductos').modal({
             backdrop: 'static',
             keyboard: false
         });
         $('#modal_formCantidadProductos').on('shown.bs.modal', function () {
             $('#txtCantidadProductos').focus();
-        }) 
+        });
+        }
+        else{
+            msgAlert1("El producto no existe.","warning");
+        }
+        
     }
 
     $('#btnGuardar').click(function (e) {
@@ -348,14 +394,15 @@ width: 150px;
             });
 
         }else{
+            $('#txtCantidadProductos').val('1');
             $('#cmbProductos').val('');
-            tableTradicional.row.add([
+            tableProductos.row.add([
                 valueCombo.nombrecompleto_producto ,
                 valueCombo.precio_producto ,
                 cantidad_productos ,
                 btn_eliminar
             ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+",0,"+myNumeroAleatorio;
-            tableTradicional.draw( false );
+            tableProductos.draw( false );
 
             $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
@@ -368,14 +415,14 @@ width: 150px;
     });
 
     function eliminarProductoTabla(thiss, valor){
-        tableTradicional.row( $(thiss).parents('tr') ).remove().draw();
+        tableProductos.row( $(thiss).parents('tr') ).remove().draw();
     }
 
     function guardarProductos(){
-        table = $('#gridTradicional').DataTable();
+        table = $('#gridProductos').DataTable();
         var estrenos = [];
         var count = 0;
-        $('#gridTradicional tbody tr').each(function() {
+        $('#gridProductos tbody tr').each(function() {
 
             ids = this.id;
             res = ids.split(",");
@@ -387,11 +434,57 @@ width: 150px;
                 "cvema_producto": res[0],
                 "cveproducto_producto": res[1],
                 "cantidad_productos": cantidad_productos,
-                "cve_ingredientes": "1,2|3,3"
+                "cve_ingredientes": res[2]
             };
-            alert(JSON.stringify(estrenos[count]));
             count = count + 1;        
-        })
+        });
+
+        $.ajax({
+            url      : 'Venta/GuardarProductos',
+            type     : "POST",
+            data     : { 
+                    ban: 1, 
+                    folio_venta : folio_venta  
+            },
+            success  : function(datos) {
+            }
+        });
+    }
+
+    function cancelarVenta(){
+
+        $.ajax({
+            url      : 'Venta/generarFolio',
+            type     : "POST",
+            data    : { 
+                ban: 1,
+                folo_venta: $("#txtFolioVenta").text()
+            },
+            success  : function(datos) {
+
+                $("#cmbProductos").prop( "disabled", true );
+                $("#txtbtnNuevaVenta").prop( "disabled", false );
+                $("#txtFolioVenta").text('');
+                $("#btncancelarFolioVenta").prop( "disabled", true );
+                tableProductos.clear().draw();
+
+            }
+        });
+
+    }
+
+    function msgAlert1(msg,tipo)
+    {
+        $('#msgAlert1').css("display", "block");
+        $("#msgAlert1").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlert1").fadeOut(1500); },1500);
+    }
+
+    function msgAlert2(msg,tipo)
+    {
+        $('#msgAlert2').css("display", "block");
+        $("#msgAlert2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlert2").fadeOut(1500); },1500);
     }
 
     $('#btnCancelarCantidad').click(function (e) {
@@ -450,13 +543,13 @@ $('.input-number').change(function() {
     if(valueCurrent >= minValue) {
         $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
     } else {
-        alert('Sorry, the minimum value was reached');
+        msgAlert2("Favor de ingresar un numero mayor a 0","warning");
         $(this).val($(this).data('oldValue'));
     }
     if(valueCurrent <= maxValue) {
         $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
     } else {
-        alert('Sorry, the maximum value was reached');
+        //alert('Sorry, the maximum value was reached');
         $(this).val($(this).data('oldValue'));
     }
     
