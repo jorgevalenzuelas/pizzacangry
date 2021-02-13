@@ -109,7 +109,8 @@ class VentaModelo
             }
 
             $this->conexion->close_conexion();
-            $this->conexion->next_result();
+
+            return $respuesta;
             
          
         }
@@ -143,12 +144,16 @@ class VentaModelo
             }
 
             $this->conexion->close_conexion();
-            $this->conexion->next_result();
+
+            return $respuesta;
             
             
         }
+        else{
+            return $c_perfil;
+        }
 
-        return $respuesta;
+        
         
     }
 

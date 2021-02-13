@@ -81,7 +81,7 @@ else
 
 				if ($respuesta == true)
 				{
-					$msg = "Snack guardado con Éxito.";
+					$msg = "Registro de venta con exito.";
 					$status = "success";
 				}
 				else
