@@ -151,28 +151,33 @@ function cargarIngrediente(){
             Valores = 0;
         }
         if(entro != true){
-            var title = 'Tradicional bloqueado';
-        var icon = 'fa fa-minus-circle';
-        var color_icon = "color: #d12929;"
-        var accion = "eliminarProductoTabla(this,'1')";
-        
 
-        var btn_eliminar = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
-        var myNumeroAleatorio = Math.floor(Math.random()*10001);
-        tableProductos.row.add([
-                valueCombo.nombrecompleto_producto ,
-                valueCombo.precio_producto ,
-                cantidad_productos ,
-                btn_eliminar
-            ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+","+Valores+","+myNumeroAleatorio;
-            tableProductos.draw( false );
-            $('#cmbProductos').val('');
-            $('#txtCantidadProductos').val('1');
-            $('#cmbProductos').focus();
-            $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
-            $("#modal_formIngredientesPaquete").modal('hide');//ocultamos el modal
-            $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
-            $('.modal-backdrop').remove();
+
+            $.ajax({
+                url      : 'Venta/GuardarVenta',
+                type     : "POST",
+                data     : { 
+                        ban: 1,
+                        cve_deventa: 0,
+                        folioventa_deventa : $("#txtFolioVenta").text(),
+                        cvema_deventa : valueCombo.cvema_producto,
+                        cantidad_deventa : cantidad_productos,
+                        preciounitario_deventa : valueCombo.precio_producto,
+                        cveproducto_deventa :   5,
+                        deingredientes : Valores
+                },
+                success  : function(datos) {
+                    $('#cmbProductos').val('');
+                    $('#txtCantidadProductos').val('1');
+                    $('#cmbProductos').focus();
+                    $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
+                    $("#modal_formIngredientesPaquete").modal('hide');//ocultamos el modal
+                    $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+                    $('.modal-backdrop').remove();
+                    consultarComanda($("#txtFolioVenta").text());
+                }
+            });
+            
         }
         else{
             msgAlert4("Favor de ingresar todos los ingredientes","warning");

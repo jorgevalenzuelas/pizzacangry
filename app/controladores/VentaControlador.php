@@ -30,6 +30,11 @@ else
 			$this->vista('venta/formPizzaIngrediente');
 		}
 
+		public function formPizzaIngredienteMod()
+		{
+			$this->vista('venta/formPizzaIngredienteMod');
+		}
+
 		public function formPizzaIngredientePaquete()
 		{
 			$this->vista('venta/formPizzaIngredientePaquete');
@@ -38,6 +43,15 @@ else
 		public function consultarProductos()
 		{
 			$data = $this->VentaModelo->consultarProductos($_POST);
+
+			$envioDatos["arrayDatos"] = $data;
+
+			echo json_encode($envioDatos);
+		}
+
+		public function consultarComanda()
+		{
+			$data = $this->VentaModelo->consultarComanda($_POST);
 
 			$envioDatos["arrayDatos"] = $data;
 
@@ -76,6 +90,41 @@ else
 							     );
 				
 				$respuesta = $this->VentaModelo->guardarVenta($datosVenta);
+				
+				
+
+				if ($respuesta == true)
+				{
+					$msg = "Registro de venta con exito.";
+					$status = "success";
+				}
+				else
+				{
+					$msg = "Hubo un error al guardar el registro.";
+					$status = "error";
+				}
+				
+			
+
+			
+			$envioDatos["status"] = $status;
+			$envioDatos["msg"] = $msg;
+			echo json_encode($envioDatos);
+			
+		}
+
+		public function modificarDetadicionalVenta()
+		{
+				//Preparamos en un array los datos que enviaremos a la BD
+				$datosVenta =  array (
+									ban                => 1,
+									cve_deventa   => $_POST["cve_deventa"],
+									deingredientes => $_POST["deingredientes"],
+									cantidad_deventa => $_POST["cantidad_deventa"],
+									cveproducto_deventa => $_POST["cveproducto_deventa"]
+							     );
+				
+				$respuesta = $this->VentaModelo->modificarDetadicionalVenta($datosVenta);
 				
 				
 

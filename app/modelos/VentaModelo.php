@@ -26,7 +26,19 @@ class VentaModelo
 
         return $r_productos;
     }
+    
+    public function consultarComanda($datos)
+    {
+        $datosFiltrados = $this->filtrarDatos($datos);
 
+        $ban  = $datosFiltrados['ban'];
+        $folio  = $datosFiltrados['folio'];
+        $query = "CALL obtenComanda('$ban','$folio')";
+        $c_productos = $this->conexion->query($query);
+        $r_productos = $this->conexion->consulta_array($c_productos);
+
+        return $r_productos;
+    }
 
 
     public function generarFolio($datosFolio)
@@ -83,6 +95,99 @@ class VentaModelo
 
         //cortamos conexion de procedimientos
         
+
+                                        
+        if($cveproducto_deventa == '1'){
+            $this->conexion->next_result();
+            $ingredentes  = $deingredientes;
+            $pizzas = explode("-", $ingredentes);
+
+            for($i = 0; $i < $cantidad_deventa; $i++){
+                file_put_contents('cantidad_deventa.txt',print_r( array($i),true)."\r\n", FILE_APPEND | LOCK_EX);
+                        
+                $ingredentes2  = $pizzas[$i];
+                $pizzas2 = explode("|", $ingredentes2);
+                for($j = 1; $j < count($pizzas2); $j++){
+                    $numeroPizza = $pizzas2[0];
+                    $cveIngredente = $pizzas2[$j];
+                    if (!empty($ultima_cve)){
+                        $query = "CALL guardarDeTradicionalIngrediente('1','0','$ultima_cve','$numeroPizza','$cveIngredente')";
+                        file_put_contents('guardarDeTradicionalIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
+                        $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+                    }
+        
+                    $this->conexion->next_result();
+                }
+            }
+
+            $this->conexion->close_conexion();
+
+            return $respuesta;
+            
+         
+        }
+        else if($cveproducto_deventa == '5'){
+            $this->conexion->next_result();
+            $ingredentes  = $deingredientes;
+            $paquetes = explode("-", $ingredentes);
+            
+            for($i = 0; $i < $cantidad_deventa; $i++){
+                $numPizza = 1;
+                $pizzas = explode("+", $paquetes[$i]);
+                for($j = 0; $j < count($pizzas); $j++){
+                    $desglose = explode("|", $pizzas[$j]);
+                    for($k = 1; $k < count($desglose); $k++){
+
+                    $numeroPaquete = $i + 1;
+                    $cvePizza = $desglose[0];
+                 
+                    $cveIngredente = $desglose[$k];
+
+                    if (!empty($ultima_cve)){
+                        $query = "CALL guardarDePaqueteIngrediente('1','0','$ultima_cve','$numeroPaquete','$numPizza','$cvePizza','$cveIngredente')";
+                        file_put_contents('guardarDePaqueteIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
+                        $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+                    }
+        
+                    $this->conexion->next_result();
+                }
+                $numPizza++;
+            }
+            }
+
+            $this->conexion->close_conexion();
+
+            return $respuesta;
+            
+            
+        }
+        else{
+            return $c_perfil;
+        }
+
+        
+        
+    }
+
+    public function modificarDetadicionalVenta($datosVenta)
+    {
+
+        $datosFiltrados = $this->filtrarDatos($datosVenta);
+
+        $ban = $datosFiltrados['ban'];
+        $cve_deventa = $datosFiltrados['cve_deventa'];
+        $deingredientes = $datosFiltrados['deingredientes'];
+        $cveproducto_deventa = $datosFiltrados['cveproducto_deventa'];
+        $cantidad_deventa = $datosFiltrados['cantidad_deventa'];
+
+      
+
+        $ultima_cve = $cve_deventa;
+        $query = "CALL eliminardeTradicionalIngrediente('$ban','$ultima_cve')";
+
+        $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+        //cortamos conexion de procedimientos
+        file_put_contents('eliminardeTradicionalIngrediente.txt',print_r( array($respuesta),true)."\r\n", FILE_APPEND | LOCK_EX);
 
                                         
         if($cveproducto_deventa == '1'){

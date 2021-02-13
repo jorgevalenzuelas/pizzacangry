@@ -18,7 +18,7 @@
                     <div class="form-group col-md-4">
                         <label>Ingrediente <?php echo $j;?>*</label>
 
-                        <select id="<?php echo $i;?>_<?php echo $j;?>" name="<?php echo $i;?>_<?php echo $j;?>" class="form-control ns_"></select>
+                        <select id="_<?php echo $i;?>_<?php echo $j;?>" name="_<?php echo $i;?>_<?php echo $j;?>" class="form-control ns_"></select>
                     </div>
             <?php 
                 }
@@ -26,8 +26,8 @@
             ?>
         </div>
     <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="btnAgregarTablaPizza">Agregar</button>
-                <button class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" id="btnCancelarPizza">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="btnAgregarTablaPizzaMod">Modificar</button>
+                <button class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" id="btnCancelarPizzaMod">Cancelar</button>
             </div>
         </div>
 
@@ -55,7 +55,7 @@ $(document).ready(function () {
                 var myJson = JSON.parse(datos);
                 for(var k = 1; k <= cantidad_productos; k++){
                     for(var l = 1; l <= cantidadingrediente_producto; l++){
-                        select = $("#"+k+"_"+l);
+                        select = $("#_"+k+"_"+l);
                         select.attr('disabled',false);
                         select.find('option').remove();
                         select.append('<option value="-1">-- Selecciona --</option>');
@@ -70,48 +70,67 @@ $(document).ready(function () {
                         }
                     }
                 }
+
+                <?php if($_POST["cve_deventa"] != ''){?>
+                consultarIngredientesComandaTradicional(<?php echo $_POST["cve_deventa"];?>, <?php echo $_POST["cantidad_productos"];?>, <?php echo $_POST["cantidadingrediente_producto"];?>);
                 
+                <?php }?>
+            }
+        });
+    }
+
+    function consultarIngredientesComandaTradicional(cve_deventa, cantidad_deventa, cantidadingrediente_producto){
+        $.ajax({
+            url      : 'Venta/consultarComanda',
+            type     : "POST",
+            data    : { 
+                ban: 2 ,
+                folio: cve_deventa
+            },
+            success  : function(datos) {
+
+                var myJson = JSON.parse(datos);
+
+
+                if(myJson.arrayDatos.length > 0)
+                {
+
+                    var aux = 1;
+                    $(myJson.arrayDatos).each( function(key, val)
+                    {
+                        if(aux > cantidadingrediente_producto){
+                            aux = 1;
+                        }
+                        
+                        $("#_"+val.numpizza_detradicionalingrediente+"_"+aux).val(val.cveingrediente_detradicionalingrediente);
+                        
+                        aux++;
+                    })
+
+                }
+                else
+                {
+                   
+                    
+                }
 
             }
         });
     }
 
-    $('#btnCancelarPizza').click(function (e) {
-        $('#cmbProductos').val('');
-        $('#txtCantidadProductos').val('1');
-        $('#cmbProductos').focus();
-        $('#modal_formCantidadProductos').modal('hide');
-        $('#modal_formIngredientes').modal('hide');
-        $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
-        $('.modal-backdrop').remove();
-
-        return false;
-    });
-
-    $('#btnAgregarTablaPizza').click(function (e) {
-
-
-        var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';
-        // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
-        if(val.indexOf("\"") !== -1){
-            var valueCombo = $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") ? $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") : "";
-        }
-        else{
-        var valueCombo = $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") ? $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") : "";
-        }
+    $('#btnAgregarTablaPizzaMod').click(function (e) {
 
         var Pizza = '';
         var Valores = [];
         var entro = false;
 
-        if(valueCombo.cveproducto_producto == 1){
             Pizza = '';
             Valores = [];
             for(var k = cantidad_productos; k >= 1; k--){
                 Pizza = '';
                 for(var l = 1; l <= cantidadingrediente_producto; l++){ 
-                    Pizza += $("#"+k+"_"+l).val() + "|";
-                    if ($("#"+k+"_"+l).val() == '-1'){
+                    Pizza += $("#_"+k+"_"+l).val() + "|";
+                    if ($("#_"+k+"_"+l).val() == '-1'){
                         entro = true;
                     }
                 }
@@ -119,27 +138,20 @@ $(document).ready(function () {
                 Valores[k-1] = k+"|"+Pizza;
             }
             Valores = Valores.join('-');
-        }
-        else {
-            //el paquete piiede tener varias pizzas tradicionales con diferentes ingredientes
-            Valores = 0;
-        }
+      
 
         if(entro != true){
 
 
 
             $.ajax({
-                url      : 'Venta/GuardarVenta',
+                url      : 'Venta/modificarDetadicionalVenta',
                 type     : "POST",
                 data     : { 
                         ban: 1,
-                        cve_deventa: 0,
-                        folioventa_deventa : $("#txtFolioVenta").text(),
-                        cvema_deventa : valueCombo.cvema_producto,
+                        cve_deventa: <?php echo $_POST["cve_deventa"];?>,
+                        cveproducto_deventa : 1,
                         cantidad_deventa : cantidad_productos,
-                        preciounitario_deventa : valueCombo.precio_producto,
-                        cveproducto_deventa :   '1',
                         deingredientes : Valores
                 },
                 success  : function(datos) {
@@ -151,24 +163,15 @@ $(document).ready(function () {
             $('#txtCantidadProductos').val('1');
             $('#cmbProductos').focus();
             $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
-            $("#modal_formIngredientes").modal('hide');//ocultamos el modal
+            $("#modal_formIngredientesMod").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
             $('.modal-backdrop').remove();
         }
         else{
             msgAlert3("Favor de ingresar todos los ingredientes","warning");
         }
-        
-        
-    });
-    
 
 
-    function msgAlert3(msg,tipo)
-    {
-        $('#msgAlert3').css("display", "block");
-        $("#msgAlert3").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
-        setTimeout(function() { $("#msgAlert3").fadeOut(1500); },1500);
-    }
+        });
 
 </script>

@@ -47,7 +47,7 @@
         <div class="row">
         <div id="msgAlert1"></div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-primary" onclick="GenerarFolio()" id="txtbtnNuevaVenta">Nueva venta</button>
+                <button type="button" class="btn btn-primary" onclick="GenerarFolio()" id="txtbtnNuevaVenta">Nueva orden</button>
                 <div class="form-group">
                     <label for="cmbProductos">Buscar productos</label>
                     <datalist id="cmbContactosListMod">
@@ -57,25 +57,24 @@
                 </div>
                 
                 <div class="box" style="margin-top: 20px;">
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                    <label>Folo:&nbsp;&nbsp;</label><label id="txtFolioVenta"></label>
-                        <table id="gridProductos" class="table table-bordered table-striped" style="font-size: 12px;">
-                            <thead>
-                                <tr>
-                                    <th>Nombre produco</th>
-                                    <th>precio</th>
-                                    <th>cantidad</th>
-                                    <th>Eliminar</th>
-                                </tr>
-                            </thead>
-                            
-                        </table>
-                        <button type="button" class="btn btn-primary" onclick="guardarProductos()">Guardar</button>
-                        <button type="button" class="btn btn-primary" onclick="cancelarVenta()" id="btncancelarFolioVenta">Cancelar</button>
-                    </div>
-                    <!-- /.box-body -->
+                <!-- /.box-header -->
+                <div class="box-body">
+                <label>Folio: &nbsp;</label><label id="txtFolioVenta"></label>
+                    <table id="gridComanda" class="table table-bordered table-striped" style="font-size: 12px;">
+                        <thead>
+                            <tr>
+                                <th>Nombre producto</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Detalle</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        
+                    </table>
                 </div>
+                <!-- /.box-body -->
+            </div>
             </div>
             
         </div>
@@ -152,6 +151,19 @@ width: 150px;
     </div>
 </div>
 
+<div class="modal fade" id="modal_formIngredientesMod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabelIngredientesMod">Ingredientes</h2>
+            </div>
+            <div class="modal-body" id="muestra_formInputsMod"> 
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modal_formIngredientesPaquete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" >
         <div class="modal-content">
@@ -201,10 +213,8 @@ width: 150px;
     var cantidad_ingredientes = 0;
     var cantidad_productos = 0;
     $(document).ready(function () {
-        $("#cmbProductos").prop( "disabled", true );
-        $("#btncancelarFolioVenta").prop( "disabled", true );
         
-        tableProductos = $('#gridProductos').DataTable( {    
+        tableComanda = $('#gridComanda').DataTable( {    
             "responsive": true,
             "searching" : false,
             "paging"    : false,
@@ -213,6 +223,7 @@ width: 150px;
             "bLengthChange": false,
             "columnDefs": [
                 {"width": "10%","className": "text-center","targets": 3},
+                {"width": "10%","className": "text-center","targets": 4},
             ],
 
             "bJQueryUI":true,"oLanguage": {
@@ -259,8 +270,6 @@ width: 150px;
 
                 if(myJson.arrayDatos.length > 0)
                 {
-                    $("#cmbProductos").prop( "disabled", false );
-                    $("#txtbtnNuevaVenta").prop( "disabled", true );
                     $("#txtFolioVenta").text(myJson.arrayDatos[0].folio_venta);
                     $("#btncancelarFolioVenta").prop( "disabled", false );
                     
@@ -304,26 +313,32 @@ width: 150px;
     }
 
     function AgregarProductoTabla(){
+        if($("#txtFolioVenta").text().length !== 0){
 
-        var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';
-        // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
-        if(val.indexOf("\"") !== -1){
-            var valueCombo = $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") ? $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") : "";
+            var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';
+            // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
+            if(val.indexOf("\"") !== -1){
+                var valueCombo = $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") ? $("#cmbContactosListMod").find("option[value='"+val+"']").data("value") : "";
+            }
+            else{
+            var valueCombo = $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") ? $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") : "";
+            }
+            if(valueCombo.cvema_producto != null){
+                $('#modal_formCantidadProductos').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $('#modal_formCantidadProductos').on('shown.bs.modal', function () {
+                $('#txtCantidadProductos').focus();
+            });
+            }
+            else{
+                msgAlert1("El producto no existe.","warning");
+            }
         }
         else{
-        var valueCombo = $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") ? $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") : "";
-        }
-        if(valueCombo.cvema_producto != null){
-            $('#modal_formCantidadProductos').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-        $('#modal_formCantidadProductos').on('shown.bs.modal', function () {
-            $('#txtCantidadProductos').focus();
-        });
-        }
-        else{
-            msgAlert1("El producto no existe.","warning");
+            $('#cmbProductos').val('');
+            msgAlert1("No existe folio para generar orden","warning");
         }
         
     }
@@ -394,15 +409,29 @@ width: 150px;
             });
 
         }else{
+
+
+            $.ajax({
+                url      : 'Venta/GuardarVenta',
+                type     : "POST",
+                data     : { 
+                        ban: 1,
+                        cve_deventa: 0,
+                        folioventa_deventa : $("#txtFolioVenta").text(),
+                        cvema_deventa : valueCombo.cvema_producto,
+                        cantidad_deventa : cantidad_productos,
+                        preciounitario_deventa : valueCombo.precio_producto,
+                        cveproducto_deventa :   valueCombo.cveproducto_producto,
+                        deingredientes : '0'
+                },
+                success  : function(datos) {
+                    consultarComanda($("#txtFolioVenta").text());
+                }
+            });
+
+
             $('#txtCantidadProductos').val('1');
             $('#cmbProductos').val('');
-            tableProductos.row.add([
-                valueCombo.nombrecompleto_producto ,
-                valueCombo.precio_producto ,
-                cantidad_productos ,
-                btn_eliminar
-            ]).node().id = valueCombo.cvema_producto+","+valueCombo.cveproducto_producto+",0,"+myNumeroAleatorio;
-            tableProductos.draw( false );
 
             $("#modal_formCantidadProductos").modal('hide');//ocultamos el modal
             $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
@@ -413,6 +442,97 @@ width: 150px;
         
 
     });
+
+    function consultarComanda(folioComanda){
+
+        $.ajax({
+            url      : 'Venta/consultarComanda',
+            type     : "POST",
+            data    : { 
+                ban: 1 ,
+                folio: folioComanda
+            },
+            success  : function(datos) {
+
+                var myJson = JSON.parse(datos);
+
+                tableComanda.clear().draw();
+
+                if(myJson.arrayDatos.length > 0)
+                {
+
+                    var title;
+                    var icon;
+                    var color_icon;
+                    var accion;
+
+                    $(myJson.arrayDatos).each( function(key, val)
+                    {
+                        title = 'Eliminar producto';
+                        icon = 'fa fa-minus-circle';
+                        color_icon = "color: #d12929;"
+                        accion = "eliminarProductoComanda('" + val.cve_deventa + "','0')";
+
+                        if(val.cveproducto_deventa == '1' || val.cveproducto_deventa == '5'){
+                            
+                            var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Detalle producto' onclick=\"mostrarSubProductosComanda('" + val.cve_deventa  +"','"+val.cveproducto_deventa +"','"+val.cantidad_deventa+"','"+val.cantidadingrediente_producto+"','"+val.nombrecompleto_comanda+"')\"></i>";
+                        }
+                        else{
+                            var btn_editar = "";
+                        }
+
+                        var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
+
+                        tableComanda.row.add([
+                            val.nombrecompleto_comanda ,
+                            val.preciounitario_deventa ,
+                            val.cantidad_deventa ,
+                            btn_editar,
+                            btn_status,
+                        ]).draw();
+                    })
+
+                }
+                else
+                {
+                    tableComanda = $('#gridComanda').DataTable();
+                    
+                }
+
+            }
+        });
+
+    }
+
+    function mostrarSubProductosComanda(cve_deventa, cveproducto_deventa, cantidad_deventa, cantidadingrediente_producto, nombrecompleto_comanda){
+        if(cveproducto_deventa == '1'){
+            //pizza tradicional tiene ingredientes por elegir
+            $('#modal_formIngredientesMod').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $("#muestra_formInputsMod").html('Cargando...');
+            $.ajax({
+                url: 'Venta/formPizzaIngredienteMod',
+                type     : "POST",
+                    data     : { 
+                        cve_deventa : cve_deventa,
+                        cveproducto_deventa : cveproducto_deventa,
+                        nombrecompleto_comanda : nombrecompleto_comanda,
+                        cantidad_productos: cantidad_deventa ,
+                        cantidadingrediente_producto : cantidadingrediente_producto
+                    },
+                success: function(datos){
+                    $("#myModalLabelIngredientesMod").text(nombrecompleto_comanda);
+                    $("#muestra_formInputsMod").html(datos);
+
+                    
+                }
+            });
+        }
+    }
+
+    
 
     function eliminarProductoTabla(thiss, valor){
         tableProductos.row( $(thiss).parents('tr') ).remove().draw();
