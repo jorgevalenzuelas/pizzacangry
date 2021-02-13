@@ -30,8 +30,7 @@
                 ?>
                     <div class="form-group col-md-4">
                         <label>Ingrediente <?php echo $j;?>*</label>
-
-                        <select id="<?php echo $i;?>_<?php echo $key+1;?>_<?php echo $j;?>" name="<?php echo $i;?>_<?php echo $key+1;?>_<?php echo $j;?>" class="form-control ns_"></select>
+                        <select id="<?php echo $porciones2[2];?>_<?php echo $i;?>_<?php echo $key+1;?>_<?php echo $j;?>" name="<?php echo $porciones2[2];?>_<?php echo $i;?>_<?php echo $key+1;?>_<?php echo $j;?>" class="form-control ns_"></select>
                     </div>
         <?php 
                 }
@@ -76,7 +75,7 @@ function cargarIngrediente(){
                     for (var index = 1; index <= arraypizzas.length; index++) {
                         var arraypizzas2 = arraypizzas[index-1].split("|");
                         for(var l = 1; l <= arraypizzas2[0]; l++){
-                            select = $("#"+k+"_"+index+"_"+l);
+                            select = $("#"+arraypizzas2[2]+"_"+k+"_"+index+"_"+l);
                             select.attr('disabled',false);
                             select.find('option').remove();
                             select.append('<option value="-1">-- Selecciona --</option>');
@@ -132,9 +131,10 @@ function cargarIngrediente(){
                 Pizza = '';
                 for (var index = 1; index <= arraypizzas.length; index++) {
                         var arraypizzas2 = arraypizzas[index-1].split("|");
+                        Pizza += arraypizzas2[2]+"|";
                         for(var l = 1; l <= arraypizzas2[0]; l++){ 
-                        Pizza += $("#"+k+"_"+index+"_"+l).val() + "|";
-                        if($("#"+k+"_"+index+"_"+l).val() == '-1'){
+                        Pizza += $("#"+arraypizzas2[2]+"_"+k+"_"+index+"_"+l).val() + "|";
+                        if($("#"+arraypizzas2[2]+"_"+k+"_"+index+"_"+l).val() == '-1'){
                             entro = true;
                         }
                     }
@@ -142,7 +142,7 @@ function cargarIngrediente(){
                    
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
-                Valores[k-1] = k+"["+Pizza+"]";
+                Valores[k-1] = Pizza;
             }
             Valores = Valores.join('-');
         }

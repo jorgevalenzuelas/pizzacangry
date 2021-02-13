@@ -120,7 +120,7 @@ $(document).ready(function () {
                     }
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
-                Valores[k-1] = k+"["+Pizza+"]";
+                Valores[k-1] = k+"|"+Pizza;
             }
             Valores = Valores.join('-');
         }

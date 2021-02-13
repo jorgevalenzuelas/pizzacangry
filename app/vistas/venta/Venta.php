@@ -422,33 +422,29 @@ width: 150px;
         table = $('#gridProductos').DataTable();
         var estrenos = [];
         var count = 0;
-        $('#gridProductos tbody tr').each(function() {
+        $('#gridProductos tbody tr').each(function(index, tr) {
 
             ids = this.id;
             res = ids.split(",");
 
-            cvema_producto = res[0];
-            cveproducto_producto = res[1];
-
-            estrenos[count] = {
-                "cvema_producto": res[0],
-                "cveproducto_producto": res[1],
-                "cantidad_productos": cantidad_productos,
-                "cve_ingredientes": res[2]
-            };
-            count = count + 1;        
+            $.ajax({
+                url      : 'Venta/GuardarVenta',
+                type     : "POST",
+                data     : { 
+                        ban: 1,
+                        cve_deventa: 0,
+                        folioventa_deventa : $("#txtFolioVenta").text(),
+                        cvema_deventa : res[0],
+                        cantidad_deventa : cantidad_productos,
+                        preciounitario_deventa : $(this).find('td').eq(1).text(),
+                        cveproducto_deventa :   res[1],
+                        deingredientes : res[2]
+                },
+                success  : function(datos) {
+                }
+            });     
         });
-
-        $.ajax({
-            url      : 'Venta/GuardarProductos',
-            type     : "POST",
-            data     : { 
-                    ban: 1, 
-                    folio_venta : folio_venta  
-            },
-            success  : function(datos) {
-            }
-        });
+        //Clave del producto+","+Tipo del producto+","+Ingreintes+","+numero aleatorios
     }
 
     function cancelarVenta(){

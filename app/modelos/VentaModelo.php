@@ -50,6 +50,105 @@ class VentaModelo
         return $r_folio;
     }
 
+    public function guardarVenta($datosVenta)
+    {
+
+        $datosFiltrados = $this->filtrarDatos($datosVenta);
+
+        $ban = $datosFiltrados['ban'];
+        $cve_deventa = $datosFiltrados['cve_deventa'];
+        $folioventa_deventa = $datosFiltrados['folioventa_deventa'];
+        $cvema_deventa = $datosFiltrados['cvema_deventa'];
+        $cantidad_deventa = $datosFiltrados['cantidad_deventa'];
+        $preciounitario_deventa = $datosFiltrados['preciounitario_deventa'];
+        $cveproducto_deventa = $datosFiltrados['cveproducto_deventa'];
+        $deingredientes = $datosFiltrados['deingredientes'];
+        $cveusuario_accion  = $datosFiltrados['cveusuario_accion'];
+
+        $query = "CALL guardarVenta(
+                                    '$ban',
+                                    '$cve_deventa',
+                                    '$folioventa_deventa',
+                                    '$cvema_deventa',
+                                    '$cantidad_deventa',
+                                    '$preciounitario_deventa',
+                                    '$cveproducto_deventa',
+                                    '$cveusuario_accion'
+                                )";
+
+        $c_perfil = $this->conexion->query($query) or die ($this->conexion->error());
+        $r_perfil = $this->conexion->consulta_assoc($c_perfil);
+
+        $ultima_cve = $r_perfil['cve_deventa'];
+
+        //cortamos conexion de procedimientos
+        
+
+                                        
+        if($cveproducto_deventa == '1'){
+            $this->conexion->next_result();
+            $ingredentes  = $deingredientes;
+            $pizzas = explode("-", $ingredentes);
+
+            for($i = 0; $i < $cantidad_deventa; $i++){
+                file_put_contents('cantidad_deventa.txt',print_r( array($i),true)."\r\n", FILE_APPEND | LOCK_EX);
+                        
+                $ingredentes2  = $pizzas[$i];
+                $pizzas2 = explode("|", $ingredentes2);
+                for($j = 1; $j < count($pizzas2); $j++){
+                    $numeroPizza = $pizzas2[0];
+                    $cveIngredente = $pizzas2[$j];
+                    if (!empty($ultima_cve)){
+                        $query = "CALL guardarDeTradicionalIngrediente('1','0','$ultima_cve','$numeroPizza','$cveIngredente')";
+                        file_put_contents('guardarDeTradicionalIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
+                        $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+                    }
+        
+                    $this->conexion->next_result();
+                }
+            }
+
+            $this->conexion->close_conexion();
+            $this->conexion->next_result();
+            
+            return $respuesta;
+        }
+        else if($cveproducto_deventa == '5'){
+            $this->conexion->next_result();
+            $ingredentes  = $deingredientes;
+            $paquetes = explode("-", $ingredentes);
+            
+            for($i = 0; $i < $cantidad_deventa; $i++){
+                $numPizza = 1;
+                $pizzas = explode("+", $paquetes[$i]);
+                for($j = 0; $j < count($pizzas); $j++){
+                    $desglose = explode("|", $pizzas[$j]);
+                    for($k = 1; $k < count($desglose); $k++){
+
+                    $numeroPaquete = $i + 1;
+                    $cvePizza = $desglose[0];
+                 
+                    $cveIngredente = $desglose[$k];
+
+                    if (!empty($ultima_cve)){
+                        $query = "CALL guardarDePaqueteIngrediente('1','0','$ultima_cve','$numeroPaquete','$numPizza','$cvePizza','$cveIngredente')";
+                        file_put_contents('guardarDePaqueteIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
+                        $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+                    }
+        
+                    $this->conexion->next_result();
+                }
+                $numPizza++;
+            }
+            }
+
+            $this->conexion->close_conexion();
+            $this->conexion->next_result();
+            
+            return $respuesta;
+        }
+        
+    }
 
 
     public function bloquearSnack($datosSnack)
