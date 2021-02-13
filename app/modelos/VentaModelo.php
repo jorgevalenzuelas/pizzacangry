@@ -111,7 +111,7 @@ class VentaModelo
             $this->conexion->close_conexion();
             $this->conexion->next_result();
             
-            return $respuesta;
+         
         }
         else if($cveproducto_deventa == '5'){
             $this->conexion->next_result();
@@ -145,8 +145,10 @@ class VentaModelo
             $this->conexion->close_conexion();
             $this->conexion->next_result();
             
-            return $respuesta;
+            
         }
+
+        return $respuesta;
         
     }
 
