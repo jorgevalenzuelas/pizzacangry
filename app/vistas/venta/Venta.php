@@ -435,7 +435,7 @@ width: 150px;
                         cve_deventa: 0,
                         folioventa_deventa : $("#txtFolioVenta").text(),
                         cvema_deventa : res[0],
-                        cantidad_deventa : cantidad_productos,
+                        cantidad_deventa : $(this).find('td').eq(2).text(),
                         preciounitario_deventa : $(this).find('td').eq(1).text(),
                         cveproducto_deventa :   res[1],
                         deingredientes : res[2]

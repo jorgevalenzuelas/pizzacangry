@@ -26,16 +26,12 @@
             ?>
         </div>
     <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="btnAgregarTabla">Agregar</button>
-                <button class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" id="btnCancelar2">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="btnAgregarTablaPizza">Agregar</button>
+                <button class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" id="btnCancelarPizza">Cancelar</button>
             </div>
         </div>
 
     </div>
-
-
-    <input type="hidden" id="txtcvePuesto" name="txtcvePuesto">
-
 
 <script type="text/javascript">
 var cantidad_productos = '<?php echo $_POST["cantidad_productos"];?>'
@@ -80,7 +76,7 @@ $(document).ready(function () {
         });
     }
 
-    $('#btnCancelar2').click(function (e) {
+    $('#btnCancelarPizza').click(function (e) {
         $('#cmbProductos').val('');
         $('#txtCantidadProductos').val('1');
         $('#cmbProductos').focus();
@@ -92,7 +88,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#btnAgregarTabla').click(function (e) {
+    $('#btnAgregarTablaPizza').click(function (e) {
 
 
         var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';

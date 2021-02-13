@@ -38,15 +38,12 @@
         }
         ?>
     <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="btnAgregarTabla">Aceptar</button>
-                <button class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" id="btnCancelar2">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="btnAgregarTablaPaquete">Aceptar</button>
+                <button class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" id="btnCancelarPaquete">Cancelar</button>
             </div>
         </div>
 
     </div>
-
-
-    <input type="hidden" id="txtcvePuesto" name="txtcvePuesto">
 
 
 <script type="text/javascript">
@@ -97,7 +94,7 @@ function cargarIngrediente(){
         });
     }
 
-    $('#btnCancelar2').click(function (e) {
+    $('#btnCancelarPaquete').click(function (e) {
         $('#cmbProductos').val('');
         $('#txtCantidadProductos').val('1');
         $('#cmbProductos').focus();
@@ -109,7 +106,7 @@ function cargarIngrediente(){
         return false;
     });
 
-    $('#btnAgregarTabla').click(function (e) {
+    $('#btnAgregarTablaPaquete').click(function (e) {
 
 
         var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';
