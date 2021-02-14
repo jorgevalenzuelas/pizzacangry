@@ -21,7 +21,15 @@
                         <select id="<?php echo $i;?>_<?php echo $j;?>" name="<?php echo $i;?>_<?php echo $j;?>" class="form-control ns_"></select>
                     </div>
             <?php 
-                }
+                } ?>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>Comentarios*</label>
+                        <input type="text" class="form-control" id="des_<?php echo $i;?>" name="des_<?php echo $i;?>" onkeyup='javascript:this.value=this.value.toUpperCase();'>  
+                    </div>
+                </div>
+            <?php
             }
             ?>
         </div>
@@ -116,7 +124,7 @@ $(document).ready(function () {
                     }
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
-                Valores[k-1] = k+"|"+Pizza;
+                Valores[k-1] = k+"|"+$("#des_"+k).val()+"|"+Pizza;
             }
             Valores = Valores.join('-');
         }

@@ -22,6 +22,14 @@
                     </div>
             <?php 
                 }
+                ?>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>Comentarios*</label>
+                        <input type="text" class="form-control" id="des_<?php echo $i;?>_" name="des_<?php echo $i;?>_" onkeyup='javascript:this.value=this.value.toUpperCase();'>  
+                    </div>
+                </div>
+                <?php
             }
             ?>
         </div>
@@ -103,6 +111,7 @@ $(document).ready(function () {
                         }
                         
                         $("#_"+val.numpizza_detradicionalingrediente+"_"+aux).val(val.cveingrediente_detradicionalingrediente);
+                        $("#des_"+val.numpizza_detradicionalingrediente+"_").val(val.descripcion_detradicionalingrediente);
                         
                         aux++;
                     })
@@ -135,14 +144,12 @@ $(document).ready(function () {
                     }
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
-                Valores[k-1] = k+"|"+Pizza;
+                Valores[k-1] = k+"|"+$("#des_"+k+"_").val()+"|"+Pizza;
             }
             Valores = Valores.join('-');
       
 
         if(entro != true){
-
-
 
             $.ajax({
                 url      : 'Venta/modificarDetadicionalVenta',

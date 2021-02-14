@@ -176,6 +176,19 @@ width: 150px;
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal_formIngredientesPaqueteMod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabelIngredientesPaqueteMod">Ingredientes</h2>
+            </div>
+            <div class="modal-body" id="muestra_formInputsPaqueteMod"> 
+
+            </div>
+        </div>
+    </div>
+</div>
 <!-- jQuery 3 -->
 <script src="<?php echo RUTA_URL; ?>public/jquery/jquery-3.4.1.min.js"></script>
 <!-- <script src="<?php echo RUTA_URL; ?>public/bower_components/jquery/dist/jquery.min.js"></script> -->
@@ -473,7 +486,11 @@ width: 150px;
                         color_icon = "color: #d12929;"
                         accion = "eliminarProductoComanda('" + val.cve_deventa + "','0')";
 
-                        if(val.cveproducto_deventa == '1' || val.cveproducto_deventa == '5'){
+                        if(val.cveproducto_deventa == '1'){
+                            
+                            var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Detalle producto' onclick=\"mostrarSubProductosComanda('" + val.cve_deventa  +"','"+val.cveproducto_deventa +"','"+val.cantidad_deventa+"','"+val.cantidadingrediente_producto+"','"+val.nombrecompleto_comanda+"')\"></i>";
+                        }
+                        else if(val.cveproducto_deventa == '5'){
                             
                             var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Detalle producto' onclick=\"mostrarSubProductosComanda('" + val.cve_deventa  +"','"+val.cveproducto_deventa +"','"+val.cantidad_deventa+"','"+val.cantidadingrediente_producto+"','"+val.nombrecompleto_comanda+"')\"></i>";
                         }
@@ -527,6 +544,30 @@ width: 150px;
                     $("#muestra_formInputsMod").html(datos);
 
                     
+                }
+            });
+        }
+        else if(cveproducto_deventa == '5'){
+            //el paquete piiede tener varias pizzas tradicionales con diferentes ingredientes
+            $('#modal_formIngredientesPaqueteMod').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $("#muestra_formInputsPaqueteMod").html('Cargando...');
+            var pizzas = cantidadingrediente_producto;
+            var arraypizzas = pizzas.split(",");
+            $.ajax({
+                url: 'Venta/formPizzaIngredientePaqueteMod',
+                type     : "POST",
+                    data     : { 
+                        cve_deventa : cve_deventa,
+                        cantidad_productos : cantidad_deventa ,
+                        cantidad_pizzas : arraypizzas.length,
+                        cantidadingrediente_producto : cantidadingrediente_producto 
+                    },
+                success: function(datos){
+                    $("#myModalLabelIngredientesPaqueteMod").text(nombrecompleto_comanda);
+                    $("#muestra_formInputsPaqueteMod").html(datos);
                 }
             });
         }
