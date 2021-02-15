@@ -270,26 +270,45 @@ width: 150px;
 
     function GenerarFolio(){
 
-        $.ajax({
-            url      : 'Venta/generarFolio',
-            type     : "POST",
-            data    : { 
-                ban: 1,
-                folo_venta: ''
-            },
-            success  : function(datos) {
+        table = $('#gridComanda').DataTable();
+        var entro = false;
+        $('#gridComanda tbody tr').each(function(index, tr) {
 
-                var myJson = JSON.parse(datos);
-
-                if(myJson.arrayDatos.length > 0)
-                {
-                    $("#txtFolioVenta").text(myJson.arrayDatos[0].folio_venta);
-                    $("#btncancelarFolioVenta").prop( "disabled", false );
-                    
-                }
-
+            if($(this).find('td').eq(2).text() != ''){
+                entro = true;
             }
         });
+        if(entro == false && $("#txtFolioVenta").text().length == 0  || entro == true && $("#txtFolioVenta").text().length > 0){
+            $.ajax({
+                url      : 'Venta/generarFolio',
+                type     : "POST",
+                data    : { 
+                    ban: 1,
+                    folo_venta: ''
+                },
+                success  : function(datos) {
+
+                    var myJson = JSON.parse(datos);
+
+                    if(myJson.arrayDatos.length > 0)
+                    {
+                        $("#txtFolioVenta").text(myJson.arrayDatos[0].folio_venta);
+                        $("#btncancelarFolioVenta").prop( "disabled", false );
+                        
+                    }
+
+                }
+            });
+
+            table.clear().draw();
+            
+        }
+        else{
+            msgAlert1("Comanda en proceso","warning");
+        }
+
+
+        
     }
 
     function cargarProductos(){
@@ -337,13 +356,40 @@ width: 150px;
             var valueCombo = $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") ? $("#cmbContactosListMod").find("option[value=\""+val+"\"]").data("value") : "";
             }
             if(valueCombo.cvema_producto != null){
-                $('#modal_formCantidadProductos').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-            $('#modal_formCantidadProductos').on('shown.bs.modal', function () {
-                $('#txtCantidadProductos').focus();
-            });
+                if(valueCombo.cveproducto_producto == '5'){
+                    //el paquete piiede tener varias pizzas tradicionales con diferentes ingredientes
+                    $('#modal_formIngredientesPaquete').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $("#muestra_formInputsPaquete").html('Cargando...');
+                    var pizzas = valueCombo.cantidadingrediente_producto;
+                    var arraypizzas = pizzas.split(",");
+                    $.ajax({
+                        url: 'Venta/formPizzaIngredientePaquete',
+                        type     : "POST",
+                            data     : { 
+                                cantidad_productos : 1 ,
+                                cantidad_pizzas : arraypizzas.length,
+                                cantidadingrediente_producto : valueCombo.cantidadingrediente_producto 
+                            },
+                        success: function(datos){
+                            $("#myModalLabelIngredientesPaquete").text(valueCombo.nombrecompleto_producto);
+                            $("#muestra_formInputsPaquete").html(datos);
+                        }
+                    });
+
+                }
+                else{
+                    $('#modal_formCantidadProductos').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $('#modal_formCantidadProductos').on('shown.bs.modal', function () {
+                        $('#txtCantidadProductos').focus();
+                    });
+                }
+                
             }
             else{
                 msgAlert1("El producto no existe.","warning");

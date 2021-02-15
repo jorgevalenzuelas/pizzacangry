@@ -46,7 +46,7 @@
         }
         ?>
     <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="btnAgregarTablaPaqueteMod">Modificar</button>
+                <button type="submit" class="btn btn-primary" id="btnAgregarTablaPaqueteMod">Aceptar</button>
                 <button class="btn btn-primary" data-dismiss="modal" data-dismiss="modal" id="btnCancelarPaqueteMod">Cancelar</button>
             </div>
         </div>

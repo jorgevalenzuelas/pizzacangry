@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label>Comentarios*</label>
-                        <input type="text" class="form-control" id="desp_<?php echo $porciones2[2];?>" onkeyup='javascript:this.value=this.value.toUpperCase();'>  
+                        <input type="text" class="form-control" id="desp_<?php echo $i;?><?php echo $porciones2[2];?>" onkeyup='javascript:this.value=this.value.toUpperCase();'>  
                     </div>
                 </div>
                 <?php
@@ -136,7 +136,7 @@ function cargarIngrediente(){
                 Pizza = '';
                 for (var index = 1; index <= arraypizzas.length; index++) {
                         var arraypizzas2 = arraypizzas[index-1].split("|");
-                        Pizza += arraypizzas2[2]+"|"+$("#desp_"+arraypizzas2[2]).val()+"|";
+                        Pizza += arraypizzas2[2]+"|"+$("#desp_"+k+arraypizzas2[2]).val()+"|";
                         for(var l = 1; l <= arraypizzas2[0]; l++){ 
                         Pizza += $("#"+arraypizzas2[2]+"_"+k+"_"+index+"_"+l).val() + "|";
                         if($("#"+arraypizzas2[2]+"_"+k+"_"+index+"_"+l).val() == '-1'){
