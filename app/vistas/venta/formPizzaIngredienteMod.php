@@ -1,15 +1,17 @@
 <?php
 //print_r($_POST);
 ?>
-<div id="msgAlert3"></div>
+<div id="msgAlert5"></div>
     <div class="box-body">
         <div class="row">
             <?php
             for($i = 1; $i <= $_POST["cantidad_productos"]; $i++){
             ?>
+            <div id="div_<?php echo $i;?>">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label>Pizza <?php echo $i;?>*</label>
+                        <button type="submit" class="btn btn-primary" onclick="eliminarPizzaVenta('<?php echo $i;?>')">Eliminar</button>
                     </div>
                 </div>
                 <?php
@@ -29,6 +31,7 @@
                         <input type="text" class="form-control" id="des_<?php echo $i;?>_" name="des_<?php echo $i;?>_" onkeyup='javascript:this.value=this.value.toUpperCase();'>  
                     </div>
                 </div>
+                </div>
                 <?php
             }
             ?>
@@ -42,7 +45,8 @@
     </div>
 
 <script type="text/javascript">
-var cantidad_productos = '<?php echo $_POST["cantidad_productos"];?>'
+var cantidad_productos = '<?php echo $_POST["cantidad_productos"];?>';
+var cantidad_productosMod = cantidad_productos;
 var cantidadingrediente_producto = '<?php echo $_POST["cantidadingrediente_producto"]?>';
 $(document).ready(function () {
     cargarIngrediente();
@@ -86,7 +90,10 @@ $(document).ready(function () {
             }
         });
     }
-
+    function eliminarPizzaVenta(valor){
+        $("#div_"+valor).remove();
+        cantidad_productosMod--;
+    }
     function consultarIngredientesComandaTradicional(cve_deventa, cantidad_deventa, cantidadingrediente_producto){
         $.ajax({
             url      : 'Venta/consultarComanda',
@@ -135,6 +142,7 @@ $(document).ready(function () {
 
             Pizza = '';
             Valores = [];
+            var count = 0;
             for(var k = cantidad_productos; k >= 1; k--){
                 Pizza = '';
                 for(var l = 1; l <= cantidadingrediente_producto; l++){ 
@@ -144,7 +152,13 @@ $(document).ready(function () {
                     }
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
-                Valores[k-1] = k+"|"+$("#des_"+k+"_").val()+"|"+Pizza;
+                    if($("#_"+k+"_1").length !== 0){
+                        Valores[count] = (count+1)+"|"+$("#des_"+k+"_").val()+"|"+Pizza;
+                        count ++;
+                    }
+                    
+                
+                
             }
             Valores = Valores.join('-');
       
@@ -158,7 +172,7 @@ $(document).ready(function () {
                         ban: 1,
                         cve_deventa: <?php echo $_POST["cve_deventa"];?>,
                         cveproducto_deventa : 1,
-                        cantidad_deventa : cantidad_productos,
+                        cantidad_deventa : cantidad_productosMod,
                         deingredientes : Valores
                 },
                 success  : function(datos) {
@@ -175,10 +189,17 @@ $(document).ready(function () {
             $('.modal-backdrop').remove();
         }
         else{
-            msgAlert3("Favor de ingresar todos los ingredientes","warning");
+            msgAlert5("Favor de ingresar todos los ingredientes","warning");
         }
 
 
         });
+
+        function msgAlert5(msg,tipo)
+    {
+        $('#msgAlert5').css("display", "block");
+        $("#msgAlert5").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlert5").fadeOut(1500); },1500);
+    }
 
 </script>

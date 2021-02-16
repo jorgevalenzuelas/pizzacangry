@@ -191,33 +191,45 @@ class VentaModelo
             $query = "CALL eliminardeTradicionalIngrediente('$ban','$ultima_cve')";
 
             $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+            if($cantidad_deventa == '0'){
+                $this->conexion->next_result();
+                $query = "CALL eliminarPaqueteVenta('1','$ultima_cve','$cantidad_deventa')";
 
-            $this->conexion->next_result();
-            $ingredentes  = $deingredientes;
-            $pizzas = explode("-", $ingredentes);
-
-            for($i = 0; $i < $cantidad_deventa; $i++){
-                file_put_contents('cantidad_deventa.txt',print_r( array($i),true)."\r\n", FILE_APPEND | LOCK_EX);
-                        
-                $ingredentes2  = $pizzas[$i];
-                $pizzas2 = explode("|", $ingredentes2);
-                for($j = 2; $j < count($pizzas2); $j++){
-                    $numeroPizza = $pizzas2[0];
-                    $descripcionPizza = $pizzas2[1];
-                    $cveIngredente = $pizzas2[$j];
-                    if (!empty($ultima_cve)){
-                        $query = "CALL guardarDeTradicionalIngrediente('1','0','$ultima_cve','$numeroPizza','$descripcionPizza','$cveIngredente')";
-                        file_put_contents('guardarDeTradicionalIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
-                        $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
-                    }
-        
-                    $this->conexion->next_result();
-                }
+                $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
             }
+            else{
+                $this->conexion->next_result();
+                $query = "CALL eliminarPaqueteVenta('2','$ultima_cve','$cantidad_deventa')";
 
-            $this->conexion->close_conexion();
+                $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
 
-            return $respuesta;
+                $this->conexion->next_result();
+                $ingredentes  = $deingredientes;
+                $pizzas = explode("-", $ingredentes);
+
+                for($i = 0; $i < $cantidad_deventa; $i++){
+                    file_put_contents('cantidad_deventa.txt',print_r( array($i),true)."\r\n", FILE_APPEND | LOCK_EX);
+                            
+                    $ingredentes2  = $pizzas[$i];
+                    $pizzas2 = explode("|", $ingredentes2);
+                    for($j = 2; $j < count($pizzas2); $j++){
+                        $numeroPizza = $pizzas2[0];
+                        $descripcionPizza = $pizzas2[1];
+                        $cveIngredente = $pizzas2[$j];
+                        if (!empty($ultima_cve)){
+                            $query = "CALL guardarDeTradicionalIngrediente('1','0','$ultima_cve','$numeroPizza','$descripcionPizza','$cveIngredente')";
+                            file_put_contents('guardarDeTradicionalIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
+                            $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+                        }
+            
+                        $this->conexion->next_result();
+                    }
+                }
+
+                $this->conexion->close_conexion();
+
+                return $respuesta;
+            }
             
          
         }
@@ -276,6 +288,71 @@ class VentaModelo
         else{
             return $c_perfil;
         }
+
+        
+        
+    }
+
+    public function eliminarProductoVenta($datosVenta)
+    {
+
+        $datosFiltrados = $this->filtrarDatos($datosVenta);
+
+        $cve_deventa = $datosFiltrados['cve_deventa'];
+        $cveproducto_deventa = $datosFiltrados['cveproducto_deventa'];
+
+      
+
+        $ultima_cve = $cve_deventa;
+        
+                                        
+        if($cveproducto_deventa == '1'){
+
+            $query = "CALL eliminardeTradicionalIngrediente('1','$ultima_cve')";
+
+            return $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+            $this->conexion->next_result();
+        
+        }
+        else if($cveproducto_deventa == '5'){
+
+            $query = "CALL eliminardePaqueteIngrediente('1','$ultima_cve')";
+
+            return $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+
+            $this->conexion->next_result();
+        }
+
+                
+                $query = "CALL eliminarPaqueteVenta('1','$ultima_cve','0')";
+
+               return $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+
+        
+        
+    }
+
+    public function modificarCantidadVenta($datosVenta)
+    {
+
+        $datosFiltrados = $this->filtrarDatos($datosVenta);
+
+        $ban = $datosFiltrados['ban'];
+        $cve_deventa = $datosFiltrados['cve_deventa'];
+        $cantidad_deventa = $datosFiltrados['cantidad_deventa'];
+
+      
+
+        $ultima_cve = $cve_deventa;
+        
+                   
+                $query = "CALL eliminarPaqueteVenta('$ban','$ultima_cve','$cantidad_deventa')";
+
+                return $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+            
+            
+            
+         
 
         
         

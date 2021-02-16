@@ -46,7 +46,7 @@
         <section class="content">
         <div class="row">
         <div id="msgAlert1"></div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <button type="button" class="btn btn-primary" onclick="GenerarFolio()" id="txtbtnNuevaVenta">Nueva orden</button>
                 <div class="form-group">
                     <label for="cmbProductos">Buscar productos</label>
@@ -113,21 +113,21 @@ width: 150px;
                 </div>
                 <div class="row">
                     <div class="center">
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
-                                <span class="glyphicon glyphicon-minus"></span>
-                            </button>
-                        </span>
-                        <input type="text" name="quant[2]" class="form-control input-number" id="txtCantidadProductos" value="1" min="1" max="100">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </span>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            <input type="text" name="quant[2]" class="form-control input-number" id="txtCantidadProductos" value="1" min="1" max="100">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <p></p>
                     </div>
-                    <p></p>
-                </div>
                 </div> 
             </div>
             <div class="box-footer">
@@ -530,26 +530,29 @@ width: 150px;
                         title = 'Eliminar producto';
                         icon = 'fa fa-minus-circle';
                         color_icon = "color: #d12929;"
-                        accion = "eliminarProductoComanda('" + val.cve_deventa + "','0')";
+                        accion = "eliminarProductoComanda('" + val.cve_deventa + "','"+val.cveproducto_deventa+"')";
 
                         if(val.cveproducto_deventa == '1'){
                             
                             var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Detalle producto' onclick=\"mostrarSubProductosComanda('" + val.cve_deventa  +"','"+val.cveproducto_deventa +"','"+val.cantidad_deventa+"','"+val.cantidadingrediente_producto+"','"+val.nombrecompleto_comanda+"')\"></i>";
+                            var btnCantidad = val.cantidad_deventa;
                         }
                         else if(val.cveproducto_deventa == '5'){
                             
                             var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Detalle producto' onclick=\"mostrarSubProductosComanda('" + val.cve_deventa  +"','"+val.cveproducto_deventa +"','"+val.cantidad_deventa+"','"+val.cantidadingrediente_producto+"','"+val.nombrecompleto_comanda+"')\"></i>";
+                            var btnCantidad = val.cantidad_deventa;
                         }
                         else{
                             var btn_editar = "";
+                            var btnCantidad = '<div class="input-group"> <span class="input-group-btn"> <button type="button" class="btn btn-danger btn-number" onclick="modCantidad('+0+','+val.cantidad_deventa+','+val.cve_deventa+')"><span class="glyphicon glyphicon-minus"></span></button></span><input type="text" class="form-control input-number" value="'+val.cantidad_deventa+'" min="1" max="100"><span class="input-group-btn"><button type="button" onclick="modCantidad('+1+','+val.cantidad_deventa+','+val.cve_deventa+')" class="btn btn-success btn-number"><span class="glyphicon glyphicon-plus"></span></button></span></div>';
                         }
-
+                        
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
                         tableComanda.row.add([
                             val.nombrecompleto_comanda ,
                             val.preciounitario_deventa ,
-                            val.cantidad_deventa ,
+                            btnCantidad,
                             btn_editar,
                             btn_status,
                         ]).draw();
@@ -566,6 +569,46 @@ width: 150px;
         });
 
     }
+
+    function eliminarProductoComanda(cve_deventa,cveproducto_deventa){
+        $.ajax({
+                url      : 'Venta/eliminarProductoVenta',
+                type     : "POST",
+                data     : { 
+                        cve_deventa:cve_deventa,
+                        cantidad_deventa : cveproducto_deventa
+                },
+                success  : function(datos) {
+                    consultarComanda($("#txtFolioVenta").text());
+                }
+            });
+    }
+
+    function modCantidad(ban,cantidad_deventa,cve_deventa){
+        var aux = cantidad_deventa;
+        if(ban == '1'){
+            aux++;
+        }
+        else if(ban == '0'){
+            aux--;
+        }
+
+        if(aux != 0){
+            $.ajax({
+                url      : 'Venta/modificarCantidadVenta',
+                type     : "POST",
+                data     : { 
+                        ban: 2,
+                        cve_deventa:cve_deventa,
+                        cantidad_deventa : aux
+                },
+                success  : function(datos) {
+                    consultarComanda($("#txtFolioVenta").text());
+                }
+            });
+        }
+    }
+
 
     function mostrarSubProductosComanda(cve_deventa, cveproducto_deventa, cantidad_deventa, cantidadingrediente_producto, nombrecompleto_comanda){
         if(cveproducto_deventa == '1'){

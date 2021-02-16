@@ -153,6 +153,71 @@ else
 			
 		}
 
+		public function eliminarProductoVenta()
+		{
+				//Preparamos en un array los datos que enviaremos a la BD
+				$datosVenta =  array (
+									cve_deventa   => $_POST["cve_deventa"],
+									cveproducto_deventa => $_POST["cveproducto_deventa"]
+							     );
+				
+				$respuesta = $this->VentaModelo->eliminarProductoVenta($datosVenta);
+				
+				
+
+				if ($respuesta == true)
+				{
+					$msg = "Registro de venta con exito.";
+					$status = "success";
+				}
+				else
+				{
+					$msg = "Hubo un error al guardar el registro.";
+					$status = "error";
+				}
+				
+			
+
+			
+			$envioDatos["status"] = $status;
+			$envioDatos["msg"] = $msg;
+			echo json_encode($envioDatos);
+			
+		}
+
+		public function modificarCantidadVenta()
+		{
+				//Preparamos en un array los datos que enviaremos a la BD
+				$datosVenta =  array (
+									ban                => $_POST["ban"],
+									cve_deventa   => $_POST["cve_deventa"],
+									cantidad_deventa => $_POST["cantidad_deventa"]
+							     );
+				
+				$respuesta = $this->VentaModelo->modificarCantidadVenta($datosVenta);
+				
+				
+
+				if ($respuesta == true)
+				{
+					$msg = "Registro de venta con exito.";
+					$status = "success";
+				}
+				else
+				{
+					$msg = "Hubo un error al guardar el registro.";
+					$status = "error";
+				}
+				
+			
+
+			
+			$envioDatos["status"] = $status;
+			$envioDatos["msg"] = $msg;
+			echo json_encode($envioDatos);
+			
+		}
+
 		public function validarDatosVaciosVentaGuardar($dataPost)
 		{
 			if(empty($dataPost["folioventa_deventa"]) || !trim($dataPost["folioventa_deventa"])){ $status = "vacio"; }
