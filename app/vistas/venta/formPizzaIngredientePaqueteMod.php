@@ -191,6 +191,7 @@ function cargarIngrediente(){
                 type     : "POST",
                 data     : { 
                     ban: 1,
+                    folio_venta : $("#txtFolioVenta").text(),
                     cve_deventa: <?php echo $_POST["cve_deventa"];?>,
                     cveproducto_deventa : 5,
                     cantidad_deventa : cantidad_productos,

@@ -72,6 +72,7 @@
                         </thead>
                         
                     </table>
+                    <label>Total: &nbsp;</label><label id="txtTotalVenta"></label>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -332,10 +333,14 @@ width: 150px;
 
                 if(myJson.arrayDatos.length > 0)
                 {
+                    
                     $(myJson.arrayDatos).each( function(key, val)
                     {
-                        value = '{"cvema_producto":"'+val.cvema_producto+'","nombrecompleto_producto":"'+val.nombrecompleto_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","precio_producto":"'+val.precio_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","cveproducto_producto":"'+val.cveproducto_producto+'","cantidadingrediente_producto":"'+val.cantidadingrediente_producto+'"}';
+                        if(val.cvema_producto != null){
+                            alert("entro");
+                            value = '{"cvema_producto":"'+val.cvema_producto+'","nombrecompleto_producto":"'+val.nombrecompleto_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","precio_producto":"'+val.precio_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","cveproducto_producto":"'+val.cveproducto_producto+'","cantidadingrediente_producto":"'+val.cantidadingrediente_producto+'"}';
 							select.append("<option data-value='"+value+"' value='"+val.nombrecompleto_producto.replace(/'/g, "&#x27;")+"'>");
+                        }
                     })
 
                 }
@@ -530,7 +535,7 @@ width: 150px;
                         title = 'Eliminar producto';
                         icon = 'fa fa-minus-circle';
                         color_icon = "color: #d12929;"
-                        accion = "eliminarProductoComanda('" + val.cve_deventa + "','"+val.cveproducto_deventa+"')";
+                        accion = "eliminarProductoComanda('" + val.folioventa_deventa + "','"+ val.cve_deventa + "','"+val.cveproducto_deventa+"')";
 
                         if(val.cveproducto_deventa == '1'){
                             
@@ -556,6 +561,8 @@ width: 150px;
                             btn_editar,
                             btn_status,
                         ]).draw();
+
+                        $("#txtTotalVenta").text(val.total_venta);
                     })
 
                 }
@@ -570,11 +577,12 @@ width: 150px;
 
     }
 
-    function eliminarProductoComanda(cve_deventa,cveproducto_deventa){
+    function eliminarProductoComanda(folio_venta, cve_deventa,cveproducto_deventa){
         $.ajax({
                 url      : 'Venta/eliminarProductoVenta',
                 type     : "POST",
                 data     : { 
+                        folio_venta : $("#txtFolioVenta").text(),
                         cve_deventa:cve_deventa,
                         cantidad_deventa : cveproducto_deventa
                 },
@@ -599,6 +607,7 @@ width: 150px;
                 type     : "POST",
                 data     : { 
                         ban: 2,
+                        folio_venta : $("#txtFolioVenta").text(),
                         cve_deventa:cve_deventa,
                         cantidad_deventa : aux
                 },

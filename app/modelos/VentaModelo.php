@@ -62,6 +62,23 @@ class VentaModelo
         return $r_folio;
     }
 
+    public function actualizarTotalVenta($datosFolio)
+    {
+
+        $datosFiltrados = $this->filtrarDatos($datosFolio);
+
+        $ban                = $datosFiltrados['ban'];
+        $folo_venta    = $datosFiltrados['folo_venta'];
+        $cveusuario_accion  = $datosFiltrados['cveusuario_accion'];
+
+        $query = "CALL actualizarTotalVenta(
+                                            '$folo_venta',
+                                            '$cveusuario_accion'
+                                        )";
+
+        $c_folio = $this->conexion->query($query);
+    }
+
     public function guardarVenta($datosVenta)
     {
 
@@ -176,6 +193,7 @@ class VentaModelo
         $datosFiltrados = $this->filtrarDatos($datosVenta);
 
         $ban = $datosFiltrados['ban'];
+        $folio_venta = $datosFiltrados['folio_venta'];
         $cve_deventa = $datosFiltrados['cve_deventa'];
         $deingredientes = $datosFiltrados['deingredientes'];
         $cveproducto_deventa = $datosFiltrados['cveproducto_deventa'];
@@ -193,13 +211,13 @@ class VentaModelo
             $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
             if($cantidad_deventa == '0'){
                 $this->conexion->next_result();
-                $query = "CALL eliminarPaqueteVenta('1','$ultima_cve','$cantidad_deventa')";
+                $query = "CALL eliminarPaqueteVenta('1','$ultima_cve','$cantidad_deventa','$folio_venta')";
 
                 $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
             }
             else{
                 $this->conexion->next_result();
-                $query = "CALL eliminarPaqueteVenta('2','$ultima_cve','$cantidad_deventa')";
+                $query = "CALL eliminarPaqueteVenta('2','$ultima_cve','$cantidad_deventa', '$folio_venta')";
 
                 $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
 
@@ -241,13 +259,13 @@ class VentaModelo
 
             if(cantidad_deventa == '0'){
                 $this->conexion->next_result();
-                $query = "CALL eliminarPaqueteVenta('1','$ultima_cve','$cantidad_deventa')";
+                $query = "CALL eliminarPaqueteVenta('1','$ultima_cve','$cantidad_deventa','$folio_venta')";
 
                 $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
             }
             else{
                 $this->conexion->next_result();
-                $query = "CALL eliminarPaqueteVenta('2','$ultima_cve','$cantidad_deventa')";
+                $query = "CALL eliminarPaqueteVenta('2','$ultima_cve','$cantidad_deventa','$folio_venta')";
 
                 $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
 
@@ -297,7 +315,7 @@ class VentaModelo
     {
 
         $datosFiltrados = $this->filtrarDatos($datosVenta);
-
+        $folio_venta = $datosFiltrados["folio_venta"];
         $cve_deventa = $datosFiltrados['cve_deventa'];
         $cveproducto_deventa = $datosFiltrados['cveproducto_deventa'];
 
@@ -324,7 +342,7 @@ class VentaModelo
         }
 
                 
-                $query = "CALL eliminarPaqueteVenta('1','$ultima_cve','0')";
+                $query = "CALL eliminarPaqueteVenta('1','$ultima_cve','0','$folio_venta')";
 
                return $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
 
@@ -338,6 +356,7 @@ class VentaModelo
         $datosFiltrados = $this->filtrarDatos($datosVenta);
 
         $ban = $datosFiltrados['ban'];
+        $folio_venta   = $datosFiltrados["folio_venta"];
         $cve_deventa = $datosFiltrados['cve_deventa'];
         $cantidad_deventa = $datosFiltrados['cantidad_deventa'];
 
@@ -346,7 +365,7 @@ class VentaModelo
         $ultima_cve = $cve_deventa;
         
                    
-                $query = "CALL eliminarPaqueteVenta('$ban','$ultima_cve','$cantidad_deventa')";
+                $query = "CALL eliminarPaqueteVenta('$ban','$ultima_cve','$cantidad_deventa','$folio_venta')";
 
                 return $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
             

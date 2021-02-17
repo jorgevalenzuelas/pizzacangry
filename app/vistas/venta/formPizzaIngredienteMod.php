@@ -170,6 +170,7 @@ $(document).ready(function () {
                 type     : "POST",
                 data     : { 
                         ban: 1,
+                        folio_venta : $("#txtFolioVenta").text(),
                         cve_deventa: <?php echo $_POST["cve_deventa"];?>,
                         cveproducto_deventa : 1,
                         cantidad_deventa : cantidad_productosMod,

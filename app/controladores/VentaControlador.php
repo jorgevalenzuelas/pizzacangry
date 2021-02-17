@@ -79,6 +79,15 @@ else
 				echo json_encode($envioDatos);
 		}
 
+		public function actualizarTotalVenta()
+		{
+			$datosVenta =  array (
+				folioventa_deventa   => $_POST["folioventa_deventa"],
+				 cveusuario_accion  => $_SESSION["cve_usuario"]
+			 );
+			$respuesta = $this->VentaModelo->actualizarTotalVenta($datosVenta);
+		}
+
 		public function GuardarVenta()
 		{
 				//Preparamos en un array los datos que enviaremos a la BD
@@ -123,6 +132,7 @@ else
 				//Preparamos en un array los datos que enviaremos a la BD
 				$datosVenta =  array (
 									ban                => 1,
+									folio_venta   => $_POST["folio_venta"],
 									cve_deventa   => $_POST["cve_deventa"],
 									deingredientes => $_POST["deingredientes"],
 									cantidad_deventa => $_POST["cantidad_deventa"],
@@ -157,6 +167,7 @@ else
 		{
 				//Preparamos en un array los datos que enviaremos a la BD
 				$datosVenta =  array (
+									folio_venta	=>	$_POST["folio_venta"],
 									cve_deventa   => $_POST["cve_deventa"],
 									cveproducto_deventa => $_POST["cveproducto_deventa"]
 							     );
@@ -190,6 +201,7 @@ else
 				//Preparamos en un array los datos que enviaremos a la BD
 				$datosVenta =  array (
 									ban                => $_POST["ban"],
+									folio_venta   => $_POST["folio_venta"],
 									cve_deventa   => $_POST["cve_deventa"],
 									cantidad_deventa => $_POST["cantidad_deventa"]
 							     );
