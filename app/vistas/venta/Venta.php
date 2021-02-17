@@ -337,7 +337,7 @@ width: 150px;
                     $(myJson.arrayDatos).each( function(key, val)
                     {
                         if(val.cvema_producto != null){
-                            alert("entro");
+                        
                             value = '{"cvema_producto":"'+val.cvema_producto+'","nombrecompleto_producto":"'+val.nombrecompleto_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","precio_producto":"'+val.precio_producto.replace(/"/g, "\\&#x22;").replace(/'/g, "&#x27;")+'","cveproducto_producto":"'+val.cveproducto_producto+'","cantidadingrediente_producto":"'+val.cantidadingrediente_producto+'"}';
 							select.append("<option data-value='"+value+"' value='"+val.nombrecompleto_producto.replace(/'/g, "&#x27;")+"'>");
                         }

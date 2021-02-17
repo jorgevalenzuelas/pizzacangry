@@ -87,6 +87,7 @@ else
 									chk2_tamano             => $_POST["chk2_tamano"],
 									chk2_ingrediente        => $_POST["chk2_ingrediente"],
 									chk2_unidadmedida		=> $_POST["chk2_unidadmedida"],
+									chk2_extra             => $_POST["chk2_extra"],
 									chk2_usuario              => $_POST["chk2_usuario"],
 									chk2_perfil               => $_POST["chk2_perfil"],
 									chk2_sucursal             => $_POST["chk2_sucursal"],

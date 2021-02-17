@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?php echo NOMBRE_SITIO; ?> | Especialidades</title>
+    <title><?php echo NOMBRE_SITIO; ?> | Extras</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -45,7 +45,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Especialidades
+                Extras
             </h1>
 
         </section>
@@ -53,20 +53,18 @@
         <!-- Main content -->
         <section class="content">
 
-            <div id="msgAlert"></div>
+            <div id="msgAlertExtra2"></div>
 
-            <button class="btn btn-primary" id="btnMostraModalEspecialidad">Nueva especialidad</button>
+            <button class="btn btn-primary" id="btnMostraModalExtra">Nuevo extra</button>
       
             <div class="box" style="margin-top: 20px;">
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table id="gridEspecialidad" class="table table-bordered table-striped" style="font-size: 12px;">
+                    <table id="gridExtra" class="table table-bordered table-striped" style="font-size: 12px;">
                         <thead>
                             <tr>
-                                <th>Nombre especialidad</th>
+                                <th>Nombre extra</th>
                                 <th>Tamaño</th>
-                                <th>Costo</th>
-                                <th>Precio publico</th>
                                 <th>Editar</th>
                                 <th>Status</th>
                             </tr>
@@ -94,49 +92,44 @@
 <!-- ./wrapper -->
 
 <!-- modales -->
-<div class="modal fade" id="modal_formEspecialidad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_formExtra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" >
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="myModalLabel">Especialidad</h2>
+                <h2 class="modal-title" id="myModalLabel">Extra</h2>
             </div>
-            <div class="modal-body" id="muestra_formEspecialidad">
-                <input type="hidden" id="txtcveEspecialidad" name="txtcveEspecialidad">
+            <div class="modal-body" id="muestra_formExtra">
+                <input type="hidden" id="txtcveExtra" name="txtcveExtra">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <div id="msgAlert2"></div>
+                        <div id="msgAlertExtra1"></div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>Nombre del extra*</label>
+                        <input type="text" class="form-control" id="txtNombreExtra" name="txtNombreExtra" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                    </div>
                     <div class="form-group col-md-4">
-                        <label>Nombre especialidad*</label>
-                        <input type="text" class="form-control" id="txtNombreEspecialidad" name="txtNombreEspecialidad" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                        <label>Tamaño*</label>
+                        <select id="cmbTamanoTradicional" name="cmbTamanoTradicional" class="form-control ns_"></select>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Costo*</label>
-                        <input type="number" min='0' class="form-control" id="txtCostoEspecialidad" name="txtCostoEspecialidad" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                        <input type="number" min='0' class="form-control" id="txtCostoExtra" name="txtCostoExtra" onkeyup='javascript:this.value=this.value.toUpperCase();'>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label>Precio publico*</label>
-                        <input type="number" min='0' class="form-control" id="txtPrecioEspecialidad" name="txtPrecioEspecialidad" onkeyup='javascript:this.value=this.value.toUpperCase();'>
-                    </div>
+                    
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>Tamaño*</label>
-                        <select id="cmbTamanoEspecialidad" name="cmbTamanoEspecialidad" class="form-control ns_"></select>
+                        <label>Precio publico*</label>
+                        <input type="number" min='0' class="form-control" id="txtPrecioExtra" name="txtPrecioExtra" onkeyup='javascript:this.value=this.value.toUpperCase();'>
                     </div>                    
-                </div> 
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label>Descripción*</label>
-                        <textarea class="form-control" id="txtDescripcionEspecialidad" name="txtDescripcionEspecialidad" onkeyup='javascript:this.value=this.value.toUpperCase();' rows="3"></textarea>
-                    </div>                    
-                </div> 
+                </div>  
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
-                <button class="btn btn-primary" id="btnCancelar">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="btnGuardarExtra">Guardar</button>
+                <button class="btn btn-primary" id="btnCancelarExtra">Cancelar</button>
             </div>
         </div>
     </div>
@@ -178,7 +171,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        tableEspecialidad = $('#gridEspecialidad').DataTable( {    
+        tableExtra = $('#gridExtra').DataTable( {    
             "responsive": true,
             "searching" : true,
             "paging"    : true,
@@ -186,8 +179,8 @@
             "info"      : true,
             "bLengthChange": false,
             "columnDefs": [
-                {"width": "10%","className": "text-center","targets": 4},
-                {"width": "10%","className": "text-center","targets": 5},
+                {"width": "10%","className": "text-center","targets": 2},
+                {"width": "10%","className": "text-center","targets": 3},
             ],
 
             "bJQueryUI":true,"oLanguage": {
@@ -215,13 +208,13 @@
             }
         });
         //Mandamos llamar la función para mostrar tabla al cargar la página
-        cargarTablaEspecialidad();
+        cargarTablaExtra();
     });
 
-    function cargarTablaEspecialidad()
+    function cargarTablaExtra()
     {
         $.ajax({
-            url      : 'Especialidad/consultar',
+            url      : 'Extra/consultar',
             type     : "POST",
             data    : { 
                 ban: 1 
@@ -234,7 +227,7 @@
 
                 var myJson = JSON.parse(datos);
 
-                tableEspecialidad.clear().draw();
+                tableExtra.clear().draw();
 
                 if(myJson.arrayDatos.length > 0)
                 {
@@ -247,29 +240,27 @@
                     $(myJson.arrayDatos).each( function(key, val)
                     {
 
-                        if (parseInt(val.estatus_especialidad) == 1)
+                        if (parseInt(val.estatus_extra) == 1)
                         {
-                            title = 'Especialidad activo';
+                            title = 'Extra activo';
                             icon = 'fa fa-dot-circle-o';
                             color_icon = "color: #4ad129;"
-                            accion = "bloquearEspecialidad('" + val.cve_especialidad + "','0')";
+                            accion = "bloquearExtra('" + val.cve_extra + "','0')";
                         }
                         else
                         {
-                            title = 'Especialidad bloqueado';
+                            title = 'Extra bloqueado';
                             icon = 'fa fa-circle';
                             color_icon = "color: #f00;"
-                            accion = "bloquearEspecialidad('" + val.cve_especialidad + "','1')";
+                            accion = "bloquearExtra('" + val.cve_extra + "','1')";
                         }
 
-                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Especiaidad' onclick=\"mostrarEspecialidad('" + val.cve_especialidad + "')\"></i>";
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Extra' onclick=\"mostrarExtra('" + val.cve_extra + "')\"></i>";
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
-                        tableEspecialidad.row.add([
-                            val.nombre_especialidad,
+                        tableExtra.row.add([
+                            val.nombre_extra,
                             val.nombre_tamano,
-                            val.costo_especialidad,
-                            val.precio_especialidad,
                             btn_editar,
                             btn_status,
                         ]).draw();
@@ -278,7 +269,7 @@
                 }
                 else
                 {
-                    tableEspecialidad = $('#gridEspecialidad').DataTable();
+                    tableExtra = $('#gridExtra').DataTable();
                     
                 }
 
@@ -286,18 +277,17 @@
         });
     }
 
-    $('#btnMostraModalEspecialidad').click(function (e) {
-        $('#modal_formEspecialidad').modal({
+    $('#btnMostraModalExtra').click(function (e) {
+        $('#modal_formExtra').modal({
             keyboard: false
         });
-        $('#txtcveEspecialidad').val('');
-        $('#txtNombreEspecialidad').val('');
-        $('#txtCostoEspecialidad').val('');
-        $('#txtPrecioEspecialidad').val('');
-        $('#txtDescripcionEspecialidad').val('');
-        document.getElementById("cmbTamanoEspecialidad").selectedIndex = "0";
+        $('#txtcveExtra').val('');
+        $('#txtNombreExtra').val('');
+        $('#txtCostoExtra').val('');
+        $('#txtPrecioExtra').val('');
+        document.getElementById("cmbTamanoTradicional").selectedIndex = "0";
         cargarTamano();
-        $("#btnGuardar").html('Guardar');
+        $("#btnGuardarExtra").html('Guardar');
         return false;
     });
 
@@ -316,7 +306,7 @@
 
                 var myJson = JSON.parse(datos);
 
-                select = $("#cmbTamanoEspecialidad");
+                select = $("#cmbTamanoTradicional");
                 select.attr('disabled',false);
                 select.find('option').remove();
                 select.append('<option value="-1">-- Selecciona --</option>');
@@ -331,7 +321,7 @@
                 }
                 else
                 {
-                    document.getElementById("cmbTamanoEspecialidad").selectedIndex = "0";
+                    document.getElementById("cmbTamanoTradicional").selectedIndex = "0";
                     
                 }
 
@@ -339,64 +329,59 @@
         });
     }
 
-    $('#btnCancelar').click(function (e) {
-        $('#modal_formEspecialidad').modal('hide');
+    $('#btnCancelarExtra').click(function (e) {
+        $('#modal_formExtra').modal('hide');
         return false;
     });
 
-    $('#btnGuardar').click(function (e) {
-        if ( $('#txtNombreEspecialidad').val()  == "" )
+    $('#btnGuardarExtra').click(function (e) {
+        if ( $('#txtNombreExtra').val()  == "" )
         {
-            msgAlert2("Favor de ingresar el nombre de la especialidad.","warning");
+            msgAlertExtra1("Favor de ingresar el nombre del extra.","warning");
         }
-        else if ( $('#txtCostoEspecialidad').val()  == "" )
+        else if ( $('#txtCostoExtra').val()  == "" )
         {
-            msgAlert2("Favor de ingresar el costo de la especialidad.","warning");
+            msgAlertExtra1("Favor de ingresar el costo del extra.","warning");
         }
-        else if ( $('#txtPrecioEspecialidad').val()  == "" )
+        else if ( $('#txtPrecioExtra').val()  == "" )
         {
-            msgAlert2("Favor de ingresar el precio de la especialidad.","warning");
+            msgAlertExtra1("Favor de ingresar el costo del extra.","warning");
         }
-        else if ( $('#txtDescripcionEspecialidad').val()  == "" )
+        else if ( $('#cmbTamanoTradicional').val()  == "-1" )
         {
-            msgAlert2("Favor de ingresar la descripción de la especialidad","warning");
-        }
-        else if ( $('#cmbTamanoEspecialidad').val()  == "-1" )
-        {
-            msgAlert2("Favor de ingresar el tamaño de la especialidad","warning");
+            msgAlert2("Favor de ingresar el tamaño del extra","warning");
         }
         else
         {
-            $("#btnGuardar").prop('disabled', true);
+            $("#btnGuardarExtra").prop('disabled', true);
             
             $.ajax({
-                url      : 'Especialidad/guardarEspecialidad',
+                url      : 'Extra/guardarExtra',
                 data     : {
-                    cve_especialidad : $('#txtcveEspecialidad').val() != '' ? $('#txtcveEspecialidad').val() : '0',
-                    nombre_especialidad : $('#txtNombreEspecialidad').val() != '' ? $('#txtNombreEspecialidad').val() : '',
-                    costo_especialidad : $('#txtCostoEspecialidad').val() != '' ? $('#txtCostoEspecialidad').val() : '',
-                    precio_especialidad : $('#txtPrecioEspecialidad').val() != '' ? $('#txtPrecioEspecialidad').val() : '',
-                    descripcion_especialidad : $('#txtDescripcionEspecialidad').val() != '' ? $('#txtDescripcionEspecialidad').val() : '',
-                    cvetamano_especialidad : $('#cmbTamanoEspecialidad').val() != -1 ? $('#cmbTamanoEspecialidad').val() : '-1'
+                    cve_extra : $('#txtcveExtra').val() != '' ? $('#txtcveExtra').val() : '0',
+                    nombre_extra : $('#txtNombreExtra').val() != '' ? $('#txtNombreExtra').val() : '',
+                    costo_extra : $('#txtCostoExtra').val() != '' ? $('#txtCostoExtra').val() : '0',
+                    precio_extra : $('#txtCostoExtra').val() != '' ? $('#txtPrecioExtra').val() : '0',
+                    cvetamano_extra : $('#cmbTamanoTradicional').val() != '-1' ? $('#cmbTamanoTradicional').val() : '-1'
                 },
                 type: "POST",
                 success: function(datos){
                     var myJson = JSON.parse(datos);
                     if(myJson.status == "success")
                     {
-                        $('#modal_formEspecialidad').modal('hide');
-                        $('#txtcveEspecialidad').val('');
+                        $('#modal_formExtra').modal('hide');
+                        $('#txtcveExtra').val('');
                         //Reinicializamos tabla
-                        cargarTablaEspecialidad();
-                        msgAlert(myJson.msg ,"success");
-                        //$('#msgAlert').css("display", "none");
-                        $("#btnGuardar").prop('disabled', false);
-                        $("#btnGuardar").html('Guardar');
+                        cargarTablaExtra();
+                        msgAlertExtra2(myJson.msg ,"success");
+                        //$('#msgAlertExtra2').css("display", "none");
+                        $("#btnGuardarExtra").prop('disabled', false);
+                        $("#btnGuardarExtra").html('Guardar');
                     }
                     else
                     {
-                        $("#btnGuardar").prop('disabled', false);
-                        msgAlert2(myJson.msg ,"danger");
+                        $("#btnGuardarExtra").prop('disabled', false);
+                        msgAlertExtra1(myJson.msg ,"danger");
                         
                     }
                 }
@@ -405,23 +390,23 @@
         return false;
     });
 
-    function msgAlert2(msg,tipo)
+    function msgAlertExtra1(msg,tipo)
     {
-        $('#msgAlert2').css("display", "block");
-        $("#msgAlert2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
-        setTimeout(function() { $("#msgAlert2").fadeOut(1500); },1500);
+        $('#msgAlertExtra1').css("display", "block");
+        $("#msgAlertExtra1").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlertExtra1").fadeOut(1500); },1500);
     }
 
-    function mostrarEspecialidad(cve_especialidad)
+    function mostrarExtra(cve_extra)
     {
-        $('#msgAlert').css("display", "none");
+        $('#msgAlertExtra2').css("display", "none");
         cargarTamano();
         $.ajax({
-            url      : 'Especialidad/consultar',
+            url      : 'Extra/consultar',
             type     : "POST",
             data     : { 
                     ban: 2, 
-                    cve_especialidad: cve_especialidad 
+                    cve_extra: cve_extra 
             },
             beforeSend: function() {
                 // setting a timeout
@@ -429,30 +414,28 @@
             success  : function(datos) {
                 var myJson = JSON.parse(datos);
                 //console.log(myJson);
-                $('#modal_formEspecialidad').modal({
+                $('#modal_formExtra').modal({
                     keyboard: false
                 });
-                $('#txtcveEspecialidad').val(myJson.arrayDatos[0].cve_especialidad);
-                $('#txtNombreEspecialidad').val(myJson.arrayDatos[0].nombre_especialidad);
-                $('#txtCostoEspecialidad').val(myJson.arrayDatos[0].costo_especialidad);
-                $('#txtPrecioEspecialidad').val(myJson.arrayDatos[0].precio_especialidad);
-                $('#txtDescripcionEspecialidad').val(myJson.arrayDatos[0].descripcion_especialidad);
-                
-                $("#cmbTamanoEspecialidad").val(myJson.arrayDatos[0].cvetamano_especialidad);
-                $("#btnGuardar").html('Actualizar Especialidad');
+                $('#txtcveExtra').val(myJson.arrayDatos[0].cve_extra);
+                $('#txtNombreExtra').val(myJson.arrayDatos[0].nombre_extra);
+                $('#txtCostoExtra').val(myJson.arrayDatos[0].costo_extra);
+                $('#txtPrecioExtra').val(myJson.arrayDatos[0].precio_extra);
+                $("#cmbTamanoTradicional").val(myJson.arrayDatos[0].cvetamano_extra);
+                $("#btnGuardarExtra").html('Actualizar Extra');
 
             }
         });
     }
 
-    function bloquearEspecialidad(cve_especialidad,bloqueo)
+    function bloquearExtra(cve_extra,bloqueo)
     {
         if (bloqueo == 0)
         {
-            var msg = "Esta seguro de bloquear esta especialidad?";
+            var msg = "Esta seguro de bloquear este extra?";
             var ban = 2;
         }else{
-            var msg = "Esta seguro de desbloquear esta especialidad?";
+            var msg = "Esta seguro de desbloquear este extra?";
             var ban = 3;
         }
 
@@ -470,12 +453,12 @@
                 if (result == true){
 
                     $.ajax({
-                        url      : 'Especialidad/bloquearEspecialidad',
+                        url      : 'Extra/bloquearExtra',
                         type     : "POST",
                         data     : { 
 
                                 ban: ban, 
-                                cve_especialidad: cve_especialidad 
+                                cve_extra: cve_extra 
 
                         },
                         beforeSend: function() {
@@ -489,15 +472,15 @@
                             if(myJson.status == "success")
                             {
 
-                                //var table = $('#gridEspecialidad').DataTable();
+                                //var table = $('#gridExtra').DataTable();
                                         
                                 //table.clear();
                                 //table.destroy();
 
                                 //Reinicializamos tabla
-                                cargarTablaEspecialidad();
+                                cargarTablaExtra();
 
-                                msgAlert(myJson.msg ,"info");
+                                msgAlertExtra2(myJson.msg ,"info");
 
                             }
 
@@ -512,11 +495,11 @@
 
     }
 
-    function msgAlert(msg,tipo)
+    function msgAlertExtra2(msg,tipo)
     {
-        $('#msgAlert').css("display", "block");
-        $("#msgAlert").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
-        setTimeout(function() { $("#msgAlert").fadeOut(1500); },1500);
+        $('#msgAlertExtra2').css("display", "block");
+        $("#msgAlertExtra2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlertExtra2").fadeOut(1500); },1500);
     }
 
 </script>

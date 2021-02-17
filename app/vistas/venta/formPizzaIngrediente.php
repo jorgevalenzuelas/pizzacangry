@@ -10,7 +10,14 @@
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label>Pizza <?php echo $i;?>*</label>
+                        <div class="form-check pull-right">
+                            <input class="form-check-input" type="checkbox" value="" id="extra_<?php echo $i;?>">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Extra
+                            </label>
+                        </div>
                     </div>
+                    
                 </div>
                 <?php
                 for($j = 1; $j <= $_POST["cantidadingrediente_producto"]; $j++){
@@ -111,6 +118,7 @@ $(document).ready(function () {
         var Pizza = '';
         var Valores = [];
         var entro = false;
+        var checkbox = 0;
 
         if(valueCombo.cveproducto_producto == 1){
             Pizza = '';
@@ -124,7 +132,14 @@ $(document).ready(function () {
                     }
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
-                Valores[k-1] = k+"|"+$("#des_"+k).val()+"|"+Pizza;
+                if ($("#extra_"+k).is(":checked"))
+                {
+                    checkbox = 1;
+                }
+                else{
+                    checkbox = 0;
+                }
+                Valores[k-1] = k+"|"+$("#des_"+k).val()+"|"+checkbox+"|"+Pizza;
             }
             Valores = Valores.join('-');
         }
@@ -134,8 +149,6 @@ $(document).ready(function () {
         }
 
         if(entro != true){
-
-
 
             $.ajax({
                 url      : 'Venta/GuardarVenta',

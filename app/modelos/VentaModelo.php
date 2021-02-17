@@ -124,12 +124,13 @@ class VentaModelo
                         
                 $ingredentes2  = $pizzas[$i];
                 $pizzas2 = explode("|", $ingredentes2);
-                for($j = 2; $j < count($pizzas2); $j++){
+                for($j = 3; $j < count($pizzas2); $j++){
                     $numeroPizza = $pizzas2[0];
                     $descripcionPizza = $pizzas2[1];
+                    $extraPizza = $pizzas2[2];
                     $cveIngredente = $pizzas2[$j];
                     if (!empty($ultima_cve)){
-                        $query = "CALL guardarDeTradicionalIngrediente('1','0','$ultima_cve','$numeroPizza','$descripcionPizza','$cveIngredente')";
+                        $query = "CALL guardarDeTradicionalIngrediente('1','0','$ultima_cve','$numeroPizza','$descripcionPizza','$extraPizza','$cveIngredente')";
                         file_put_contents('guardarDeTradicionalIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
                         $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
                     }
@@ -230,12 +231,13 @@ class VentaModelo
                             
                     $ingredentes2  = $pizzas[$i];
                     $pizzas2 = explode("|", $ingredentes2);
-                    for($j = 2; $j < count($pizzas2); $j++){
+                    for($j = 3; $j < count($pizzas2); $j++){
                         $numeroPizza = $pizzas2[0];
                         $descripcionPizza = $pizzas2[1];
+                        $extraPizza = $pizzas2[2];
                         $cveIngredente = $pizzas2[$j];
                         if (!empty($ultima_cve)){
-                            $query = "CALL guardarDeTradicionalIngrediente('1','0','$ultima_cve','$numeroPizza','$descripcionPizza','$cveIngredente')";
+                            $query = "CALL guardarDeTradicionalIngrediente('1','0','$ultima_cve','$numeroPizza','$descripcionPizza','$extraPizza','$cveIngredente')";
                             file_put_contents('guardarDeTradicionalIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
                             $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
                         }

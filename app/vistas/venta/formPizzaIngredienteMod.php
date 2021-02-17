@@ -12,6 +12,12 @@
                     <div class="form-group col-md-12">
                         <label>Pizza <?php echo $i;?>*</label>
                         <button type="submit" class="btn btn-primary" onclick="eliminarPizzaVenta('<?php echo $i;?>')">Eliminar</button>
+                        <div class="form-check pull-right">
+                            <input class="form-check-input" type="checkbox" value="" id="extra_<?php echo $i;?>_">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Extra
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <?php
@@ -119,6 +125,12 @@ $(document).ready(function () {
                         
                         $("#_"+val.numpizza_detradicionalingrediente+"_"+aux).val(val.cveingrediente_detradicionalingrediente);
                         $("#des_"+val.numpizza_detradicionalingrediente+"_").val(val.descripcion_detradicionalingrediente);
+                        if(val.extra_detradicionalingrediente == '1'){
+                            $("#extra_"+val.numpizza_detradicionalingrediente+"_").attr('checked', true);
+                        }
+                        else{
+                            $("#extra_"+val.numpizza_detradicionalingrediente+"_").attr('checked', false);
+                        }
                         
                         aux++;
                     })
@@ -139,6 +151,7 @@ $(document).ready(function () {
         var Pizza = '';
         var Valores = [];
         var entro = false;
+        var checkbox = 0;
 
             Pizza = '';
             Valores = [];
@@ -153,7 +166,14 @@ $(document).ready(function () {
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
                     if($("#_"+k+"_1").length !== 0){
-                        Valores[count] = (count+1)+"|"+$("#des_"+k+"_").val()+"|"+Pizza;
+                        if ($("#extra_"+k+"_").is(":checked"))
+                        {
+                            checkbox = 1;
+                        }
+                        else{
+                            checkbox = 0;
+                        }
+                        Valores[count] = (count+1)+"|"+$("#des_"+k+"_").val()+"|"+checkbox+"|"+Pizza;
                         count ++;
                     }
                     
