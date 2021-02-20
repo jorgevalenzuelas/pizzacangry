@@ -5,7 +5,8 @@
 <div class="box-body">
         <div class="row">
         <?php
-        for($i = 1; $i <= $_POST["cantidad_productos"]; $i++){
+        //cantidad de paquetes siempre sera 1
+        for($noPaquete = 1; $noPaquete <= $_POST["cantidad_productos"]; $noPaquete++){
         ?>
             <div class="row">
                 <div class="form-group col-md-12">
@@ -17,20 +18,28 @@
                 
                 <?php
                 $porciones = explode(",", $_POST["cantidadingrediente_producto"]);
-                foreach ($porciones as $key=>$valor) {
+                //estas son las tandas o numeros de pizzas pero agrupados por separar
+                foreach ($porciones as $tanda=>$valor) {
                     $porciones2 = explode("|", $valor);
+                    for($noPizza = 1; $noPizza <= $porciones2[0]; $noPizza++){
                 ?>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label><?php echo $porciones2[1];?>*</label>
+                        <label><?php echo $porciones2[2];?>*</label>
+                        <div class="form-check pull-right">
+                            <input class="form-check-input" type="checkbox" value="" id="extra_<?php echo $noPaquete;?>_<?php echo $tanda+1;?>_<?php echo $noPizza;?>">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                QUESO FILADELFIA
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <?php
-                for($j = 1; $j <= $porciones2[0]; $j++){
+                for($noIngrediente = 1; $noIngrediente <= $porciones2[1]; $noIngrediente++){
                 ?>
                     <div class="form-group col-md-4">
                         <label>Ingrediente <?php echo $j;?>*</label>
-                        <select id="<?php echo $porciones2[2];?>_<?php echo $i;?>_<?php echo $key+1;?>_<?php echo $j;?>" name="<?php echo $porciones2[2];?>_<?php echo $i;?>_<?php echo $key+1;?>_<?php echo $j;?>" class="form-control ns_"></select>
+                        <select id="<?php echo $noPaquete;?>_<?php echo $tanda+1;?>_<?php echo $noPizza;?>_<?php echo $noIngrediente;?>_<?php echo $porciones2[3];?>" name="<?php echo $porciones2[2];?>_<?php echo $i;?>_<?php echo $key+1;?>_<?php echo $j;?>" class="form-control ns_"></select>
                     </div>
         <?php 
                 }
@@ -38,10 +47,11 @@
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label>Comentarios*</label>
-                        <input type="text" class="form-control" id="desp_<?php echo $i;?><?php echo $porciones2[2];?>" onkeyup='javascript:this.value=this.value.toUpperCase();'>  
+                        <input type="text" class="form-control" id="desp_<?php echo $noPaquete;?>_<?php echo $tanda+1;?>_<?php echo $noPizza;?>" onkeyup='javascript:this.value=this.value.toUpperCase();'>  
                     </div>
                 </div>
                 <?php
+                }
             }
         }
         ?>
@@ -76,11 +86,12 @@ function cargarIngrediente(){
             success  : function(datos) {
 
                 var myJson = JSON.parse(datos);
-                for(var k = 1; k <= cantidad_productos; k++){
-                    for (var index = 1; index <= arraypizzas.length; index++) {
-                        var arraypizzas2 = arraypizzas[index-1].split("|");
-                        for(var l = 1; l <= arraypizzas2[0]; l++){
-                            select = $("#"+arraypizzas2[2]+"_"+k+"_"+index+"_"+l);
+                for(var noPaquete = 1; noPaquete <= cantidad_productos; noPaquete++){
+                    for (var tanda = 0; tanda < arraypizzas.length; tanda++) {
+                        var arraypizzas2 = arraypizzas[tanda].split("|");
+                        for(var noPizza = 1; noPizza <= arraypizzas2[0]; noPizza++){
+                            for(var noIngrediente = 1; noIngrediente <= arraypizzas2[1]; noIngrediente++){
+                            select = $("#"+noPaquete+"_"+(tanda+1)+"_"+noPizza+"_"+noIngrediente+"_"+arraypizzas2[3]);
                             select.attr('disabled',false);
                             select.find('option').remove();
                             select.append('<option value="-1">-- Selecciona --</option>');
@@ -94,6 +105,7 @@ function cargarIngrediente(){
 
                             }
                         }
+                    }
                     }
                 }
                 
@@ -132,23 +144,34 @@ function cargarIngrediente(){
         if(valueCombo.cveproducto_producto == 5){
             Pizza = '';
             Valores = [];
-            for(var k = 1; k <= cantidad_productos; k++){
+
+            for(var noPaquete = 1; noPaquete <= cantidad_productos; noPaquete++){
                 Pizza = '';
-                for (var index = 1; index <= arraypizzas.length; index++) {
-                        var arraypizzas2 = arraypizzas[index-1].split("|");
-                        Pizza += arraypizzas2[2]+"|"+$("#desp_"+k+arraypizzas2[2]).val()+"|";
-                        for(var l = 1; l <= arraypizzas2[0]; l++){ 
-                        Pizza += $("#"+arraypizzas2[2]+"_"+k+"_"+index+"_"+l).val() + "|";
-                        if($("#"+arraypizzas2[2]+"_"+k+"_"+index+"_"+l).val() == '-1'){
-                            entro = true;
+                for (var tanda = 0; tanda < arraypizzas.length; tanda++) {
+                    var arraypizzas2 = arraypizzas[tanda].split("|");
+                    for(var noPizza = 1; noPizza <= arraypizzas2[0]; noPizza++){
+                        if ($("#extra_"+noPaquete+"_"+(tanda+1)+"_"+noPizza).is(":checked"))
+                            {
+                                checkbox = 1;
+                            }
+                            else{
+                                checkbox = 0;
+                            }
+                        Pizza += arraypizzas2[3]+"|"+$("#desp_"+noPaquete+"_"+(tanda+1)+"_"+noPizza).val()+"|"+checkbox+"|";
+                        for(var noIngrediente = 1; noIngrediente <= arraypizzas2[1]; noIngrediente++){
+
+                            Pizza += $("#"+noPaquete+"_"+(tanda+1)+"_"+noPizza+"_"+noIngrediente+"_"+arraypizzas2[3]).val() + "|";
+                            if($("#"+noPaquete+"_"+(tanda+1)+"_"+noPizza+"_"+noIngrediente+"_"+arraypizzas2[3]).val() == '-1'){
+                                entro = true;
+                            }
                         }
+                        Pizza = Pizza.substring(0, Pizza.length - 1);
+                        Pizza += "-";
                     }
                     Pizza = Pizza.substring(0, Pizza.length - 1)+"+";
-                   
                 }
                 Pizza = Pizza.substring(0, Pizza.length - 1);
-                Valores[k-1] = Pizza;
-                
+                Valores[noPaquete-1] = Pizza;
             }
             Valores = Valores.join('-');
         }

@@ -15,7 +15,7 @@
                         <div class="form-check pull-right">
                             <input class="form-check-input" type="checkbox" value="" id="extra_<?php echo $i;?>_">
                             <label class="form-check-label" for="flexCheckDefault">
-                                Extra
+                                QUESO FILADELFIA
                             </label>
                         </div>
                     </div>

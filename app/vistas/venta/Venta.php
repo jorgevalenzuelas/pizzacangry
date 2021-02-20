@@ -508,7 +508,16 @@ width: 150px;
     });
 
     function consultarComanda(folioComanda){
-
+        $.ajax({
+            url      : 'Venta/actualizarTotalVenta',
+            type     : "POST",
+            data    : { 
+                ban: 1 ,
+                folo_venta: folioComanda
+            },
+            success  : function(datos) {
+            }
+        });
         $.ajax({
             url      : 'Venta/consultarComanda',
             type     : "POST",

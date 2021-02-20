@@ -148,30 +148,34 @@ class VentaModelo
         else if($cveproducto_deventa == '5'){
             $this->conexion->next_result();
             $ingredentes  = $deingredientes;
-            $paquetes = explode("-", $ingredentes);
+            $noTanda = explode("+", $ingredentes);
+
+            for($i = 0; $i < count($noTanda); $i++){
+                $noPizza = explode("-", $noTanda[$i]);
+                for($j = 0; $j < count($noPizza); $j++){
+                    $desglose = explode("|", $noPizza[$j]);
+                    for($k = 3; $k < count($desglose); $k++){
+                        $numPaquete = 1;
+                        $numTanda = $i+1;
+                        $numPizza = $j+1;
+                        $numIngrediente = $k-2;
+                        $cvePizzaTradicional = $desglose[0];
+                        $cveIngredente = $desglose[$k];
+                        $descripcionPizza = $desglose[1];
+                        $extraPizza = $desglose[2];
+
+                        if (!empty($ultima_cve)){
+                            $query = "CALL guardarDePaqueteIngrediente('1','0','$ultima_cve','$numPaquete','$numTanda','$numPizza','$numIngrediente','$cvePizzaTradicional','$cveIngredente','$extraPizza','$descripcionPizza')";
+                            file_put_contents('guardarDePaqueteIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
+                            $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+                        }
+                        //file_put_contents('guardarDePaqueteIngredientevalores.txt',print_r( array($numPaquete." - ".$numTanda." - ".$numPizza." - ".$numIngrediente." - ".$cvePizzaTradicional." - ".$cveIngredente." - ".$descripcionPizza),true)."\r\n", FILE_APPEND | LOCK_EX);
+
+                    
             
-            for($i = 0; $i < $cantidad_deventa; $i++){
-                $numPizza = 1;
-                $pizzas = explode("+", $paquetes[$i]);
-                for($j = 0; $j < count($pizzas); $j++){
-                    $desglose = explode("|", $pizzas[$j]);
-                    for($k = 2; $k < count($desglose); $k++){
-
-                    $numeroPaquete = $i + 1;
-                    $cvePizza = $desglose[0];
-                    $descripcionPizza = $desglose[1];
-                    $cveIngredente = $desglose[$k];
-
-                    if (!empty($ultima_cve)){
-                        $query = "CALL guardarDePaqueteIngrediente('1','0','$ultima_cve','$numeroPaquete','$numPizza','$cvePizza','$descripcionPizza','$cveIngredente')";
-                        file_put_contents('guardarDePaqueteIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
-                        $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+                        $this->conexion->next_result();
                     }
-        
-                    $this->conexion->next_result();
                 }
-                $numPizza++;
-            }
             }
 
             $this->conexion->close_conexion();
@@ -259,7 +263,7 @@ class VentaModelo
 
             $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
 
-            if(cantidad_deventa == '0'){
+            if($cantidad_deventa == '0'){
                 $this->conexion->next_result();
                 $query = "CALL eliminarPaqueteVenta('1','$ultima_cve','$cantidad_deventa','$folio_venta')";
 
@@ -273,30 +277,34 @@ class VentaModelo
 
                 $this->conexion->next_result();
                 $ingredentes  = $deingredientes;
-                $paquetes = explode("-", $ingredentes);
+                $noTanda = explode("+", $ingredentes);
+
+                for($i = 0; $i < count($noTanda); $i++){
+                    $noPizza = explode("-", $noTanda[$i]);
+                    for($j = 0; $j < count($noPizza); $j++){
+                        $desglose = explode("|", $noPizza[$j]);
+                        for($k = 3; $k < count($desglose); $k++){
+                            $numPaquete = 1;
+                            $numTanda = $i+1;
+                            $numPizza = $j+1;
+                            $numIngrediente = $k-2;
+                            $cvePizzaTradicional = $desglose[0];
+                            $cveIngredente = $desglose[$k];
+                            $descripcionPizza = $desglose[1];
+                            $extraPizza = $desglose[2];
+
+                            if (!empty($ultima_cve)){
+                                $query = "CALL guardarDePaqueteIngrediente('1','0','$ultima_cve','$numPaquete','$numTanda','$numPizza','$numIngrediente','$cvePizzaTradicional','$cveIngredente','$extraPizza','$descripcionPizza')";
+                                file_put_contents('guardarDePaqueteIngrediente1.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
+                                $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+                            }
+                            //file_put_contents('guardarDePaqueteIngredientevalores.txt',print_r( array($numPaquete." - ".$numTanda." - ".$numPizza." - ".$numIngrediente." - ".$cvePizzaTradicional." - ".$cveIngredente." - ".$descripcionPizza),true)."\r\n", FILE_APPEND | LOCK_EX);
+
+                        
                 
-                for($i = 0; $i < $cantidad_deventa; $i++){
-                    $numPizza = 1;
-                    $pizzas = explode("+", $paquetes[$i]);
-                    for($j = 0; $j < count($pizzas); $j++){
-                        $desglose = explode("|", $pizzas[$j]);
-                        for($k = 2; $k < count($desglose); $k++){
-
-                        $numeroPaquete = $i + 1;
-                        $cvePizza = $desglose[0];
-                        $descripcionPizza = $desglose[1];
-                        $cveIngredente = $desglose[$k];
-
-                        if (!empty($ultima_cve) || !empty($cvePizza)){
-                            $query = "CALL guardarDePaqueteIngrediente('1','0','$ultima_cve','$numeroPaquete','$numPizza','$cvePizza','$descripcionPizza','$cveIngredente')";
-                            file_put_contents('guardarDePaqueteIngrediente.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
-                            $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+                            $this->conexion->next_result();
                         }
-            
-                        $this->conexion->next_result();
                     }
-                    $numPizza++;
-                }
                 }
 
                 $this->conexion->close_conexion();

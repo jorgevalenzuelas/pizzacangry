@@ -82,7 +82,7 @@ else
 		public function actualizarTotalVenta()
 		{
 			$datosVenta =  array (
-				folioventa_deventa   => $_POST["folioventa_deventa"],
+				folo_venta   => $_POST["folo_venta"],
 				 cveusuario_accion  => $_SESSION["cve_usuario"]
 			 );
 			$respuesta = $this->VentaModelo->actualizarTotalVenta($datosVenta);
