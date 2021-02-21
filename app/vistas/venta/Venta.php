@@ -57,25 +57,72 @@
                 </div>
                 
                 <div class="box" style="margin-top: 20px;">
-                <!-- /.box-header -->
-                <div class="box-body">
-                <label>Folio: &nbsp;</label><label id="txtFolioVenta"></label>
-                    <table id="gridComanda" class="table table-bordered table-striped" style="font-size: 12px;">
-                        <thead>
-                            <tr>
-                                <th>Nombre producto</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
-                                <th>Detalle</th>
-                                <th>Eliminar</th>
-                            </tr>
-                        </thead>
-                        
-                    </table>
-                    <label>Total: &nbsp;</label><label id="txtTotalVenta"></label>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                    <label>Folio: &nbsp;</label><label id="txtFolioVenta"></label>
+                        <table id="gridComanda" class="table table-bordered table-striped" style="font-size: 12px;">
+                            <thead>
+                                <tr>
+                                    <th>Nombre producto</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Detalle</th>
+                                    <th>Eliminar</th>
+                                </tr>
+                            </thead>
+                            
+                        </table>
+                        <label>Total: &nbsp;</label><label id="txtTotalVenta"></label>
+                        <div class="form-check" id="divTipoVenta">
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio1">
+                                    <input type="radio" class="form-check-input" id="radio1" name="optradio" onchange="tipoVenta()" value="1">&nbsp; Restaurante
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label" for="radio2">
+                                    <input type="radio" class="form-check-input" id="radio2" name="optradio" onchange="tipoVenta()" value="2">&nbsp; Domicilio
+                                    <div id="txtbtnVincularCliente">
+                                            <button type="button" class="btn btn-primary" onclick="vincularCliente()">Vincular cliente</button>
+                                        
+                                            <button type="button" class="btn btn-success" onclick="nuevoCliente()">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+
+                                            <div class="col-md-6">
+                                                <label>Nombre cliente: &nbsp;</label><label id="txtNombreClienteVenta"></label>
+                                                <br>
+                                                <label>Dirección: &nbsp;</label><label id="txtDireccionClienteVenta"></label>
+                                            </div>
+                                        </div>
+                                </label>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
                 </div>
-                <!-- /.box-body -->
             </div>
+            
+            <div class="col-md-6">
+                <div class="box" style="margin-top: 20px;">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="gridFolio" class="table table-bordered table-striped" style="font-size: 12px;">
+                            <thead>
+                                <tr>
+                                    <th>Folio</th>
+                                    <th>Total</th>
+                                    <th>Tipo</th>
+                                    <th>Editar</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
             </div>
             
         </div>
@@ -99,6 +146,51 @@ width: 150px;
   
 }
 </style>
+<div class="modal fade" id="modal_formClienteNuevo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel"></h5>
+            </div>
+            <div class="modal-body" id="muestra_formClienteNuevo"> 
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_formCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mg modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body" id="muestra_formCliente"> 
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <div class="form-group">
+                        <label for="cmbCliente">Buscar cliente</label>
+                        <datalist id="cmbContactosListCliente">
+                            <!--option value="0" selected="selected"> -- Seleccione -- </option-->
+                        </datalist>
+                        <input list="cmbContactosListCliente" id="cmbCliente" name="cmbCliente" type="text" class="form-control" placeholder=" -- Escriba -- " onkeyup="javascript:this.value=this.value.toUpperCase();" onchange="buscarDireccion();">
+                    </div>
+                </div>
+                <div class="form-group col-md-12" id="divDireccionCliente">
+                    <div class="form-group">
+                    <h5>Nombre Cliente:&nbsp;</h5><label id="txtNombreClientediv"></label>
+                    <br>
+                    <h5>Direccion:&nbsp;</h5><label id="txtDireccionClientediv"></label>
+                    </div>
+                </div>                          
+            </div>
+                <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="btnGuardarCantidad2()" >Agregar</button>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
 <!-- ./wrapper -->
 <div class="modal fade" id="modal_formCantidadProductos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" >
@@ -132,7 +224,7 @@ width: 150px;
                 </div> 
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="btnGuardar">Aceptar</button>
+                <button type="submit" class="btn btn-primary" id="btnGuardarCantidad">Aceptar</button>
                 <button class="btn btn-primary" data-dismiss="modal" id="btnCancelarCantidad">Cancelar</button>
             </div>
         </div>
@@ -227,6 +319,47 @@ width: 150px;
     var cantidad_ingredientes = 0;
     var cantidad_productos = 0;
     $(document).ready(function () {
+
+        $("#divTipoVenta").hide();
+        $("#txtbtnVincularCliente").hide();
+        
+
+        tableFolio = $('#gridFolio').DataTable( {    
+            "responsive": true,
+            "searching" : true,
+            "paging"    : true,
+            "ordering"  : false,
+            "info"      : true,
+            "bLengthChange": false,
+            "columnDefs": [
+                {"width": "10%","className": "text-center","targets": 3},
+                {"width": "10%","className": "text-center","targets": 4},
+            ],
+
+            "bJQueryUI":true,"oLanguage": {
+                "sEmptyTable":     "No hay datos registrados en la Base de Datos.",
+                "sInfo":           "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando desde 0 hasta 0 de 0 registros",
+                "sInfoFiltered":   "(filtrado de _MAX_ registros en total)",
+                "sInfoPostFix":    "",
+                "sInfoThousands":  ",",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sLoadingRecords": "Cargando...",
+                "sProcessing":     "Procesando...",
+                "sSearch":         "Buscar:",
+                "sZeroRecords":    "No se encontraron resultados",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": activar para Ordenar Ascendentemente",
+                    "sSortDescending": ": activar para Ordendar Descendentemente"
+                }
+            }
+        });
         
         tableComanda = $('#gridComanda').DataTable( {    
             "responsive": true,
@@ -266,11 +399,186 @@ width: 150px;
         });
         
         cargarProductos();
+        cargarTablaFolio();
         $('#cmbProductos').focus();
     });
 
-    function GenerarFolio(){
+    function buscarDireccion(){
+        var val = $('#cmbCliente').val() ? $('#cmbCliente').val() : '';
+            // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
+            if(val.indexOf("\"") !== -1){
+                var valueCombo = $("#cmbContactosListCliente").find("option[value='"+val+"']").data("value") ? $("#cmbContactosListCliente").find("option[value='"+val+"']").data("value") : "";
+            }
+            else{
+            var valueCombo = $("#cmbContactosListCliente").find("option[value=\""+val+"\"]").data("value") ? $("#cmbContactosListCliente").find("option[value=\""+val+"\"]").data("value") : "";
+            }
 
+            if(valueCombo.cve_cliente != null){
+                $("#txtNombreClientediv").text(valueCombo.nombre_cliente != 'null' ? valueCombo.nombre_cliente : '');
+                $("#txtDireccionClientediv").text(valueCombo.domicilio_cliente != 'null' ? valueCombo.domicilio_cliente : '');
+                
+
+            }
+
+
+    }
+
+    function cargarTablaFolio()
+    {
+        $.ajax({
+            url      : 'Venta/consultarFolios',
+            type     : "POST",
+            data    : { 
+                ban: 1,
+                folio_venta : 0
+            },
+            success  : function(datos) {
+
+                var myJson = JSON.parse(datos);
+
+                tableFolio.clear().draw();
+
+                if(myJson.arrayDatos.length > 0)
+                {
+
+                    var title;
+                    var icon;
+                    var color_icon;
+                    var accion;
+
+                    $(myJson.arrayDatos).each( function(key, val)
+                    {
+                            title = 'Tradicional activo';
+                            icon = 'fa fa-dot-circle-o';
+                            color_icon = "color: #4ad129;"
+                            accion = "bloquearTradicional ('" + val.cve_venta  + "','0')";
+                        
+
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Especiaidad' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
+                        var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
+
+                        tableFolio.row.add([
+                            val.folio_venta ,
+                            val.total_venta ,
+                            val.tipo_venta ,
+                            btn_editar,
+                            btn_status,
+                        ]).draw();
+                    })
+
+                }
+                else
+                {
+                    tableFolio = $('#gridFolio').DataTable();
+                    
+                }
+
+            }
+        });
+    }
+
+    function  nuevoCliente(){
+
+        $('#modal_formClienteNuevo').modal({
+            keyboard: false
+        });
+
+        $("#muestra_formClienteNuevo").html('Cargando...');
+
+        $.ajax({
+            url: 'venta/formClienteNuevo',
+            success: function(datos){
+
+                $("#muestra_formClienteNuevo").html(datos);
+
+            }
+        });
+        
+    }
+
+    function vincularCliente(){
+        $('#modal_formCliente').modal({
+            keyboard: false
+        });
+
+        $.ajax({
+            url      : 'Cliente/consultar',
+            type     : "POST",
+            data    : { 
+                ban: 1
+            },
+            beforeSend: function() {
+                // setting a timeout
+
+            },
+            success  : function(datos) {
+
+                var myJson = JSON.parse(datos);
+
+                select = $("#cmbContactosListCliente");
+                select.attr('disabled',false);
+                select.find('option').remove();
+
+                if(myJson.arrayDatos.length > 0)
+                {
+                    
+                    $(myJson.arrayDatos).each( function(key, val)
+                    {
+                        if(val.cve_cliente != null){
+                        
+                            value = '{"cve_cliente":"'+val.cve_cliente+'","nombre_cliente":"'+val.nombre_cliente+'","domicilio_cliente":"'+val.domicilio_cliente+'"}';
+							select.append("<option data-value='"+value+"' value='"+val.nombre_cliente.replace(/'/g, "&#x27;")+"'>");
+                        }
+                    })
+
+                }
+
+            }
+        });
+    }
+
+    function tipoVenta(){
+        var myRadio = $("input[name=optradio]");
+        var checkedValue = myRadio.filter(":checked").val();
+        // 1 = restaurante
+        // 2 = domicilio
+        if(checkedValue == 1){
+            $("#txtbtnVincularCliente").hide();
+            $.ajax({
+                url      : 'Venta/actualizaTipoVenta',
+                type     : "POST",
+                data    : { 
+                    ban: checkedValue,
+                    cve_cliente_venta: 0,
+                    folio_venta: $("#txtFolioVenta").text()
+                },
+                success  : function(datos) {
+
+                }
+            });
+        }
+        else{
+
+            $("#txtbtnVincularCliente").show();
+
+            $.ajax({
+                url      : 'Venta/actualizaTipoVenta',
+                type     : "POST",
+                data    : { 
+                    ban: checkedValue,
+                    cve_cliente_venta: 0,
+                    folio_venta: $("#txtFolioVenta").text()
+                },
+                success  : function(datos) {
+
+                }
+            });
+            
+        }
+        
+    }
+    function GenerarFolio(){
+        cargarTablaFolio();
         table = $('#gridComanda').DataTable();
         var entro = false;
         $('#gridComanda tbody tr').each(function(index, tr) {
@@ -295,6 +603,7 @@ width: 150px;
                     {
                         $("#txtFolioVenta").text(myJson.arrayDatos[0].folio_venta);
                         $("#btncancelarFolioVenta").prop( "disabled", false );
+                        $("#radio1").attr('checked', true);
                         
                     }
 
@@ -407,7 +716,7 @@ width: 150px;
         
     }
 
-    $('#btnGuardar').click(function (e) {
+    $('#btnGuardarCantidad').click(function (e) {
 
         var val = $('#cmbProductos').val() ? $('#cmbProductos').val() : '';
         // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
@@ -504,10 +813,40 @@ width: 150px;
         }
         
         
-
+    
     });
 
+    function btnGuardarCantidad2(){
+
+        var val = $('#cmbCliente').val() ? $('#cmbCliente').val() : '';
+        // se agrego indexOf para saber si el string val viene con comillas o apostrofe y formar bien la cadena
+        if(val.indexOf("\"") !== -1){
+            var valueCombo = $("#cmbContactosListCliente").find("option[value='"+val+"']").data("value") ? $("#cmbContactosListCliente").find("option[value='"+val+"']").data("value") : "";
+        }
+        else{
+        var valueCombo = $("#cmbContactosListCliente").find("option[value=\""+val+"\"]").data("value") ? $("#cmbContactosListCliente").find("option[value=\""+val+"\"]").data("value") : "";
+        }
+
+        $.ajax({
+            url      : 'Venta/actualizaTipoVenta',
+            type     : "POST",
+            data    : { 
+                ban: 2,
+                cve_cliente_venta: valueCombo.cve_cliente,
+                folio_venta: $("#txtFolioVenta").text()
+            },
+            success  : function(datos) {
+                consultarComanda($("#txtFolioVenta").text());
+            }
+        });
+    };
+
     function consultarComanda(folioComanda){
+        $("#txtFolioVenta").text(folioComanda);
+        $("#divTipoVenta").show();
+        
+        
+        
         $.ajax({
             url      : 'Venta/actualizarTotalVenta',
             type     : "POST",
@@ -572,6 +911,23 @@ width: 150px;
                         ]).draw();
 
                         $("#txtTotalVenta").text(val.total_venta);
+                        if(val.tipo_venta == 'Restaurante'){
+                            
+                            $("#radio1").prop('checked', true);
+                            $("#radio2").prop('checked', false);
+                            $("#txtNombreClienteVenta").text('');
+                            $("#txtDireccionClienteVenta").text('');
+                            $("#txtbtnVincularCliente").hide();
+                        }
+                        else if(val.tipo_venta == 'Domicilio'){
+                            $("#radio2").prop('checked', true);
+                            $("#radio1").prop('checked', false);
+                            $("#txtbtnVincularCliente").show();
+                            $("#txtNombreClienteVenta").text(val.nombre_cliente);
+                            $("#txtDireccionClienteVenta").text(val.domicilio_cliente);
+                        }
+                        
+                        
                     })
 
                 }

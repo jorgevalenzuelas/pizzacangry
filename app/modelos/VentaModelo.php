@@ -26,6 +26,19 @@ class VentaModelo
 
         return $r_productos;
     }
+
+    public function consultarFolios($datos)
+    {
+        $datosFiltrados = $this->filtrarDatos($datos);
+
+        $ban  = $datosFiltrados['ban'];
+        $folio_venta  = $datosFiltrados['folio_venta'];
+        $query = "CALL obtenFolios('$ban','$folio_venta')";
+        $c_productos = $this->conexion->query($query);
+        $r_productos = $this->conexion->consulta_array($c_productos);
+
+        return $r_productos;
+    }
     
     public function consultarComanda($datos)
     {
@@ -55,6 +68,31 @@ class VentaModelo
                                             '$folo_venta',
                                             '$cveusuario_accion'
                                         )";
+
+        $c_folio = $this->conexion->query($query);
+        $r_folio = $this->conexion->consulta_array($c_folio);
+
+        return $r_folio;
+    }
+
+
+    public function actualizaTipoVenta($datosFolio)
+    {
+
+        $datosFiltrados = $this->filtrarDatos($datosFolio);
+
+        $ban                = $datosFiltrados['ban'];
+        $cve_cliente_venta    = $datosFiltrados['cve_cliente_venta'];
+        $folio_venta    = $datosFiltrados['folio_venta'];
+        $cveusuario_accion  = $datosFiltrados['cveusuario_accion'];
+
+        $query = "CALL actualizarTipoVenta(
+                                            '$ban',
+                                            '$cve_cliente_venta',
+                                            '$folio_venta',
+                                            '$cveusuario_accion'
+                                        )";
+                                        //file_put_contents('actualizaTipoVenta.txt',print_r( array($query),true)."\r\n", FILE_APPEND | LOCK_EX);
 
         $c_folio = $this->conexion->query($query);
         $r_folio = $this->conexion->consulta_array($c_folio);

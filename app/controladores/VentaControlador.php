@@ -45,9 +45,24 @@ else
 			$this->vista('venta/formPizzaIngredientePaqueteMod');
 		}
 
+		public function formClienteNuevo()
+		{
+
+			$this->vista('cliente/formClienteNuevo', $datos);
+		}
+
 		public function consultarProductos()
 		{
 			$data = $this->VentaModelo->consultarProductos($_POST);
+
+			$envioDatos["arrayDatos"] = $data;
+
+			echo json_encode($envioDatos);
+		}
+
+		public function consultarFolios()
+		{
+			$data = $this->VentaModelo->consultarFolios($_POST);
 
 			$envioDatos["arrayDatos"] = $data;
 
@@ -65,14 +80,32 @@ else
 
 		public function generarFolio()
 		{
+			//Preparamos en un array los datos que enviaremos a la BD
+			$datosFolio =  array (
+								ban                => $_POST["ban"],
+								folo_venta                => $_POST["folo_venta"],
+								cveusuario_accion  => $_SESSION["cve_usuario"]
+								);
+			
+			$respuesta = $this->VentaModelo->generarFolio($datosFolio);
+
+			$envioDatos["arrayDatos"] = $respuesta;
+
+			echo json_encode($envioDatos);
+		}
+
+
+		public function actualizaTipoVenta()
+		{
 				//Preparamos en un array los datos que enviaremos a la BD
 				$datosFolio =  array (
 									ban                => $_POST["ban"],
-									folo_venta                => $_POST["folo_venta"],
+									cve_cliente_venta     => $_POST["cve_cliente_venta"],
+									folio_venta                => $_POST["folio_venta"],
 							     	cveusuario_accion  => $_SESSION["cve_usuario"]
 							     );
 				
-				$respuesta = $this->VentaModelo->generarFolio($datosFolio);
+				$respuesta = $this->VentaModelo->actualizaTipoVenta($datosFolio);
 
 				$envioDatos["arrayDatos"] = $respuesta;
 
