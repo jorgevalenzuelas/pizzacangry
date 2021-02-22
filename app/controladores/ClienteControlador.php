@@ -110,6 +110,7 @@ else
 				$datosClienteNuevo =  array (
 									ban               => 1,
 									nombreCliente      => $_POST["txtNombreClienteNuevo"],
+									direccionCliente      => $_POST["txtDireccionClienteNuevo"],
 									cve_cliente        => $cve_cliente,
 							     	cveusuario_accion => $_SESSION["cve_usuario"]
 							     );

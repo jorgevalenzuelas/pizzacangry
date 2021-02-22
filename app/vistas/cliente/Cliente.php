@@ -308,7 +308,7 @@
                         $('#txtDireccionCliente').val(myJson.arrayDatos[0].domicilio_cliente);
                         $('#txtcveCliente').val(myJson.arrayDatos[0].cve_cliente);
 
-                        $("#btnGuardar").html('Actualizar Cliente');
+                        $("#btnGuardarCliente").html('Actualizar Cliente');
                         
                     }
                 });

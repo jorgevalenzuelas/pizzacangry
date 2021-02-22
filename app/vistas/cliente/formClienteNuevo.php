@@ -20,7 +20,7 @@
     
 
     <div class="box-footer">
-        <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
+        <button type="submit" class="btn btn-primary" id="btnGuardarClienteNuevo">Guardar</button>
         <button class="btn btn-primary" id="btnCancelar">Cancelar</button>
     </div>
 
@@ -46,7 +46,7 @@
         else
         {
 
-            $("#btnGuardar").prop('disabled', true);
+            $("#btnGuardarClienteNuevo").prop('disabled', true);
             
             $.ajax({
                 url      : $(this).attr('action'),
@@ -71,13 +71,13 @@
                         setTimeout(function() { $("#msgAlert").fadeOut(1500); },3000);
                         $('#modal_formClienteNuevo').modal('hide');
                         //$('#msgAlert').css("display", "none");
-                        $("#btnGuardar").prop('disabled', false);
-                        $("#btnGuardar").html('Guardar');
+                        $("#btnGuardarClienteNuevo").prop('disabled', false);
+                        $("#btnGuardarClienteNuevo").html('Guardar');
 
                     }
                     else
                     {
-                        $("#btnGuardar").prop('disabled', false);
+                        $("#btnGuardarClienteNuevo").prop('disabled', false);
                         msgAlert2Nuevo(myJson.msg ,"danger");
                     }
                 }

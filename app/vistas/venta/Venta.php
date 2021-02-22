@@ -90,11 +90,14 @@
                                             </button>
 
                                             <div class="col-md-6">
-                                                <label>Nombre cliente: &nbsp;</label><label id="txtNombreClienteVenta"></label>
+                                                <h5>Nombre cliente: &nbsp;</labeh5l><label id="txtNombreClienteVenta"></label>
                                                 <br>
-                                                <label>Dirección: &nbsp;</label><label id="txtDireccionClienteVenta"></label>
+                                                <h5>Dirección: &nbsp;</h5><label id="txtDireccionClienteVenta"></label>
+                                                
                                             </div>
                                         </div>
+                                        <br>
+                                        <h5>Hora pedido: &nbsp;</h5><label id="txtHoraClienteVenta"></label>
                                 </label>
                                 
                             </div>
@@ -603,7 +606,12 @@ width: 150px;
                     {
                         $("#txtFolioVenta").text(myJson.arrayDatos[0].folio_venta);
                         $("#btncancelarFolioVenta").prop( "disabled", false );
-                        $("#radio1").attr('checked', true);
+                        $("#radio1").prop('checked', true);
+                        $("#txtNombreClienteVenta").text('');
+                        $("#txtDireccionClienteVenta").text('');
+                        $("#txtbtnVincularCliente").hide();
+                        $("#txtHoraClienteVenta").text('');
+                        $("#txtTotalVenta").text('');
                         
                     }
 
@@ -926,6 +934,11 @@ width: 150px;
                             $("#txtNombreClienteVenta").text(val.nombre_cliente);
                             $("#txtDireccionClienteVenta").text(val.domicilio_cliente);
                         }
+                        if(key == 0){
+                            $("#txtHoraClienteVenta").text(val.fechaalta_deventa);
+                        }
+                        
+                        
                         
                         
                     })
