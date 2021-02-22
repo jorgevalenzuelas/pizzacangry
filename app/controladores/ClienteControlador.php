@@ -105,13 +105,12 @@ else
 			else
 			{
 				//Preparamos en un array los datos que enviaremos a la BD
-				$cve_cliente = (empty($_POST["txtcveClienteNuevo"])) ? $_POST["txtcveClienteNuevo"] : 0 ;
 
 				$datosClienteNuevo =  array (
 									ban               => 1,
 									nombreCliente      => $_POST["txtNombreClienteNuevo"],
 									direccionCliente      => $_POST["txtDireccionClienteNuevo"],
-									cve_cliente        => $cve_cliente,
+									cve_cliente        => $_POST["txtcveClienteNuevo"],
 							     	cveusuario_accion => $_SESSION["cve_usuario"]
 							     );
 				

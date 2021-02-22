@@ -24,7 +24,7 @@
         <button class="btn btn-primary" id="btnCancelar">Cancelar</button>
     </div>
 
-    <input type="hidden" id="txtcveClienteNuevo" name="txtcveClienteNuevo">
+    <input type="hidden" id="txtcveClienteNuevo" name="txtcveClienteNuevo" value="0">
 </form>
 
 <script type="text/javascript">
