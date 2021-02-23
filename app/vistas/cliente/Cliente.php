@@ -65,6 +65,7 @@
                             <tr>
                                 <th>Nombre cliente</th>
                                 <th>Domicilio</th>
+                                <th>Telefono</th>
                                 <th>Editar</th>
                                 <th>Status</th>
                             </tr>
@@ -150,8 +151,8 @@
             "info"      : true,
             "bLengthChange": false,
             "columnDefs": [
-                {"width": "10%","className": "text-center","targets": 2},
                 {"width": "10%","className": "text-center","targets": 3},
+                {"width": "10%","className": "text-center","targets": 4},
             ],
 
             "bJQueryUI":true,"oLanguage": {
@@ -232,6 +233,7 @@
                         tableClientes.row.add([
                             val.nombre_cliente,
                             val.domicilio_cliente,
+                            val.telefono_cliente,
                             btn_editar,
                             btn_status,
                         ]).draw();
@@ -306,6 +308,7 @@
                         
                         $('#txtNombreCliente').val(myJson.arrayDatos[0].nombre_cliente);
                         $('#txtDireccionCliente').val(myJson.arrayDatos[0].domicilio_cliente);
+                        $('#txtTelefonoCliente').val(myJson.arrayDatos[0].telefono_cliente);
                         $('#txtcveCliente').val(myJson.arrayDatos[0].cve_cliente);
 
                         $("#btnGuardarCliente").html('Actualizar Cliente');

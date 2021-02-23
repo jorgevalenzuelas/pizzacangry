@@ -75,6 +75,22 @@ class VentaModelo
         return $r_folio;
     }
 
+    public function cambiarEstatusVenta($datos)
+    {
+        $datosFiltrados = $this->filtrarDatos($datos);
+
+        $ban  = $datosFiltrados['ban'];
+        $cve_venta = (!empty($datosFiltrados['cve_venta']) || $datosFiltrados['cve_venta']!=null) ? $datosFiltrados['cve_venta'] : '0';
+        $estatus = (!empty($datosFiltrados['estatus']) || $datosFiltrados['estatus']!=null) ? $datosFiltrados['estatus'] : '1';
+
+        $query = "CALL cambiarEstatusVenta('$ban','$cve_venta','$estatus')";
+        $respuesta = $this->conexion->query($query) or die ($this->conexion->error());
+        
+        $this->conexion->close_conexion();
+        
+        return $respuesta;
+    }
+
 
     public function actualizaTipoVenta($datosFolio)
     {

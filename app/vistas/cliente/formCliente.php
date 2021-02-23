@@ -13,6 +13,8 @@
                 <input type="text" class="form-control" id="txtNombreCliente" name="txtNombreCliente" onkeyup='javascript:this.value=this.value.toUpperCase();'>
                 <label>Dirección</label>
                 <input type="text" class="form-control" id="txtDireccionCliente" name="txtDireccionCliente" onkeyup='javascript:this.value=this.value.toUpperCase();'>
+                <label>Teléfono</label>
+                <input type="number" class="form-control" id="txtTelefonoCliente" name="txtTelefonoCliente" onkeyup='javascript:this.value=this.value.toUpperCase();'>
             </div>
         </div>
     </div>
@@ -41,6 +43,11 @@
         else if ( $('#txtDireccionCliente').val()  == "" )
         {
             msgAlert2("Favor de ingresar la dirección del cliente.","warning");
+            setTimeout(function() { $("#msgAlert2").fadeOut(1500); },3000);
+        }
+        else if ( $('#txtTelefonoCliente').val()  == "" )
+        {
+            msgAlert2("Favor de ingresar el telefono del cliente.","warning");
             setTimeout(function() { $("#msgAlert2").fadeOut(1500); },3000);
         }
         else

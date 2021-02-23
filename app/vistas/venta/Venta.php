@@ -93,6 +93,8 @@
                                                 <h5>Nombre cliente: &nbsp;</labeh5l><label id="txtNombreClienteVenta"></label>
                                                 <br>
                                                 <h5>Dirección: &nbsp;</h5><label id="txtDireccionClienteVenta"></label>
+                                                <br>
+                                                <h5>Teléfono: &nbsp;</h5><label id="txtTelefonoClienteVenta"></label>
                                                 
                                             </div>
                                         </div>
@@ -116,6 +118,7 @@
                                 <tr>
                                     <th>Folio</th>
                                     <th>Total</th>
+                                    <th>Hr. pedido</th>
                                     <th>Tipo</th>
                                     <th>Editar</th>
                                     <th>Status</th>
@@ -184,6 +187,8 @@ width: 150px;
                     <h5>Nombre Cliente:&nbsp;</h5><label id="txtNombreClientediv"></label>
                     <br>
                     <h5>Direccion:&nbsp;</h5><label id="txtDireccionClientediv"></label>
+                    <br>
+                    <h5>Teléfono:&nbsp;</h5><label id="txtTelefonoClientediv"></label>
                     </div>
                 </div>                          
             </div>
@@ -335,8 +340,8 @@ width: 150px;
             "info"      : true,
             "bLengthChange": false,
             "columnDefs": [
-                {"width": "10%","className": "text-center","targets": 3},
                 {"width": "10%","className": "text-center","targets": 4},
+                {"width": "10%","className": "text-center","targets": 5},
             ],
 
             "bJQueryUI":true,"oLanguage": {
@@ -419,6 +424,7 @@ width: 150px;
             if(valueCombo.cve_cliente != null){
                 $("#txtNombreClientediv").text(valueCombo.nombre_cliente != 'null' ? valueCombo.nombre_cliente : '');
                 $("#txtDireccionClientediv").text(valueCombo.domicilio_cliente != 'null' ? valueCombo.domicilio_cliente : '');
+                $("#txtTelefonoClientediv").text(valueCombo.telefono_cliente != 'null' ? valueCombo.telefono_cliente : '');
                 
 
             }
@@ -451,10 +457,13 @@ width: 150px;
 
                     $(myJson.arrayDatos).each( function(key, val)
                     {
-                            title = 'Tradicional activo';
+                        if(val.estatus_venta == 1){
+                            title = 'En proceso';
                             icon = 'fa fa-dot-circle-o';
                             color_icon = "color: #4ad129;"
-                            accion = "bloquearTradicional ('" + val.cve_venta  + "','0')";
+                            accion = "cambiarEstatusVenta('" + val.cve_venta  + "','2')";
+                        }
+                            
                         
 
                         var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Especiaidad' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
@@ -463,6 +472,7 @@ width: 150px;
                         tableFolio.row.add([
                             val.folio_venta ,
                             val.total_venta ,
+                            val.fechaalta_deventa ,
                             val.tipo_venta ,
                             btn_editar,
                             btn_status,
@@ -475,6 +485,23 @@ width: 150px;
                     tableFolio = $('#gridFolio').DataTable();
                     
                 }
+
+            }
+        });
+    }
+
+    function cambiarEstatusVenta(cve_venta, estatus){
+        $.ajax({
+            url      : 'Venta/cambiarEstatusVenta',
+            type     : "POST",
+            data    : { 
+                ban: 1,
+                cve_venta: cve_venta,
+                estatus : estatus
+            },
+            success  : function(datos) {
+                
+                cargarTablaFolio();
 
             }
         });
@@ -529,7 +556,7 @@ width: 150px;
                     {
                         if(val.cve_cliente != null){
                         
-                            value = '{"cve_cliente":"'+val.cve_cliente+'","nombre_cliente":"'+val.nombre_cliente+'","domicilio_cliente":"'+val.domicilio_cliente+'"}';
+                            value = '{"cve_cliente":"'+val.cve_cliente+'","nombre_cliente":"'+val.nombre_cliente+'","domicilio_cliente":"'+val.domicilio_cliente+'","telefono_cliente":"'+val.telefono_cliente+'"}';
 							select.append("<option data-value='"+value+"' value='"+val.nombre_cliente.replace(/'/g, "&#x27;")+"'>");
                         }
                     })
@@ -609,6 +636,7 @@ width: 150px;
                         $("#radio1").prop('checked', true);
                         $("#txtNombreClienteVenta").text('');
                         $("#txtDireccionClienteVenta").text('');
+                        $("#txtTelefonoClienteVenta").text('');
                         $("#txtbtnVincularCliente").hide();
                         $("#txtHoraClienteVenta").text('');
                         $("#txtTotalVenta").text('');
@@ -845,6 +873,7 @@ width: 150px;
             },
             success  : function(datos) {
                 consultarComanda($("#txtFolioVenta").text());
+                cargarTablaFolio();
             }
         });
     };
@@ -925,6 +954,7 @@ width: 150px;
                             $("#radio2").prop('checked', false);
                             $("#txtNombreClienteVenta").text('');
                             $("#txtDireccionClienteVenta").text('');
+                            $("#txtTelefonoClienteVenta").text('');
                             $("#txtbtnVincularCliente").hide();
                         }
                         else if(val.tipo_venta == 'Domicilio'){
@@ -933,6 +963,7 @@ width: 150px;
                             $("#txtbtnVincularCliente").show();
                             $("#txtNombreClienteVenta").text(val.nombre_cliente);
                             $("#txtDireccionClienteVenta").text(val.domicilio_cliente);
+                            $("#txtTelefonoClienteVenta").text(val.telefono_cliente);
                         }
                         if(key == 0){
                             $("#txtHoraClienteVenta").text(val.fechaalta_deventa);

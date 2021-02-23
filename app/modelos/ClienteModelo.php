@@ -30,8 +30,6 @@ class ClienteModelo
         return $r_cliente;
     }
 
-
-
     public function guardarCliente($datosCliente)
     {
 
@@ -40,6 +38,7 @@ class ClienteModelo
         $ban               = $datosFiltrados['ban'];
         $nombreCliente      = $datosFiltrados['nombreCliente'];
         $direccionCliente      = $datosFiltrados['direccionCliente'];
+        $telefonoCliente      = $datosFiltrados['telefonoCliente'];
         $cveCliente         = $datosFiltrados['cve_cliente'];
         $cveusuario_accion = $datosFiltrados['cveusuario_accion'];
 
@@ -48,6 +47,7 @@ class ClienteModelo
                                     '$cveCliente',
                                     '$nombreCliente',
                                     '$direccionCliente',
+                                    '$telefonoCliente',
                                     '$cveusuario_accion'
                                     )";
 

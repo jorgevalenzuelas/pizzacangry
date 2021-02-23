@@ -38,8 +38,6 @@ else
 			echo json_encode($envioDatos);
 		}
 
-
-
 		public function formCliente()
 		{
 
@@ -66,6 +64,7 @@ else
 									ban               => 1,
 									nombreCliente      => $_POST["txtNombreCliente"],
 									direccionCliente      => $_POST["txtDireccionCliente"],
+									telefonoCliente      => $_POST["txtTelefonoCliente"],
 									cve_cliente        => $cve_cliente,
 							     	cveusuario_accion => $_SESSION["cve_usuario"]
 							     );
@@ -110,6 +109,7 @@ else
 									ban               => 1,
 									nombreCliente      => $_POST["txtNombreClienteNuevo"],
 									direccionCliente      => $_POST["txtDireccionClienteNuevo"],
+									telefonoCliente      => $_POST["txtTelefonoClienteNuevo"],
 									cve_cliente        => $_POST["txtcveClienteNuevo"],
 							     	cveusuario_accion => $_SESSION["cve_usuario"]
 							     );
@@ -141,6 +141,7 @@ else
 		{
 			if(empty($dataPost["txtNombreCliente"]) || !trim($dataPost["txtNombreCliente"])){ $status = "vacio"; }
 			else if(empty($dataPost["txtDireccionCliente"]) || !trim($dataPost["txtDireccionCliente"])){ $status = "vacio"; }
+			else if(empty($dataPost["txtTelefonoCliente"]) || !trim($dataPost["txtTelefonoCliente"])){ $status = "vacio"; }
 			else{
 				$status = "completo";
 			}
@@ -151,6 +152,8 @@ else
 		public function validarDatosVaciosClienteGuardarNuevo($dataPost)
 		{
 			if(empty($dataPost["txtNombreClienteNuevo"]) || !trim($dataPost["txtNombreClienteNuevo"])){ $status = "vacio"; }
+			else if(empty($dataPost["txtDireccionClienteNuevo"]) || !trim($dataPost["txtDireccionClienteNuevo"])){ $status = "vacio"; }
+			else if(empty($dataPost["txtTelefonoClienteNuevo"]) || !trim($dataPost["txtTelefonoClienteNuevo"])){ $status = "vacio"; }
 			else{
 				$status = "completo";
 			}

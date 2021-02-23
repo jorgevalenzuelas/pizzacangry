@@ -94,6 +94,21 @@ else
 			echo json_encode($envioDatos);
 		}
 
+		public function cambiarEstatusVenta()
+		{
+				//Preparamos en un array los datos que enviaremos a la BD
+				$datosFolio =  array (
+									ban                => $_POST["ban"],
+									cve_venta     => $_POST["cve_venta"],
+									estatus                => $_POST["estatus"]
+							     );
+				
+				$respuesta = $this->VentaModelo->cambiarEstatusVenta($datosFolio);
+
+				$envioDatos["arrayDatos"] = $respuesta;
+
+				echo json_encode($envioDatos);
+		}
 
 		public function actualizaTipoVenta()
 		{
