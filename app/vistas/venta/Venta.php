@@ -544,7 +544,7 @@ width: 150px;
                             
                         
 
-                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Especiaidad' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar comanda' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
                         tableFolio.row.add([
@@ -602,7 +602,7 @@ width: 150px;
                             
                         
 
-                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Especiaidad' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar comanda' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
                         tableFolioEntregado.row.add([
@@ -639,6 +639,18 @@ width: 150px;
                 
                 cargarTablaFolio();
                 cargarTablaFolioEntregado();
+
+                $("#btncancelarFolioVenta").prop( "disabled", false );
+                $("#radio1").prop('checked', true);
+                $("#txtNombreClienteVenta").text('');
+                $("#txtDireccionClienteVenta").text('');
+                $("#txtTelefonoClienteVenta").text('');
+                $("#txtbtnVincularCliente").hide();
+                $("#txtHoraClienteVenta").text('');
+                $("#txtTotalVenta").text('');
+                $("#divTipoVenta").hide();
+                $("#txtFolioVenta").text('');
+                tableComanda.clear().draw();
 
             }
         });
@@ -1073,8 +1085,14 @@ width: 150px;
                             var btnCantidad = val.cantidad_deventa;
                         }
                         else{
-                            var btn_editar = "";
-                            var btnCantidad = '<div class="input-group"> <span class="input-group-btn"> <button type="button" class="btn btn-danger btn-number" onclick="modCantidad('+0+','+val.cantidad_deventa+','+val.cve_deventa+')"><span class="glyphicon glyphicon-minus"></span></button></span><input type="text" class="form-control input-number" value="'+val.cantidad_deventa+'" min="1" max="100"><span class="input-group-btn"><button type="button" onclick="modCantidad('+1+','+val.cantidad_deventa+','+val.cve_deventa+')" class="btn btn-success btn-number"><span class="glyphicon glyphicon-plus"></span></button></span></div>';
+                            if(val.estatus_venta == 1){
+                                var btn_editar = "";
+                                var btnCantidad = '<div class="input-group"> <span class="input-group-btn"> <button type="button" class="btn btn-danger btn-number" onclick="modCantidad('+0+','+val.cantidad_deventa+','+val.cve_deventa+')"><span class="glyphicon glyphicon-minus"></span></button></span><input type="text" class="form-control input-number" value="'+val.cantidad_deventa+'" min="1" max="100"><span class="input-group-btn"><button type="button" onclick="modCantidad('+1+','+val.cantidad_deventa+','+val.cve_deventa+')" class="btn btn-success btn-number"><span class="glyphicon glyphicon-plus"></span></button></span></div>';
+                            }
+                            else{
+                                var btn_editar = "";
+                                var btnCantidad = val.cantidad_deventa;
+                            }
                         }
                         if(val.estatus_venta == 1){
                             var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
@@ -1094,26 +1112,37 @@ width: 150px;
 
                         $("#txtTotalVenta").text(val.total_venta);
                         if(val.tipo_venta == 'Restaurante'){
-                            
                             $("#radio1").prop('checked', true);
                             $("#radio2").prop('checked', false);
+                            $("#radio1").prop('disabled', false);
+                            $("#radio2").prop('disabled', false);
                             $("#txtNombreClienteVenta").text('');
                             $("#txtDireccionClienteVenta").text('');
                             $("#txtTelefonoClienteVenta").text('');
                             $("#txtbtnVincularCliente").hide();
+                            
+                            if(val.estatus_venta == 2){
+                                $("#radio1").prop('disabled', true);
+                                $("#radio2").prop('disabled', true);
+                            }
                         }
                         else if(val.tipo_venta == 'Domicilio'){
                             $("#radio2").prop('checked', true);
                             $("#radio1").prop('checked', false);
+                            $("#radio1").prop('disabled', false);
+                            $("#radio2").prop('disabled', false);
                             $("#txtbtnVincularCliente").show();
                             $("#btnVincularCliente").show();
-                                $("#btnNuevoCliente").show();
+                            $("#btnNuevoCliente").show();
                             $("#txtNombreClienteVenta").text(val.nombre_cliente);
                             $("#txtDireccionClienteVenta").text(val.domicilio_cliente);
                             $("#txtTelefonoClienteVenta").text(val.telefono_cliente);
+                            
                             if(val.estatus_venta == 2){
                                 $("#btnVincularCliente").hide();
                                 $("#btnNuevoCliente").hide();
+                                $("#radio1").prop('disabled', true);
+                                $("#radio2").prop('disabled', true);
                             }
                         }
                         if(key == 0){
@@ -1123,7 +1152,9 @@ width: 150px;
                         
                         
                         
-                    })
+                    });
+                    cargarTablaFolio();
+                cargarTablaFolioEntregado();
 
                 }
                 else
