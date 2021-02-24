@@ -47,6 +47,8 @@
         <div class="row">
         <div id="msgAlert1"></div>
             <div class="col-md-6">
+            <h3>Ordenar&nbsp;</h3>
+                        <hr>
                 <button type="button" class="btn btn-primary" onclick="GenerarFolio()" id="txtbtnNuevaVenta">Nueva orden</button>
                 <div class="form-group">
                     <label for="cmbProductos">Buscar productos</label>
@@ -83,9 +85,9 @@
                                 <label class="form-check-label" for="radio2">
                                     <input type="radio" class="form-check-input" id="radio2" name="optradio" onchange="tipoVenta()" value="2">&nbsp; Domicilio
                                     <div id="txtbtnVincularCliente">
-                                            <button type="button" class="btn btn-primary" onclick="vincularCliente()">Vincular cliente</button>
+                                            <button type="button" class="btn btn-primary" onclick="vincularCliente()" id="btnVincularCliente">Vincular cliente</button>
                                         
-                                            <button type="button" class="btn btn-success" onclick="nuevoCliente()">
+                                            <button type="button" class="btn btn-success" onclick="nuevoCliente()" id="btnNuevoCliente">
                                                 <span class="glyphicon glyphicon-plus"></span>
                                             </button>
 
@@ -110,24 +112,55 @@
             </div>
             
             <div class="col-md-6">
-                <div class="box" style="margin-top: 20px;">
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="gridFolio" class="table table-bordered table-striped" style="font-size: 12px;">
-                            <thead>
-                                <tr>
-                                    <th>Folio</th>
-                                    <th>Total</th>
-                                    <th>Hr. pedido</th>
-                                    <th>Tipo</th>
-                                    <th>Editar</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            
-                        </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>En proceso&nbsp;</h3>
+                        <hr>
+                        <div class="box" style="margin-top: 20px;">
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="gridFolio" class="table table-bordered table-striped" style="font-size: 12px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Folio</th>
+                                            <th>Total</th>
+                                            <th>Hr. pedido</th>
+                                            <th>Tipo</th>
+                                            <th>Editar</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
                     </div>
-                    <!-- /.box-body -->
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Ultimas ventas&nbsp;</h3>
+                        <hr>
+                        <div class="box" style="margin-top: 20px;">
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="gridFolioEntregado" class="table table-bordered table-striped" style="font-size: 12px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Folio</th>
+                                            <th>Total</th>
+                                            <th>Hr. pedido</th>
+                                            <th>Tipo</th>
+                                            <th>Detalle</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -291,36 +324,37 @@ width: 150px;
     </div>
 </div>
 <!-- jQuery 3 -->
-<script src="<?php echo RUTA_URL; ?>public/jquery/jquery-3.4.1.min.js"></script>
-<!-- <script src="<?php echo RUTA_URL; ?>public/bower_components/jquery/dist/jquery.min.js"></script> -->
-<!-- jQuery UI 1.11.4 -->
-<script src="<?php echo RUTA_URL; ?>public/bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
-<!-- Bootstrap 3.3.7 -->
-<script src="<?php echo RUTA_URL; ?>public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- iCheck 1.0.1 -->
-<script src="<?php echo RUTA_URL; ?>public/plugins/iCheck/icheck.min.js"></script>
-<!-- DataTables -->
-<script src="<?php echo RUTA_URL; ?>public/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo RUTA_URL; ?>public/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="<?php echo RUTA_URL; ?>public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="<?php echo RUTA_URL; ?>public/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="<?php echo RUTA_URL; ?>public/bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo RUTA_URL; ?>public/dist/js/adminlte.min.js"></script>
+    <script src="<?php echo RUTA_URL; ?>public/jquery/jquery-3.4.1.min.js"></script>
+    <!-- <script src="<?php echo RUTA_URL; ?>public/bower_components/jquery/dist/jquery.min.js"></script> -->
+    <!-- jQuery UI 1.11.4 -->
+    <script src="<?php echo RUTA_URL; ?>public/bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+    $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="<?php echo RUTA_URL; ?>public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="<?php echo RUTA_URL; ?>public/plugins/iCheck/icheck.min.js"></script>
+    <!-- DataTables -->
+    <script src="<?php echo RUTA_URL; ?>public/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo RUTA_URL; ?>public/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="<?php echo RUTA_URL; ?>public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="<?php echo RUTA_URL; ?>public/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="<?php echo RUTA_URL; ?>public/bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="<?php echo RUTA_URL; ?>public/dist/js/adminlte.min.js"></script>
 
-<!-- AdminLTE for demo purposes -->
-<script src="<?php echo RUTA_URL; ?>public/dist/js/demo.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="<?php echo RUTA_URL; ?>public/dist/js/demo.js"></script>
 
-<script src="<?php echo RUTA_URL; ?>public/librerias/bootbox/bootbox.min.js"></script>
+    <script src="<?php echo RUTA_URL; ?>public/librerias/bootbox/bootbox.min.js"></script>
 
-<script src="<?php echo RUTA_URL; ?>public/js/main.js"></script>
+    <script src="<?php echo RUTA_URL; ?>public/js/main.js"></script>
+<!-- jQuery 3 -->
 
 <script type="text/javascript">
 
@@ -340,6 +374,49 @@ width: 150px;
             "info"      : true,
             "bLengthChange": false,
             "columnDefs": [
+                {"width": "20%","className": "text-center","targets": 0},
+                {"width": "20%","className": "text-center","targets": 1},
+                {"width": "20%","className": "text-center","targets": 2},
+                {"width": "10%","className": "text-center","targets": 4},
+                {"width": "10%","className": "text-center","targets": 5},
+            ],
+
+            "bJQueryUI":true,"oLanguage": {
+                "sEmptyTable":     "No hay datos registrados en la Base de Datos.",
+                "sInfo":           "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando desde 0 hasta 0 de 0 registros",
+                "sInfoFiltered":   "(filtrado de _MAX_ registros en total)",
+                "sInfoPostFix":    "",
+                "sInfoThousands":  ",",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sLoadingRecords": "Cargando...",
+                "sProcessing":     "Procesando...",
+                "sSearch":         "Buscar:",
+                "sZeroRecords":    "No se encontraron resultados",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": activar para Ordenar Ascendentemente",
+                    "sSortDescending": ": activar para Ordendar Descendentemente"
+                }
+            }
+        });
+
+        tableFolioEntregado = $('#gridFolioEntregado').DataTable( {    
+            "responsive": true,
+            "searching" : true,
+            "paging"    : true,
+            "ordering"  : false,
+            "info"      : true,
+            "bLengthChange": false,
+            "columnDefs": [
+                {"width": "20%","className": "text-center","targets": 0},
+                {"width": "20%","className": "text-center","targets": 1},
+                {"width": "20%","className": "text-center","targets": 2},
                 {"width": "10%","className": "text-center","targets": 4},
                 {"width": "10%","className": "text-center","targets": 5},
             ],
@@ -408,6 +485,7 @@ width: 150px;
         
         cargarProductos();
         cargarTablaFolio();
+        cargarTablaFolioEntregado();
         $('#cmbProductos').focus();
     });
 
@@ -490,6 +568,64 @@ width: 150px;
         });
     }
 
+    function cargarTablaFolioEntregado()
+    {
+        $.ajax({
+            url      : 'Venta/consultarFolios',
+            type     : "POST",
+            data    : { 
+                ban: 3,
+                folio_venta : 0
+            },
+            success  : function(datos) {
+
+                var myJson = JSON.parse(datos);
+
+                tableFolioEntregado.clear().draw();
+
+                if(myJson.arrayDatos.length > 0)
+                {
+
+                    var title;
+                    var icon;
+                    var color_icon;
+                    var accion;
+
+                    $(myJson.arrayDatos).each( function(key, val)
+                    {
+                        if(val.estatus_venta == 2){
+                            title = 'En proceso';
+                            icon = 'fa fa-dot-circle-o';
+                            color_icon = "color: #4ad129;"
+                            accion = "cambiarEstatusVenta('" + val.cve_venta  + "','2')";
+                        }
+                            
+                        
+
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar Especiaidad' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
+                        var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
+
+                        tableFolioEntregado.row.add([
+                            val.folio_venta ,
+                            val.total_venta ,
+                            val.fechaalta_deventa ,
+                            val.tipo_venta ,
+                            btn_editar,
+                            btn_status,
+                        ]).draw();
+                    })
+
+                }
+                else
+                {
+                    tableFolioEntregado = $('#gridFolioEntregado').DataTable();
+                    
+                }
+
+            }
+        });
+    }
+
     function cambiarEstatusVenta(cve_venta, estatus){
         $.ajax({
             url      : 'Venta/cambiarEstatusVenta',
@@ -502,6 +638,7 @@ width: 150px;
             success  : function(datos) {
                 
                 cargarTablaFolio();
+                cargarTablaFolioEntregado();
 
             }
         });
@@ -590,6 +727,8 @@ width: 150px;
         else{
 
             $("#txtbtnVincularCliente").show();
+            $("#btnVincularCliente").show();
+            $("#btnNuevoCliente").show();
 
             $.ajax({
                 url      : 'Venta/actualizaTipoVenta',
@@ -640,6 +779,7 @@ width: 150px;
                         $("#txtbtnVincularCliente").hide();
                         $("#txtHoraClienteVenta").text('');
                         $("#txtTotalVenta").text('');
+                        $("#divTipoVenta").hide();
                         
                     }
 
@@ -936,8 +1076,13 @@ width: 150px;
                             var btn_editar = "";
                             var btnCantidad = '<div class="input-group"> <span class="input-group-btn"> <button type="button" class="btn btn-danger btn-number" onclick="modCantidad('+0+','+val.cantidad_deventa+','+val.cve_deventa+')"><span class="glyphicon glyphicon-minus"></span></button></span><input type="text" class="form-control input-number" value="'+val.cantidad_deventa+'" min="1" max="100"><span class="input-group-btn"><button type="button" onclick="modCantidad('+1+','+val.cantidad_deventa+','+val.cve_deventa+')" class="btn btn-success btn-number"><span class="glyphicon glyphicon-plus"></span></button></span></div>';
                         }
+                        if(val.estatus_venta == 1){
+                            var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
+                        }
+                        else{
+                            var btn_status = '';
+                        }
                         
-                        var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
                         tableComanda.row.add([
                             val.nombrecompleto_comanda ,
@@ -961,9 +1106,15 @@ width: 150px;
                             $("#radio2").prop('checked', true);
                             $("#radio1").prop('checked', false);
                             $("#txtbtnVincularCliente").show();
+                            $("#btnVincularCliente").show();
+                                $("#btnNuevoCliente").show();
                             $("#txtNombreClienteVenta").text(val.nombre_cliente);
                             $("#txtDireccionClienteVenta").text(val.domicilio_cliente);
                             $("#txtTelefonoClienteVenta").text(val.telefono_cliente);
+                            if(val.estatus_venta == 2){
+                                $("#btnVincularCliente").hide();
+                                $("#btnNuevoCliente").hide();
+                            }
                         }
                         if(key == 0){
                             $("#txtHoraClienteVenta").text(val.fechaalta_deventa);
