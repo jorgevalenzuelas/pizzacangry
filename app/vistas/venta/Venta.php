@@ -75,6 +75,7 @@
                             
                         </table>
                         <label>Total: &nbsp;</label><label id="txtTotalVenta"></label>
+                        <button type="button" class="btn btn-primary pull-right" onclick="pagarComanda()" id="btnPagarComanda">Pagar</button>
                         <div class="form-check" id="divTipoVenta">
                             <div class="form-check-inline">
                                 <label class="form-check-label" for="radio1">
@@ -364,6 +365,7 @@ width: 150px;
 
         $("#divTipoVenta").hide();
         $("#txtbtnVincularCliente").hide();
+        $("#btnPagarComanda").hide();
         
 
         tableFolio = $('#gridFolio').DataTable( {    
@@ -792,6 +794,7 @@ width: 150px;
                         $("#txtHoraClienteVenta").text('');
                         $("#txtTotalVenta").text('');
                         $("#divTipoVenta").hide();
+                        $("#btnPagarComanda").hide();
                         
                     }
 
@@ -1120,10 +1123,12 @@ width: 150px;
                             $("#txtDireccionClienteVenta").text('');
                             $("#txtTelefonoClienteVenta").text('');
                             $("#txtbtnVincularCliente").hide();
+                            $("#btnPagarComanda").show();
                             
                             if(val.estatus_venta == 2){
                                 $("#radio1").prop('disabled', true);
                                 $("#radio2").prop('disabled', true);
+                                $("#btnPagarComanda").hide();
                             }
                         }
                         else if(val.tipo_venta == 'Domicilio'){
@@ -1137,12 +1142,14 @@ width: 150px;
                             $("#txtNombreClienteVenta").text(val.nombre_cliente);
                             $("#txtDireccionClienteVenta").text(val.domicilio_cliente);
                             $("#txtTelefonoClienteVenta").text(val.telefono_cliente);
+                            $("#btnPagarComanda").show();
                             
                             if(val.estatus_venta == 2){
                                 $("#btnVincularCliente").hide();
                                 $("#btnNuevoCliente").hide();
                                 $("#radio1").prop('disabled', true);
                                 $("#radio2").prop('disabled', true);
+                                $("#btnPagarComanda").hide();
                             }
                         }
                         if(key == 0){
@@ -1160,6 +1167,17 @@ width: 150px;
                 else
                 {
                     tableComanda = $('#gridComanda').DataTable();
+                    $("#txtTotalVenta").text('');
+                    $("#btncancelarFolioVenta").prop( "disabled", false );
+                    $("#radio1").prop('checked', true);
+                    $("#txtNombreClienteVenta").text('');
+                    $("#txtDireccionClienteVenta").text('');
+                    $("#txtTelefonoClienteVenta").text('');
+                    $("#txtbtnVincularCliente").hide();
+                    $("#txtHoraClienteVenta").text('');
+                    $("#txtTotalVenta").text('');
+                    $("#divTipoVenta").hide();
+                    $("#btnPagarComanda").hide();
                     
                 }
 
@@ -1179,6 +1197,7 @@ width: 150px;
                 },
                 success  : function(datos) {
                     consultarComanda($("#txtFolioVenta").text());
+                    
                 }
             });
     }
