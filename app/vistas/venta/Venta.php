@@ -324,6 +324,24 @@ width: 150px;
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal_formPagar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-mg modal-dialog-centered" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel">Pagar cuenta</h3>
+            </div>
+            <div class="modal-body" id="muestra_formPagar">
+                
+            </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary" id="btnGuardarPagar">Aceptar</button>
+                <button class="btn btn-primary" data-dismiss="modal" id="btnCancelarPagar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- jQuery 3 -->
     <script src="<?php echo RUTA_URL; ?>public/jquery/jquery-3.4.1.min.js"></script>
     <!-- <script src="<?php echo RUTA_URL; ?>public/bower_components/jquery/dist/jquery.min.js"></script> -->
@@ -490,6 +508,16 @@ width: 150px;
         cargarTablaFolioEntregado();
         $('#cmbProductos').focus();
     });
+
+    function pagarComanda(){
+        $('#modal_formPagar').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        $('#modal_formPagar').on('shown.bs.modal', function () {
+            $('#txtCantidadProductos').focus();
+        });
+    }
 
     function buscarDireccion(){
         var val = $('#cmbCliente').val() ? $('#cmbCliente').val() : '';
