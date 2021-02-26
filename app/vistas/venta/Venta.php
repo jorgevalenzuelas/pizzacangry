@@ -326,17 +326,29 @@ width: 150px;
 </div>
 
 <div class="modal fade" id="modal_formPagar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-mg modal-dialog-centered" >
+    <div class="modal-dialog modal-sm modal-dialog-centered" >
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="myModalLabel">Pagar cuenta</h3>
+                <h3 class="modal-title" id="myModalLabel">COBRAR</h3>
             </div>
             <div class="modal-body" id="muestra_formPagar">
-                
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label style="font-size:180%;">TOTAL A COBRAR:&nbsp;$</label><label style="font-size:180%;" id="txtTotalVentaCobrar" name="txtTotalVentaCobrar"></label>
+                </div>
+                <div class="form-group col-md-12">
+                    <label style="font-size:180%;">PAGÓ CON:&nbsp;</label>
+                    <input style="font-size:180%;text-align: center;" type="number" class="form-control" id="txtTotalCobrar" name="txtTotalCobrar" onkeyup="camcularCambio()">
+                </div>
+                <div class="form-group col-md-12">
+                    <label style="font-size:180%;">SU CAMBIO:&nbsp;</label>
+                    <label style="font-size:180%;" id="txtTotalCambio" name="txtTotalCambio"></label>
+                </div>
+            </div>
             </div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="btnGuardarPagar">Aceptar</button>
+                <button type="submit" class="btn btn-primary" id="btnGuardarPagar">Cobrar</button>
                 <button class="btn btn-primary" data-dismiss="modal" id="btnCancelarPagar">Cancelar</button>
             </div>
         </div>
@@ -509,13 +521,35 @@ width: 150px;
         $('#cmbProductos').focus();
     });
 
+    function camcularCambio(){
+       var totalVentaCobrar =  parseInt($('#txtTotalVentaCobrar').text());
+       var pagoCliente =  parseInt($('#txtTotalCobrar').val());
+       var cambio = 0;
+
+       if(pagoCliente >= totalVentaCobrar){
+            cambio = pagoCliente - totalVentaCobrar;
+            $('#txtTotalCambio').text(cambio);
+            $("#btnGuardarPagar").prop('disabled', false);
+       }
+       else{
+        $('#txtTotalCambio').text('0');
+        $("#btnGuardarPagar").prop('disabled', true);
+
+       }
+
+       
+    }
+
     function pagarComanda(){
+        $("#btnGuardarPagar").prop('disabled', true);
         $('#modal_formPagar').modal({
             backdrop: 'static',
             keyboard: false
         });
+        $('#txtTotalVentaCobrar').text($('#txtTotalVenta').text());
         $('#modal_formPagar').on('shown.bs.modal', function () {
-            $('#txtCantidadProductos').focus();
+            $('#txtTotalCobrar').focus();
+            
         });
     }
 
@@ -934,6 +968,12 @@ width: 150px;
         }
         
     }
+    
+    $('#btnCancelarPagar').click(function (e) {
+        $('#txtTotalVentaCobrar').text('');
+        $('#txtTotalCobrar').val('');
+        $('#txtTotalCambio').text('');
+    });
 
     $('#btnGuardarCantidad').click(function (e) {
 
