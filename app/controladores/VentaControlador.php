@@ -130,10 +130,14 @@ else
 		public function actualizarTotalVenta()
 		{
 			$datosVenta =  array (
-				folo_venta   => $_POST["folo_venta"],
+				ban   => $_POST["ban"],
+				folio_venta   => $_POST["folio_venta"],
 				 cveusuario_accion  => $_SESSION["cve_usuario"]
 			 );
 			$respuesta = $this->VentaModelo->actualizarTotalVenta($datosVenta);
+			$envioDatos["arrayDatos"] = $respuesta;
+
+				echo json_encode($envioDatos);
 		}
 
 		public function GuardarVenta()

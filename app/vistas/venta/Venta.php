@@ -47,68 +47,96 @@
         <div class="row">
         <div id="msgAlert1"></div>
             <div class="col-md-6">
-            <h3>Ordenar&nbsp;</h3>
-                        <hr>
-                <button type="button" class="btn btn-primary" onclick="GenerarFolio()" id="txtbtnNuevaVenta">Nueva orden</button>
-                <div class="form-group">
-                    <label for="cmbProductos">Buscar productos</label>
-                    <datalist id="cmbContactosListMod">
-                        <!--option value="0" selected="selected"> -- Seleccione -- </option-->
-                    </datalist>
-                    <input list="cmbContactosListMod" id="cmbProductos" name="cmbProductos" type="text" class="form-control" placeholder=" -- Escriba -- " onkeyup="javascript:this.value=this.value.toUpperCase();" onchange="AgregarProductoTabla();">
-                </div>
-                
-                <div class="box" style="margin-top: 20px;">
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                    <label>Folio: &nbsp;</label><label id="txtFolioVenta"></label>
-                        <table id="gridComanda" class="table table-bordered table-striped" style="font-size: 12px;">
-                            <thead>
-                                <tr>
-                                    <th>Nombre producto</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
-                                    <th>Detalle</th>
-                                    <th>Eliminar</th>
-                                </tr>
-                            </thead>
-                            
-                        </table>
-                        <label>Total: &nbsp;</label><label id="txtTotalVenta"></label>
-                        <button type="button" class="btn btn-primary pull-right" onclick="pagarComanda()" id="btnPagarComanda">Pagar</button>
-                        <div class="form-check" id="divTipoVenta">
-                            <div class="form-check-inline">
-                                <label class="form-check-label" for="radio1">
-                                    <input type="radio" class="form-check-input" id="radio1" name="optradio" onchange="tipoVenta()" value="1">&nbsp; Restaurante
-                                </label>
-                            </div>
-                            <div class="form-check-inline">
-                                <label class="form-check-label" for="radio2">
-                                    <input type="radio" class="form-check-input" id="radio2" name="optradio" onchange="tipoVenta()" value="2">&nbsp; Domicilio
-                                    <div id="txtbtnVincularCliente">
-                                            <button type="button" class="btn btn-primary" onclick="vincularCliente()" id="btnVincularCliente">Vincular cliente</button>
-                                        
-                                            <button type="button" class="btn btn-success" onclick="nuevoCliente()" id="btnNuevoCliente">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                            </button>
-
-                                            <div class="col-md-6">
-                                                <h5>Nombre cliente: &nbsp;</labeh5l><label id="txtNombreClienteVenta"></label>
-                                                <br>
-                                                <h5>Dirección: &nbsp;</h5><label id="txtDireccionClienteVenta"></label>
-                                                <br>
-                                                <h5>Teléfono: &nbsp;</h5><label id="txtTelefonoClienteVenta"></label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Ordenar&nbsp;</h3>
+                                <hr>
+                        <button type="button" class="btn btn-primary" onclick="GenerarFolio()" id="txtbtnNuevaVenta">Nueva orden</button>
+                        <div class="form-group">
+                            <label for="cmbProductos">Buscar productos</label>
+                            <datalist id="cmbContactosListMod">
+                                <!--option value="0" selected="selected"> -- Seleccione -- </option-->
+                            </datalist>
+                            <input list="cmbContactosListMod" id="cmbProductos" name="cmbProductos" type="text" class="form-control" placeholder=" -- Escriba -- " onkeyup="javascript:this.value=this.value.toUpperCase();" onchange="AgregarProductoTabla();">
+                        </div>
+                        
+                        <div class="box" style="margin-top: 20px;">
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                            <label>Folio: &nbsp;</label><label id="txtFolioVenta"></label>
+                                <table id="gridComanda" class="table table-bordered table-striped" style="font-size: 12px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre producto</th>
+                                            <th>Precio</th>
+                                            <th>Cantidad</th>
+                                            <th>Detalle</th>
+                                            <th>Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                </table>
+                                <label>Total: &nbsp;</label><label id="txtTotalVenta"></label>
+                                <button type="button" class="btn btn-primary pull-right" onclick="pagarComanda()" id="btnPagarComanda">Pagar</button>
+                                <div class="form-check" id="divTipoVenta">
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label" for="radio1">
+                                            <input type="radio" class="form-check-input" id="radio1" name="optradio" onchange="tipoVenta()" value="1">&nbsp; Restaurante
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label" for="radio2">
+                                            <input type="radio" class="form-check-input" id="radio2" name="optradio" onchange="tipoVenta()" value="2">&nbsp; Domicilio
+                                            <div id="txtbtnVincularCliente">
+                                                    <button type="button" class="btn btn-primary" onclick="vincularCliente()" id="btnVincularCliente">Vincular cliente</button>
                                                 
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <h5>Hora pedido: &nbsp;</h5><label id="txtHoraClienteVenta"></label>
-                                </label>
-                                
+                                                    <button type="button" class="btn btn-success" onclick="nuevoCliente()" id="btnNuevoCliente">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+
+                                                    <div class="col-md-6">
+                                                        <h5>Nombre cliente: &nbsp;</labeh5l><label id="txtNombreClienteVenta"></label>
+                                                        <br>
+                                                        <h5>Dirección: &nbsp;</h5><label id="txtDireccionClienteVenta"></label>
+                                                        <br>
+                                                        <h5>Teléfono: &nbsp;</h5><label id="txtTelefonoClienteVenta"></label>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <h5>Hora pedido: &nbsp;</h5><label id="txtHoraClienteVenta"></label>
+                                        </label>
+                                        
+                                    </div>
+                                </div>
                             </div>
+                            <!-- /.box-body -->
                         </div>
                     </div>
-                    <!-- /.box-body -->
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Por cobrar&nbsp;</h3>
+                        <hr>
+                        <div class="box" style="margin-top: 20px;">
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="gridPorCobrar" class="table table-bordered table-striped" style="font-size: 12px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Folio</th>
+                                            <th>Total</th>
+                                            <th>Hr. pedido</th>
+                                            <th>Tipo</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -128,7 +156,7 @@
                                             <th>Hr. pedido</th>
                                             <th>Tipo</th>
                                             <th>Editar</th>
-                                            <th>Status</th>
+                                            <th>Estatus</th>
                                         </tr>
                                     </thead>
                                     
@@ -153,7 +181,7 @@
                                             <th>Hr. pedido</th>
                                             <th>Tipo</th>
                                             <th>Detalle</th>
-                                            <th>Status</th>
+                                            <th>Estatus</th>
                                         </tr>
                                     </thead>
                                     
@@ -348,8 +376,8 @@ width: 150px;
             </div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="btnGuardarPagar">Cobrar</button>
-                <button class="btn btn-primary" data-dismiss="modal" id="btnCancelarPagar">Cancelar</button>
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" id="btnGuardarPago">Cobrar</button>
+                <button class="btn btn-primary" data-dismiss="modal" id="btnCancelarPago">Cancelar</button>
             </div>
         </div>
     </div>
@@ -396,6 +424,45 @@ width: 150px;
         $("#divTipoVenta").hide();
         $("#txtbtnVincularCliente").hide();
         $("#btnPagarComanda").hide();
+
+        tablePorCobrar = $('#gridPorCobrar').DataTable( {    
+            "responsive": true,
+            "searching" : true,
+            "paging"    : true,
+            "ordering"  : false,
+            "info"      : true,
+            "bLengthChange": false,
+            "columnDefs": [
+                {"width": "20%","className": "text-center","targets": 0},
+                {"width": "20%","className": "text-center","targets": 1},
+                {"width": "20%","className": "text-center","targets": 2},
+                {"width": "10%","className": "text-center","targets": 4},
+            ],
+
+            "bJQueryUI":true,"oLanguage": {
+                "sEmptyTable":     "No hay datos registrados en la Base de Datos.",
+                "sInfo":           "Mostrando desde _START_ hasta _END_ de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando desde 0 hasta 0 de 0 registros",
+                "sInfoFiltered":   "(filtrado de _MAX_ registros en total)",
+                "sInfoPostFix":    "",
+                "sInfoThousands":  ",",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sLoadingRecords": "Cargando...",
+                "sProcessing":     "Procesando...",
+                "sSearch":         "Buscar:",
+                "sZeroRecords":    "No se encontraron resultados",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": activar para Ordenar Ascendentemente",
+                    "sSortDescending": ": activar para Ordendar Descendentemente"
+                }
+            }
+        });
         
 
         tableFolio = $('#gridFolio').DataTable( {    
@@ -516,6 +583,7 @@ width: 150px;
         });
         
         cargarProductos();
+        cargarTablaPorCobrar();
         cargarTablaFolio();
         cargarTablaFolioEntregado();
         $('#cmbProductos').focus();
@@ -529,11 +597,11 @@ width: 150px;
        if(pagoCliente >= totalVentaCobrar){
             cambio = pagoCliente - totalVentaCobrar;
             $('#txtTotalCambio').text(cambio);
-            $("#btnGuardarPagar").prop('disabled', false);
+            $("#btnGuardarPago").prop('disabled', false);
        }
        else{
         $('#txtTotalCambio').text('0');
-        $("#btnGuardarPagar").prop('disabled', true);
+        $("#btnGuardarPago").prop('disabled', true);
 
        }
 
@@ -541,7 +609,7 @@ width: 150px;
     }
 
     function pagarComanda(){
-        $("#btnGuardarPagar").prop('disabled', true);
+        $("#btnGuardarPago").prop('disabled', true);
         $('#modal_formPagar').modal({
             backdrop: 'static',
             keyboard: false
@@ -572,6 +640,63 @@ width: 150px;
             }
 
 
+    }
+
+    function cargarTablaPorCobrar()
+    {
+        $.ajax({
+            url      : 'Venta/consultarFolios',
+            type     : "POST",
+            data    : { 
+                ban: 4,
+                folio_venta : 0
+            },
+            success  : function(datos) {
+
+                var myJson = JSON.parse(datos);
+
+                tablePorCobrar.clear().draw();
+
+                if(myJson.arrayDatos.length > 0)
+                {
+
+                    var title;
+                    var icon;
+                    var color_icon;
+                    var accion;
+
+                    $(myJson.arrayDatos).each( function(key, val)
+                    {
+                        /**if(val.estatus_venta == 1){
+                            title = 'En proceso';
+                            icon = 'fa fa-dot-circle-o';
+                            color_icon = "color: #4ad129;"
+                            accion = "cambiarEstatusVenta('" + val.cve_venta  + "','2')";
+                        }**/
+                            
+                        
+
+                        var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar comanda' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
+                        //var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
+
+                        tablePorCobrar.row.add([
+                            val.folio_venta ,
+                            val.total_venta ,
+                            val.fechaalta_deventa ,
+                            val.tipo_venta ,
+                            btn_editar,
+                        ]).draw();
+                    })
+
+                }
+                else
+                {
+                    tablePorCobrar = $('#gridPorCobrar').DataTable();
+                    
+                }
+
+            }
+        });
     }
 
     function cargarTablaFolio()
@@ -658,10 +783,11 @@ width: 150px;
                     $(myJson.arrayDatos).each( function(key, val)
                     {
                         if(val.estatus_venta == 2){
-                            title = 'En proceso';
+                            title = 'Entregado';
                             icon = 'fa fa-dot-circle-o';
-                            color_icon = "color: #4ad129;"
-                            accion = "cambiarEstatusVenta('" + val.cve_venta  + "','2')";
+                            color_icon = "color: #ffa126;"
+                            //accion = "cambiarEstatusVenta('" + val.cve_venta  + "','2')";
+                            accion = "";
                         }
                             
                         
@@ -700,7 +826,7 @@ width: 150px;
                 estatus : estatus
             },
             success  : function(datos) {
-                
+                cargarTablaPorCobrar();
                 cargarTablaFolio();
                 cargarTablaFolioEntregado();
 
@@ -823,6 +949,7 @@ width: 150px;
         
     }
     function GenerarFolio(){
+        cargarTablaPorCobrar();
         cargarTablaFolio();
         table = $('#gridComanda').DataTable();
         var entro = false;
@@ -968,8 +1095,24 @@ width: 150px;
         }
         
     }
+
+    $('#btnGuardarPago').click(function (e) {
+        $.ajax({
+            url      : 'Venta/actualizarTotalVenta',
+            type     : "POST",
+            data    : { 
+                ban: 2,
+                folio_venta: $("#txtFolioVenta").text()
+            },
+            success  : function(datos) {
+                consultarComanda($("#txtFolioVenta").text());
+                cargarTablaPorCobrar();
+                cargarTablaFolio();
+            }
+        });
+    });
     
-    $('#btnCancelarPagar').click(function (e) {
+    $('#btnCancelarPago').click(function (e) {
         $('#txtTotalVentaCobrar').text('');
         $('#txtTotalCobrar').val('');
         $('#txtTotalCambio').text('');
@@ -1096,6 +1239,7 @@ width: 150px;
             },
             success  : function(datos) {
                 consultarComanda($("#txtFolioVenta").text());
+                cargarTablaPorCobrar();
                 cargarTablaFolio();
             }
         });
@@ -1112,7 +1256,7 @@ width: 150px;
             type     : "POST",
             data    : { 
                 ban: 1 ,
-                folo_venta: folioComanda
+                folio_venta: folioComanda
             },
             success  : function(datos) {
             }
@@ -1156,7 +1300,7 @@ width: 150px;
                             var btnCantidad = val.cantidad_deventa;
                         }
                         else{
-                            if(val.estatus_venta == 1){
+                            if(val.estatus_venta == 1 && val.estatuspago_venta == 0){
                                 var btn_editar = "";
                                 var btnCantidad = '<div class="input-group"> <span class="input-group-btn"> <button type="button" class="btn btn-danger btn-number" onclick="modCantidad('+0+','+val.cantidad_deventa+','+val.cve_deventa+')"><span class="glyphicon glyphicon-minus"></span></button></span><input type="text" class="form-control input-number" value="'+val.cantidad_deventa+'" min="1" max="100"><span class="input-group-btn"><button type="button" onclick="modCantidad('+1+','+val.cantidad_deventa+','+val.cve_deventa+')" class="btn btn-success btn-number"><span class="glyphicon glyphicon-plus"></span></button></span></div>';
                             }
@@ -1165,7 +1309,7 @@ width: 150px;
                                 var btnCantidad = val.cantidad_deventa;
                             }
                         }
-                        if(val.estatus_venta == 1){
+                        if(val.estatus_venta == 1 && val.estatuspago_venta == 0){
                             var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
                         }
                         else{
@@ -1198,6 +1342,9 @@ width: 150px;
                                 $("#radio2").prop('disabled', true);
                                 $("#btnPagarComanda").hide();
                             }
+                            if(val.estatuspago_venta == 1){
+                                $("#btnPagarComanda").hide();
+                            }
                         }
                         else if(val.tipo_venta == 'Domicilio'){
                             $("#radio2").prop('checked', true);
@@ -1219,6 +1366,9 @@ width: 150px;
                                 $("#radio2").prop('disabled', true);
                                 $("#btnPagarComanda").hide();
                             }
+                            if(val.estatuspago_venta == 1){
+                                $("#btnPagarComanda").hide();
+                            }
                         }
                         if(key == 0){
                             $("#txtHoraClienteVenta").text(val.fechaalta_deventa);
@@ -1228,6 +1378,7 @@ width: 150px;
                         
                         
                     });
+                    cargarTablaPorCobrar();
                     cargarTablaFolio();
                 cargarTablaFolioEntregado();
 
