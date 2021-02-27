@@ -1315,7 +1315,6 @@ width: 150px;
                         else{
                             var btn_status = '';
                         }
-                        
 
                         tableComanda.row.add([
                             val.nombrecompleto_comanda ,
@@ -1345,6 +1344,10 @@ width: 150px;
                             if(val.estatuspago_venta == 1){
                                 $("#btnPagarComanda").hide();
                             }
+                            else
+                            {
+                                $("#btnPagarComanda").show();
+                            }
                         }
                         else if(val.tipo_venta == 'Domicilio'){
                             $("#radio2").prop('checked', true);
@@ -1368,6 +1371,10 @@ width: 150px;
                             }
                             if(val.estatuspago_venta == 1){
                                 $("#btnPagarComanda").hide();
+                            }
+                            else
+                            {
+                                $("#btnPagarComanda").show();
                             }
                         }
                         if(key == 0){

@@ -435,7 +435,7 @@
                 $('#txtCostoBebida').val(myJson.arrayDatos[0].costo_bebida);
                 $('#txtPrecioBebida').val(myJson.arrayDatos[0].precio_bebida);
                 $('#txtStockBebida').val(myJson.arrayDatos[0].stock_bebida);
-                $('#cmbUnidadmedidaBebida').val(myJson.arrayDatos[0].cveunidadmedida_bebida);
+                $('#cmbUnidadmedidaBebida').val(myJson.arrayDatos[0].cveunidadmedida_bebida).change();
                 $("#btnGuardar").html('Actualizar Bebida');
 
             }

@@ -434,7 +434,7 @@
                 $('#txtPrecioTradicional').val(myJson.arrayDatos[0].precio_tradicional );
                 $('#txtCantidadingredienteTradicional').val(myJson.arrayDatos[0].cantidadingrediente_tradicional);
                 
-                $("#cmbTamanoTradicional").val(myJson.arrayDatos[0].cvetamano_tradicional);
+                $("#cmbTamanoTradicional").val(myJson.arrayDatos[0].cvetamano_tradicional).change();
                 $("#btnGuardar").html('Actualizar tradicional');
 
             }

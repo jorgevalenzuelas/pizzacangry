@@ -14,12 +14,8 @@ else
 		
 		public function __construct()
 		{
-
 			$this->TamanoModelo = $this->modelo('TamanoModelo');
-
 		}
-
-
 
 		//Todo controlador debe tener un metodo index
 		public function index()
@@ -27,14 +23,10 @@ else
 			$this->vista('tamano/Tamano');
 		}
 
-
-
 		public function consultar()
 		{
 			$data = $this->TamanoModelo->consultar($_POST);
-
 			$envioDatos["arrayDatos"] = $data;
-
 			echo json_encode($envioDatos);
 		}
 
@@ -58,7 +50,6 @@ else
 				
 				$respuesta = $this->TamanoModelo->guardarTamano($datosTamano);
 
-				
 				if ($respuesta == true)
 				{
 					$msg = "Tamaño guardado con Éxito.";
@@ -72,14 +63,11 @@ else
 				
 			}
 
-			
 			$envioDatos["status"] = $status;
 			$envioDatos["msg"] = $msg;
 			echo json_encode($envioDatos);
 			
 		}
-
-
 
 		public function validarDatosVaciosTamanoGuardar($dataPost)
 		{
@@ -87,11 +75,8 @@ else
 			else{
 				$status = "completo";
 			}
-
 			return $status;
 		}
-
-
 
 		public function bloquearTamano()
 		{
@@ -124,10 +109,6 @@ else
 			$envioDatos["msg"] = $msg;
 			echo json_encode($envioDatos);
 		}
-		
 	}
-
 }
-
-
 ?>

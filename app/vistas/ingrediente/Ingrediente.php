@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,16 +46,12 @@
             <h1>
                 Ingredientes
             </h1>
-
         </section>
 
         <!-- Main content -->
         <section class="content">
-
-            <div id="msgAlert"></div>
-
+            <div id="msgAlertContent"></div>
             <button class="btn btn-primary" id="btnMostraModalIngrediente">Nuevo ingrediente</button>
-      
             <div class="box" style="margin-top: 20px;">
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -101,7 +96,7 @@
                 <input type="hidden" id="txtcveIngrediente" name="txtcveIngrediente">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <div id="msgAlert2"></div>
+                        <div id="msgAlertIngrediente"></div>
                     </div>
                 </div>
                 <div class="row">
@@ -278,7 +273,7 @@
     $('#btnGuardar').click(function (e) {
         if ( $('#txtNombreIngrediente').val()  == "" )
         {
-            msgAlert2("Favor de ingresar el nombre del ingrediente.","warning");
+            msgAlertIngrediente("Favor de ingresar el nombre del ingrediente.","warning");
         }
         else
         {
@@ -299,7 +294,7 @@
                         $('#txtcveIngrediente').val('');
                         //Reinicializamos tabla
                         cargarTablaIngrediente();
-                        msgAlert(myJson.msg ,"success");
+                        msgAlertContent(myJson.msg ,"success");
                         //$('#msgAlert').css("display", "none");
                         $("#btnGuardar").prop('disabled', false);
                         $("#btnGuardar").html('Guardar');
@@ -307,7 +302,7 @@
                     else
                     {
                         $("#btnGuardar").prop('disabled', false);
-                        msgAlert2(myJson.msg ,"danger");
+                        msgAlertIngrediente(myJson.msg ,"danger");
                         
                     }
                 }
@@ -316,16 +311,16 @@
         return false;
     });
 
-    function msgAlert2(msg,tipo)
+    function msgAlertIngrediente(msg,tipo)
     {
-        $('#msgAlert2').css("display", "block");
-        $("#msgAlert2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
-        setTimeout(function() { $("#msgAlert2").fadeOut(1500); },1500);
+        $('#msgAlertIngrediente').css("display", "block");
+        $("#msgAlertIngrediente").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlertIngrediente").fadeOut(1500); },1500);
     }
 
     function mostrarIngrediente(cve_ingrediente)
     {
-        $('#msgAlert').css("display", "none");
+        $('#msgAlertContent').css("display", "none");
 
         $.ajax({
             url      : 'Ingrediente/consultar',
@@ -403,7 +398,7 @@
                                 //Reinicializamos tabla
                                 cargarTablaIngrediente();
 
-                                msgAlert(myJson.msg ,"info");
+                                msgAlertContent(myJson.msg ,"info");
 
                             }
 
@@ -418,11 +413,11 @@
 
     }
 
-    function msgAlert(msg,tipo)
+    function msgAlertContent(msg,tipo)
     {
-        $('#msgAlert').css("display", "block");
-        $("#msgAlert").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
-        setTimeout(function() { $("#msgAlert").fadeOut(1500); },1500);
+        $('#msgAlertContent').css("display", "block");
+        $("#msgAlertContent").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlertContent").fadeOut(1500); },1500);
     }
 
 </script>

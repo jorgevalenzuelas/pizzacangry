@@ -438,7 +438,7 @@
                 $('#txtPrecioEspecialidad').val(myJson.arrayDatos[0].precio_especialidad);
                 $('#txtDescripcionEspecialidad').val(myJson.arrayDatos[0].descripcion_especialidad);
                 
-                $("#cmbTamanoEspecialidad").val(myJson.arrayDatos[0].cvetamano_especialidad);
+                $("#cmbTamanoEspecialidad").val(myJson.arrayDatos[0].cvetamano_especialidad).change();
                 $("#btnGuardar").html('Actualizar Especialidad');
 
             }

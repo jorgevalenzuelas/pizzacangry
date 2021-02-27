@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,16 +46,11 @@
             <h1>
                 Tamaños
             </h1>
-
         </section>
-
         <!-- Main content -->
         <section class="content">
-
-            <div id="msgAlert"></div>
-
+            <div id="msgAlertContent"></div>
             <button class="btn btn-primary" id="btnMostraModalTamano">Nuevo tamaño</button>
-      
             <div class="box" style="margin-top: 20px;">
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -74,22 +68,16 @@
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
-
         </section>
         <!-- /.content -->
-
     </div>
     <!-- /.content-wrapper -->
-    
     <?php 
     //include RUTA_APP . 'vistas/includes/footer.php';
-
     include RUTA_APP . 'vistas/includes/control_sidebar_right.php';
     ?>
-
 </div>
 <!-- ./wrapper -->
-
 <!-- modales -->
 <div class="modal fade" id="modal_formTamano" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" >
@@ -101,7 +89,7 @@
                 <input type="hidden" id="txtcveTamano" name="txtcveTamano">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <div id="msgAlert2"></div>
+                        <div id="msgAlertTamano"></div>
                     </div>
                 </div>
                 <div class="row">
@@ -118,7 +106,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- jQuery 3 -->
 <script src="<?php echo RUTA_URL; ?>public/jquery/jquery-3.4.1.min.js"></script>
@@ -203,19 +190,12 @@
             data    : { 
                 ban: 1 
             },
-            beforeSend: function() {
-                // setting a timeout
-
-            },
             success  : function(datos) {
-
                 var myJson = JSON.parse(datos);
-
                 tableTamano.clear().draw();
 
                 if(myJson.arrayDatos.length > 0)
                 {
-
                     var title;
                     var icon;
                     var color_icon;
@@ -223,7 +203,6 @@
 
                     $(myJson.arrayDatos).each( function(key, val)
                     {
-
                         if (parseInt(val.estatus_tamano) == 1)
                         {
                             title = 'Tamaño activo';
@@ -253,9 +232,7 @@
                 else
                 {
                     tableTamano = $('#gridTamano').DataTable();
-                    
                 }
-
             }
         });
     }
@@ -278,7 +255,7 @@
     $('#btnGuardar').click(function (e) {
         if ( $('#txtNombreTamano').val()  == "" )
         {
-            msgAlert2("Favor de ingresar el nombre del tamaño.","warning");
+            msgAlertTamano("Favor de ingresar el nombre del tamaño.","warning");
         }
         else
         {
@@ -299,15 +276,14 @@
                         $('#txtcveTamano').val('');
                         //Reinicializamos tabla
                         cargarTablaTamano();
-                        msgAlert(myJson.msg ,"success");
-                        //$('#msgAlert').css("display", "none");
+                        msgAlertContent(myJson.msg ,"success");
                         $("#btnGuardar").prop('disabled', false);
                         $("#btnGuardar").html('Guardar');
                     }
                     else
                     {
                         $("#btnGuardar").prop('disabled', false);
-                        msgAlert2(myJson.msg ,"danger");
+                        msgAlertTamano(myJson.msg ,"danger");
                         
                     }
                 }
@@ -316,16 +292,16 @@
         return false;
     });
 
-    function msgAlert2(msg,tipo)
+    function msgAlertTamano(msg,tipo)
     {
-        $('#msgAlert2').css("display", "block");
-        $("#msgAlert2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
-        setTimeout(function() { $("#msgAlert2").fadeOut(1500); },1500);
+        $('#msgAlertTamano').css("display", "block");
+        $("#msgAlertTamano").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlertTamano").fadeOut(1500); },1500);
     }
 
     function mostrarTamano(cve_tamano)
     {
-        $('#msgAlert').css("display", "none");
+        $('#msgAlertContent').css("display", "none");
 
         $.ajax({
             url      : 'Tamano/consultar',
@@ -394,17 +370,8 @@
                     
                             if(myJson.status == "success")
                             {
-
-                                //var table = $('#gridTamano').DataTable();
-                                        
-                                //table.clear();
-                                //table.destroy();
-
-                                //Reinicializamos tabla
                                 cargarTablaTamano();
-
-                                msgAlert(myJson.msg ,"info");
-
+                                msgAlertContent(myJson.msg ,"info");
                             }
 
                         }
@@ -418,11 +385,11 @@
 
     }
 
-    function msgAlert(msg,tipo)
+    function msgAlertContent(msg,tipo)
     {
-        $('#msgAlert').css("display", "block");
-        $("#msgAlert").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
-        setTimeout(function() { $("#msgAlert").fadeOut(1500); },1500);
+        $('#msgAlertContent').css("display", "block");
+        $("#msgAlertContent").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlertContent").fadeOut(1500); },1500);
     }
 
 </script>

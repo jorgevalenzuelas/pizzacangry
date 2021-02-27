@@ -408,9 +408,6 @@
                     ban: 2, 
                     cve_extra: cve_extra 
             },
-            beforeSend: function() {
-                // setting a timeout
-            },
             success  : function(datos) {
                 var myJson = JSON.parse(datos);
                 //console.log(myJson);
@@ -421,7 +418,7 @@
                 $('#txtNombreExtra').val(myJson.arrayDatos[0].nombre_extra);
                 $('#txtCostoExtra').val(myJson.arrayDatos[0].costo_extra);
                 $('#txtPrecioExtra').val(myJson.arrayDatos[0].precio_extra);
-                $("#cmbTamanoTradicional").val(myJson.arrayDatos[0].cvetamano_extra);
+                $("#cmbTamanoTradicional").val(myJson.arrayDatos[0].cvetamano_extra).change();
                 $("#btnGuardarExtra").html('Actualizar Extra');
 
             }

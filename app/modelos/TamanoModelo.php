@@ -1,24 +1,18 @@
 <?php
-
 class TamanoModelo
 {
-
 	//creamos la variable donde se instanciará la clase "conectar"
     public $conexion;
 
     public function __construct() {
-
     	//inicializamos la clase para conectarnos a la bd
         $this->conexion = new ConexionBD(); //instanciamos la clase
 
     }
 
-
-
     public function consultar($datos)
     {
         $datosFiltrados = $this->filtrarDatos($datos);
-
         $ban  = $datosFiltrados['ban'];
         $cve_tamano = (!empty($datosFiltrados['cve_tamano']) || $datosFiltrados['cve_tamano']!=null) ? $datosFiltrados['cve_tamano'] : '0';
 
@@ -30,11 +24,8 @@ class TamanoModelo
         return $r_tamano;
     }
 
-
-
     public function guardarTamano($datosTamano)
     {
-
         $datosFiltrados = $this->filtrarDatos($datosTamano);
 
         $ban                = $datosFiltrados['ban'];
@@ -55,8 +46,6 @@ class TamanoModelo
 
     }
 
-
-
     public function bloquearTamano($datosTamano)
     {
         $datosFiltrados = $this->filtrarDatos($datosTamano);
@@ -71,18 +60,12 @@ class TamanoModelo
         return $respuesta;
     }
 
-    
-
     public function filtrarDatos($datosFiltrar){
-
         foreach ($datosFiltrar as $indice => $valor) {
             $datosFiltrarr[$indice] = $this->conexion->real_escape_string($valor);
         }
 
         return $datosFiltrarr;
-
-    }
-	
+    }	
 }
-
 ?>
