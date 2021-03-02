@@ -46,7 +46,7 @@
         <section class="content">
         <div class="row">
         <div id="msgAlert1"></div>
-            <div class="col-md-6">
+            <div class="col-md-6" id="body_gob">
                 <div class="row">
                     <div class="col-md-12">
                         <h3>Ordenar&nbsp;</h3>
@@ -225,14 +225,20 @@ width: 150px;
             </div>
         </div>
     </div>
-</div>
+</div> 
 
 <div class="modal fade" id="modal_formCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-mg modal-dialog-centered" >
         <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel">Vincular cliente</h3>
             </div>
             <div class="modal-body" id="muestra_formCliente"> 
+            <div class="row">
+                    <div class="form-group col-md-12">
+                        <div id="msgAlertClienteNuevo"></div>
+                    </div>
+                </div>
 
             <div class="row">
                 <div class="form-group col-md-12">
@@ -246,7 +252,7 @@ width: 150px;
                 </div>
                 <div class="form-group col-md-12" id="divDireccionCliente">
                     <div class="form-group">
-                    <h5>Nombre Cliente:&nbsp;</h5><label id="txtNombreClientediv"></label>
+                    <h5>Nombre cliente:&nbsp;</h5><label id="txtNombreClientediv"></label>
                     <br>
                     <h5>Direccion:&nbsp;</h5><label id="txtDireccionClientediv"></label>
                     <br>
@@ -254,7 +260,7 @@ width: 150px;
                     </div>
                 </div>                          
             </div>
-                <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" onclick="btnGuardarCantidad2()" >Agregar</button>
+                <button type="button" class="btn btn-primary pull-right" onclick="btnGuardarCantidad2()" >Agregar</button>
             </div>
             <br>
             <br>
@@ -609,6 +615,10 @@ width: 150px;
     }
 
     function pagarComanda(){
+        
+        $('#txtTotalCobrar').val('');
+        
+        $('#txtTotalCambio').text('');
         $("#btnGuardarPago").prop('disabled', true);
         $('#modal_formPagar').modal({
             backdrop: 'static',
@@ -866,8 +876,18 @@ width: 150px;
     }
 
     function vincularCliente(){
+
+        $("#cmbCliente").val('');
+        $("#txtNombreClientediv").text('');
+        $("#txtDireccionClientediv").text('');
+        $("#txtTelefonoClientediv").text('');
+
         $('#modal_formCliente').modal({
             keyboard: false
+        });
+
+        $('#modal_formCliente').on('shown.bs.modal', function () {
+            $('#cmbCliente').focus();
         });
 
         $.ajax({
@@ -1229,20 +1249,30 @@ width: 150px;
         var valueCombo = $("#cmbContactosListCliente").find("option[value=\""+val+"\"]").data("value") ? $("#cmbContactosListCliente").find("option[value=\""+val+"\"]").data("value") : "";
         }
 
-        $.ajax({
-            url      : 'Venta/actualizaTipoVenta',
-            type     : "POST",
-            data    : { 
-                ban: 2,
-                cve_cliente_venta: valueCombo.cve_cliente,
-                folio_venta: $("#txtFolioVenta").text()
-            },
-            success  : function(datos) {
-                consultarComanda($("#txtFolioVenta").text());
-                cargarTablaPorCobrar();
-                cargarTablaFolio();
-            }
-        });
+        if(valueCombo.cve_cliente == null)
+        {
+            msgAlertClienteNuevo("El cliente no existe.","warning");
+        }
+        else{
+            $.ajax({
+                url      : 'Venta/actualizaTipoVenta',
+                type     : "POST",
+                data    : { 
+                    ban: 2,
+                    cve_cliente_venta: valueCombo.cve_cliente,
+                    folio_venta: $("#txtFolioVenta").text()
+                },
+                success  : function(datos) {
+                    consultarComanda($("#txtFolioVenta").text());
+                    cargarTablaPorCobrar();
+                    cargarTablaFolio();
+
+                    $("#modal_formCliente").modal('hide');//ocultamos el modal
+                    $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+                    $('.modal-backdrop').remove();
+                }
+            });
+        }
     };
 
     function consultarComanda(folioComanda){
@@ -1388,6 +1418,8 @@ width: 150px;
                     cargarTablaPorCobrar();
                     cargarTablaFolio();
                 cargarTablaFolioEntregado();
+                scrollHastaArriba(100);
+						return;
 
                 }
                 else
@@ -1577,6 +1609,13 @@ width: 150px;
         $("#msgAlert2").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
         setTimeout(function() { $("#msgAlert2").fadeOut(1500); },1500);
     }
+    
+    function msgAlertClienteNuevo(msg,tipo)
+    {
+        $('#msgAlertClienteNuevo').css("display", "block");
+        $("#msgAlertClienteNuevo").html("<div class='alert alert-" + tipo + "' role='alert'>" + msg + " <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button> </div>");
+        setTimeout(function() { $("#msgAlertClienteNuevo").fadeOut(1500); },1500);
+    }
 
     $('#btnCancelarCantidad').click(function (e) {
         $('#cmbProductos').val('');
@@ -1588,6 +1627,12 @@ width: 150px;
 
         return false;
     });
+
+    function scrollHastaArriba(tiempo){
+			$('html, body').animate({
+			   scrollTop: $("#body_gob").offset().top
+			}, tiempo);
+		}
 
 //configuracion para el snippe los numeros 
     $('.btn-number').click(function(e){

@@ -142,7 +142,7 @@ function cargarIngrediente(){
                     $(myJson.arrayDatos).each( function(key, val)
                     {
 
-                        alert("#_"+val.numpaquete_depaqueteingrediente+"_"+val.numtanda_depaqueteingrediente+"_"+val.numpizza_depaqueteingrediente+"_"+val.numingrediente_depaqueteingrediente+"_"+val.cvetradicional_depaqueteingrediente);
+                        //alert("#_"+val.numpaquete_depaqueteingrediente+"_"+val.numtanda_depaqueteingrediente+"_"+val.numpizza_depaqueteingrediente+"_"+val.numingrediente_depaqueteingrediente+"_"+val.cvetradicional_depaqueteingrediente);
                         $("#_"+val.numpaquete_depaqueteingrediente+"_"+val.numtanda_depaqueteingrediente+"_"+val.numpizza_depaqueteingrediente+"_"+val.numingrediente_depaqueteingrediente+"_"+val.cvetradicional_depaqueteingrediente).val(val.cveingrediente_depaqueteingrediente).change();
                         $("#_desp_"+val.numpaquete_depaqueteingrediente+"_"+val.numtanda_depaqueteingrediente+"_"+val.numpizza_depaqueteingrediente).val(val.descripcion_depaqueteingrediente);
                         if(val.extra_depaqueteingrediente == '1'){
