@@ -1276,11 +1276,6 @@ width: 150px;
     };
 
     function consultarComanda(folioComanda){
-        $("#txtFolioVenta").text(folioComanda);
-        $("#divTipoVenta").show();
-        
-        
-        
         $.ajax({
             url      : 'Venta/actualizarTotalVenta',
             type     : "POST",
@@ -1289,159 +1284,160 @@ width: 150px;
                 folio_venta: folioComanda
             },
             success  : function(datos) {
-            }
-        });
-        $.ajax({
-            url      : 'Venta/consultarComanda',
-            type     : "POST",
-            data    : { 
-                ban: 1 ,
-                folio: folioComanda
-            },
-            success  : function(datos) {
+                $("#txtFolioVenta").text(folioComanda);
+                $("#divTipoVenta").show();
+                $.ajax({
+                    url      : 'Venta/consultarComanda',
+                    type     : "POST",
+                    data    : { 
+                        ban: 1 ,
+                        folio: folioComanda
+                    },
+                    success  : function(datos) {
 
-                var myJson = JSON.parse(datos);
+                        var myJson = JSON.parse(datos);
 
-                tableComanda.clear().draw();
+                        tableComanda.clear().draw();
 
-                if(myJson.arrayDatos.length > 0)
-                {
+                        if(myJson.arrayDatos.length > 0)
+                        {
 
-                    var title;
-                    var icon;
-                    var color_icon;
-                    var accion;
+                            var title;
+                            var icon;
+                            var color_icon;
+                            var accion;
 
-                    $(myJson.arrayDatos).each( function(key, val)
-                    {
-                        title = 'Eliminar producto';
-                        icon = 'fa fa-minus-circle';
-                        color_icon = "color: #d12929;"
-                        accion = "eliminarProductoComanda('" + val.folioventa_deventa + "','"+ val.cve_deventa + "','"+val.cveproducto_deventa+"')";
+                            $(myJson.arrayDatos).each( function(key, val)
+                            {
+                                title = 'Eliminar producto';
+                                icon = 'fa fa-minus-circle';
+                                color_icon = "color: #d12929;"
+                                accion = "eliminarProductoComanda('" + val.folioventa_deventa + "','"+ val.cve_deventa + "','"+val.cveproducto_deventa+"')";
 
-                        if(val.cveproducto_deventa == '1'){
-                            
-                            var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Detalle producto' onclick=\"mostrarSubProductosComanda('" + val.cve_deventa  +"','"+val.cveproducto_deventa +"','"+val.cantidad_deventa+"','"+val.cantidadingrediente_producto+"','"+val.nombrecompleto_comanda+"')\"></i>";
-                            var btnCantidad = val.cantidad_deventa;
+                                if(val.cveproducto_deventa == '1'){
+                                    
+                                    var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Detalle producto' onclick=\"mostrarSubProductosComanda('" + val.cve_deventa  +"','"+val.cveproducto_deventa +"','"+val.cantidad_deventa+"','"+val.cantidadingrediente_producto+"','"+val.nombrecompleto_comanda+"')\"></i>";
+                                    var btnCantidad = val.cantidad_deventa;
+                                }
+                                else if(val.cveproducto_deventa == '5'){
+                                    
+                                    var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Detalle producto' onclick=\"mostrarSubProductosComanda('" + val.cve_deventa  +"','"+val.cveproducto_deventa +"','"+val.cantidad_deventa+"','"+val.cantidadingrediente_producto+"','"+val.nombrecompleto_comanda+"')\"></i>";
+                                    var btnCantidad = val.cantidad_deventa;
+                                }
+                                else{
+                                    if(val.estatus_venta == 1 && val.estatuspago_venta == 0){
+                                        var btn_editar = "";
+                                        var btnCantidad = '<div class="input-group"> <span class="input-group-btn"> <button type="button" class="btn btn-danger btn-number" onclick="modCantidad('+0+','+val.cantidad_deventa+','+val.cve_deventa+')"><span class="glyphicon glyphicon-minus"></span></button></span><input type="text" class="form-control input-number" value="'+val.cantidad_deventa+'" min="1" max="100"><span class="input-group-btn"><button type="button" onclick="modCantidad('+1+','+val.cantidad_deventa+','+val.cve_deventa+')" class="btn btn-success btn-number"><span class="glyphicon glyphicon-plus"></span></button></span></div>';
+                                    }
+                                    else{
+                                        var btn_editar = "";
+                                        var btnCantidad = val.cantidad_deventa;
+                                    }
+                                }
+                                if(val.estatus_venta == 1 && val.estatuspago_venta == 0){
+                                    var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
+                                }
+                                else{
+                                    var btn_status = '';
+                                }
+
+                                tableComanda.row.add([
+                                    val.nombrecompleto_comanda ,
+                                    val.preciounitario_deventa ,
+                                    btnCantidad,
+                                    btn_editar,
+                                    btn_status,
+                                ]).draw();
+
+                                $("#txtTotalVenta").text(val.total_venta);
+                                if(val.tipo_venta == 'Restaurante'){
+                                    $("#radio1").prop('checked', true);
+                                    $("#radio2").prop('checked', false);
+                                    $("#radio1").prop('disabled', false);
+                                    $("#radio2").prop('disabled', false);
+                                    $("#txtNombreClienteVenta").text('');
+                                    $("#txtDireccionClienteVenta").text('');
+                                    $("#txtTelefonoClienteVenta").text('');
+                                    $("#txtbtnVincularCliente").hide();
+                                    $("#btnPagarComanda").show();
+                                    
+                                    if(val.estatus_venta == 2){
+                                        $("#radio1").prop('disabled', true);
+                                        $("#radio2").prop('disabled', true);
+                                        $("#btnPagarComanda").hide();
+                                    }
+                                    if(val.estatuspago_venta == 1){
+                                        $("#btnPagarComanda").hide();
+                                    }
+                                    else
+                                    {
+                                        $("#btnPagarComanda").show();
+                                    }
+                                }
+                                else if(val.tipo_venta == 'Domicilio'){
+                                    $("#radio2").prop('checked', true);
+                                    $("#radio1").prop('checked', false);
+                                    $("#radio1").prop('disabled', false);
+                                    $("#radio2").prop('disabled', false);
+                                    $("#txtbtnVincularCliente").show();
+                                    $("#btnVincularCliente").show();
+                                    $("#btnNuevoCliente").show();
+                                    $("#txtNombreClienteVenta").text(val.nombre_cliente);
+                                    $("#txtDireccionClienteVenta").text(val.domicilio_cliente);
+                                    $("#txtTelefonoClienteVenta").text(val.telefono_cliente);
+                                    $("#btnPagarComanda").show();
+                                    
+                                    if(val.estatus_venta == 2){
+                                        $("#btnVincularCliente").hide();
+                                        $("#btnNuevoCliente").hide();
+                                        $("#radio1").prop('disabled', true);
+                                        $("#radio2").prop('disabled', true);
+                                        $("#btnPagarComanda").hide();
+                                    }
+                                    if(val.estatuspago_venta == 1){
+                                        $("#btnPagarComanda").hide();
+                                    }
+                                    else
+                                    {
+                                        $("#btnPagarComanda").show();
+                                    }
+                                }
+                                if(key == 0){
+                                    $("#txtHoraClienteVenta").text(val.fechaalta_deventa);
+                                }
+                                
+                                
+                                
+                                
+                            });
+                            cargarTablaPorCobrar();
+                            cargarTablaFolio();
+                        cargarTablaFolioEntregado();
+                        scrollHastaArriba(100);
+                                return;
+
                         }
-                        else if(val.cveproducto_deventa == '5'){
-                            
-                            var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Detalle producto' onclick=\"mostrarSubProductosComanda('" + val.cve_deventa  +"','"+val.cveproducto_deventa +"','"+val.cantidad_deventa+"','"+val.cantidadingrediente_producto+"','"+val.nombrecompleto_comanda+"')\"></i>";
-                            var btnCantidad = val.cantidad_deventa;
-                        }
-                        else{
-                            if(val.estatus_venta == 1 && val.estatuspago_venta == 0){
-                                var btn_editar = "";
-                                var btnCantidad = '<div class="input-group"> <span class="input-group-btn"> <button type="button" class="btn btn-danger btn-number" onclick="modCantidad('+0+','+val.cantidad_deventa+','+val.cve_deventa+')"><span class="glyphicon glyphicon-minus"></span></button></span><input type="text" class="form-control input-number" value="'+val.cantidad_deventa+'" min="1" max="100"><span class="input-group-btn"><button type="button" onclick="modCantidad('+1+','+val.cantidad_deventa+','+val.cve_deventa+')" class="btn btn-success btn-number"><span class="glyphicon glyphicon-plus"></span></button></span></div>';
-                            }
-                            else{
-                                var btn_editar = "";
-                                var btnCantidad = val.cantidad_deventa;
-                            }
-                        }
-                        if(val.estatus_venta == 1 && val.estatuspago_venta == 0){
-                            var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
-                        }
-                        else{
-                            var btn_status = '';
-                        }
-
-                        tableComanda.row.add([
-                            val.nombrecompleto_comanda ,
-                            val.preciounitario_deventa ,
-                            btnCantidad,
-                            btn_editar,
-                            btn_status,
-                        ]).draw();
-
-                        $("#txtTotalVenta").text(val.total_venta);
-                        if(val.tipo_venta == 'Restaurante'){
+                        else
+                        {
+                            tableComanda = $('#gridComanda').DataTable();
+                            $("#txtTotalVenta").text('');
+                            $("#btncancelarFolioVenta").prop( "disabled", false );
                             $("#radio1").prop('checked', true);
-                            $("#radio2").prop('checked', false);
-                            $("#radio1").prop('disabled', false);
-                            $("#radio2").prop('disabled', false);
                             $("#txtNombreClienteVenta").text('');
                             $("#txtDireccionClienteVenta").text('');
                             $("#txtTelefonoClienteVenta").text('');
                             $("#txtbtnVincularCliente").hide();
-                            $("#btnPagarComanda").show();
+                            $("#txtHoraClienteVenta").text('');
+                            $("#txtTotalVenta").text('');
+                            $("#divTipoVenta").hide();
+                            $("#btnPagarComanda").hide();
                             
-                            if(val.estatus_venta == 2){
-                                $("#radio1").prop('disabled', true);
-                                $("#radio2").prop('disabled', true);
-                                $("#btnPagarComanda").hide();
-                            }
-                            if(val.estatuspago_venta == 1){
-                                $("#btnPagarComanda").hide();
-                            }
-                            else
-                            {
-                                $("#btnPagarComanda").show();
-                            }
                         }
-                        else if(val.tipo_venta == 'Domicilio'){
-                            $("#radio2").prop('checked', true);
-                            $("#radio1").prop('checked', false);
-                            $("#radio1").prop('disabled', false);
-                            $("#radio2").prop('disabled', false);
-                            $("#txtbtnVincularCliente").show();
-                            $("#btnVincularCliente").show();
-                            $("#btnNuevoCliente").show();
-                            $("#txtNombreClienteVenta").text(val.nombre_cliente);
-                            $("#txtDireccionClienteVenta").text(val.domicilio_cliente);
-                            $("#txtTelefonoClienteVenta").text(val.telefono_cliente);
-                            $("#btnPagarComanda").show();
-                            
-                            if(val.estatus_venta == 2){
-                                $("#btnVincularCliente").hide();
-                                $("#btnNuevoCliente").hide();
-                                $("#radio1").prop('disabled', true);
-                                $("#radio2").prop('disabled', true);
-                                $("#btnPagarComanda").hide();
-                            }
-                            if(val.estatuspago_venta == 1){
-                                $("#btnPagarComanda").hide();
-                            }
-                            else
-                            {
-                                $("#btnPagarComanda").show();
-                            }
-                        }
-                        if(key == 0){
-                            $("#txtHoraClienteVenta").text(val.fechaalta_deventa);
-                        }
-                        
-                        
-                        
-                        
-                    });
-                    cargarTablaPorCobrar();
-                    cargarTablaFolio();
-                cargarTablaFolioEntregado();
-                scrollHastaArriba(100);
-						return;
 
-                }
-                else
-                {
-                    tableComanda = $('#gridComanda').DataTable();
-                    $("#txtTotalVenta").text('');
-                    $("#btncancelarFolioVenta").prop( "disabled", false );
-                    $("#radio1").prop('checked', true);
-                    $("#txtNombreClienteVenta").text('');
-                    $("#txtDireccionClienteVenta").text('');
-                    $("#txtTelefonoClienteVenta").text('');
-                    $("#txtbtnVincularCliente").hide();
-                    $("#txtHoraClienteVenta").text('');
-                    $("#txtTotalVenta").text('');
-                    $("#divTipoVenta").hide();
-                    $("#btnPagarComanda").hide();
-                    
-                }
-
+                    }
+                });
             }
         });
-
     }
 
     function eliminarProductoComanda(folio_venta, cve_deventa,cveproducto_deventa){
