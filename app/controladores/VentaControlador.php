@@ -51,6 +51,12 @@ else
 			$this->vista('cliente/formClienteNuevo', $datos);
 		}
 
+		public function mostrarTiket()
+		{
+
+			$this->vista('venta/ticket', $datos);
+		}
+
 		public function consultarProductos()
 		{
 			$data = $this->VentaModelo->consultarProductos($_POST);
@@ -131,6 +137,7 @@ else
 		{
 			$datosVenta =  array (
 				ban   => $_POST["ban"],
+				pagocon_venta   => $_POST["pagocon_venta"],
 				folio_venta   => $_POST["folio_venta"],
 				 cveusuario_accion  => $_SESSION["cve_usuario"]
 			 );

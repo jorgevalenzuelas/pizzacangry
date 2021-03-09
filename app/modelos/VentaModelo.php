@@ -122,11 +122,13 @@ class VentaModelo
         $datosFiltrados = $this->filtrarDatos($datosFolio);
 
         $ban                = $datosFiltrados['ban'];
+        $pagocon_venta    = $datosFiltrados['pagocon_venta'];
         $folio_venta    = $datosFiltrados['folio_venta'];
         $cveusuario_accion  = $datosFiltrados['cveusuario_accion'];
 
         $query = "CALL actualizarTotalVenta(
                                             '$ban',
+                                            '$pagocon_venta',
                                             '$folio_venta',
                                             '$cveusuario_accion'
                                         )";

@@ -1122,15 +1122,32 @@ width: 150px;
             type     : "POST",
             data    : { 
                 ban: 2,
+                pagocon_venta: $("#txtTotalCobrar").val(),
                 folio_venta: $("#txtFolioVenta").text()
             },
             success  : function(datos) {
                 consultarComanda($("#txtFolioVenta").text());
                 cargarTablaPorCobrar();
                 cargarTablaFolio();
+                //var windows = window.open("Venta/mostrarTiket/?folio=" + $("#txtFolioVenta").text(), '_blank').print();
+                ticket($("#txtFolioVenta").text());
             }
         });
     });
+
+
+    function ticket(folio) 
+    {
+        var mywindow = window.open("Venta/mostrarTiket/?folio=" + folio, '_blank', 'height=400,width=600');
+      
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+       
+
+
+       
+        
+        //return true;
+    }
     
     $('#btnCancelarPago').click(function (e) {
         $('#txtTotalVentaCobrar').text('');
@@ -1281,6 +1298,7 @@ width: 150px;
             type     : "POST",
             data    : { 
                 ban: 1 ,
+                pagocon_venta: 0,
                 folio_venta: folioComanda
             },
             success  : function(datos) {
