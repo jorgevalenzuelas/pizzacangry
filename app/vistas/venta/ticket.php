@@ -3,8 +3,8 @@ session_start();
 error_reporting(E_ALL);
 
 $model = new VentaModelo();
-$response = $model->consultarProductos2(1);
-print_r($response);
+$response = $model->consultarComandaTiket(1, $_REQUEST["folio"]);
+//print_r($response);
 ?>
 <style type="text/css">
 .classImprime{
@@ -54,10 +54,90 @@ td{
         </div>
     	-----------------------------------------------------
 	</div>
-	<div align="center">
+	
+    <?php
+	//////////////////////////////////////////////////////////////   Detalle de la venta, cantidad, productos y precio
+    if ($response[0]["tipo_venta"] === 'Restaurante') {
+        $tipo_venta = 'RESTAURANTE';
+    }
+    else{
+        $tipo_venta = 'DOMICILIO';
+    }
+    
+    echo "<table width=\"380\">";
+		echo"
+			<tr> 
+				<td width=\"80\" align=\"left\" cellpadding=\"5\" >FECHA:</td>
+				<td width=\"300\" align=\"left\" colspan=\"2\"><b>".$response[0]["fechaalta_deventa"]."</b></td>
+				<!--<td width=\"180\" align=\"left\" colspan=\"2\">&nbsp;</td> -->
+			 <!-- <td width=\"100\" align=\"right\" ><b>". $_REQUEST["folio"]."</b></td>--> 
+			</tr>
+            <tr>
+				<td align=\"left\" >VENTA:</td>
+				<td align=\"left\" colspan='2'>".$tipo_venta."</td>
+			</tr>
+            <tr>
+				<td align=\"left\" >ATENDIO:</td>
+				<td align=\"left\" colspan='2'>".$_SESSION["nombreUsuario"]."</td>
+			</tr>
+		";
+	echo "</table>";
+    if (count($response)) {
+        /*******************PRODUCTOS*************************************/
+            echo "<table width=\"380\">";
+                echo"
+                    <tr><td colspan='4' align=\"center\">****** PRODUCTOS ******</td></tr>
+                    <tr> 
+                        <td width=\"27\" align=\"left\" cellpadding=\"5\" >CANT</td>
+                        <td width=\"200\" align=\"left\" >DESCRIPCI&Oacute;N</td>
+                        <td width=\"137\" align=\"left\" >COSTO UNIT.</td>
+                        <td width=\"26\" align=\"center\" >MONTO</td> 
+                    </tr>";
+            $totalServicio = 0;
+            $total = 0;
+            for($i = 0 ; $i < count($response); $i++) 
+            {
+                $total = $response[$i]["cantidad_deventa"] * $response[$i]["preciounitario_deventa"];
+                echo "<tr> 
+                        <td width=\"27\" >";
+                            echo $response[$i]["cantidad_deventa"];
+                echo "	</td>
+                        <td width=\"200\" >";
+                            echo htmlspecialchars($response[$i]["nombrecompleto_comanda"]);
+                echo "	</td>
+                        <td width=\"137\" >";
+                            echo htmlspecialchars('$'.$response[$i]["preciounitario_deventa"]);
+                echo "	</td>
+                        <td width=\"26\" align=\"right\" > $";
+                            echo number_format($total, 2, '.', ',');
+                echo "</td> 
+                    </tr>";		
+            }
+            echo " <br><tr><td></td><td></td><td align=\"right\" style=\"font-size:13pt;\">TOTAL:</td><td align=\"right\" style=\"font-size:13pt;\">$".number_format($response[0]["total_venta"], 2, '.', ',')."</td></tr>";
+            echo "</table>";
+        }
 
-    	
-	</div>
+        if ($response[0]["tipo_venta"] !== 'Restaurante') {
+            echo "<table width=\"380\">";
+                echo"
+                <tr><td colspan='4' align=\"center\">****** DOMICILIO ******</td></tr>
+                    <tr> 
+                        <td width=\"80\" align=\"left\" cellpadding=\"5\" >CLIENTE:</td>
+                        <td width=\"300\" align=\"left\" colspan=\"2\"><b>".htmlspecialchars($response[0]["nombre_cliente"])."</b></td>
+                    </tr>
+                    <tr>
+                        <td align=\"left\" >DIRECCI&Oacute;N:</td>
+                        <td align=\"left\" colspan='2'>".htmlspecialchars($response[0]["domicilio_cliente"])."</td>
+                    </tr>
+                    <tr>
+                        <td align=\"left\" >TEL&Eacute;FONO:</td>
+                        <td align=\"left\" colspan='2'>".$response[0]["telefono_cliente"]."</td>
+                    </tr>
+                ";
+            echo "</table>";
+        }
+        
+	?>
 
 	<div align="center">
     -----------------------------------------------------
