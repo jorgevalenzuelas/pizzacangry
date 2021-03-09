@@ -1,6 +1,10 @@
 <?php
 session_start();
 error_reporting(E_ALL);
+
+$model = new VentaModelo();
+$response = $model->consultarProductos2(1);
+print_r($response);
 ?>
 <style type="text/css">
 .classImprime{
@@ -50,10 +54,13 @@ td{
         </div>
     	-----------------------------------------------------
 	</div>
-	<?php
-	echo "<center>-----------------------------------------------------</center>";
-	?>
 	<div align="center">
+
+    	
+	</div>
+
+	<div align="center">
+    -----------------------------------------------------
         <div style="display: block;text-align: center;font-weight: bold;font-size: 9pt;margin-top: 10px;">
         	<img src="<?php echo RUTA_URL; ?>public/img/telefono_negro.png" style="width: 3%;margin-right: 3px;">(669) 990 92 58<br>
         </div>

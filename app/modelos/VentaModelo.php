@@ -27,6 +27,15 @@ class VentaModelo
         return $r_productos;
     }
 
+    public function consultarProductos2($datos)
+    {
+        $query = "CALL obtenProductos('$datos')";
+        $c_productos = $this->conexion->query($query);
+        $r_productos = $this->conexion->consulta_array($c_productos);
+
+        return $r_productos;
+    }
+
     public function consultarFolios($datos)
     {
         $datosFiltrados = $this->filtrarDatos($datos);
