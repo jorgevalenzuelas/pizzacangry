@@ -42,7 +42,7 @@ td{
 </style>
 
 <!--body-->
-<body onload="window.print()" onafterprint="window.close()">
+<body onafterprint="window.close()">
 <div align="left" class="classImprime">
 	<div align="center">
 		<img src="<?php echo RUTA_URL; ?>public/img/LogoCangry.png" id="borde_negro" style="width: 35%;display: block;margin-bottom: 10px;">

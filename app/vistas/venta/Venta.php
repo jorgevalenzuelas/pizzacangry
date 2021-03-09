@@ -1134,23 +1134,22 @@ width: 150px;
                 cargarTablaPorCobrar();
                 cargarTablaFolio();
                 //var windows = window.open("Venta/mostrarTiket/?folio=" + $("#txtFolioVenta").text(), '_blank').print();
-                ticket($("#txtFolioVenta").text());
+                ticketPrint($("#txtFolioVenta").text());
             }
         });
     });
 
 
+    function ticketPrint(folio) 
+    {
+        var mywindow = window.open("Venta/mostrarTiket/?folio=" + folio, '_blank', 'height=400,width=700').print();
+    
+    }
+
     function ticket(folio) 
     {
-        var mywindow = window.open("Venta/mostrarTiket/?folio=" + folio, '_blank', 'height=400,width=600');
-      
-        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
-       
-
-
-       
-        
-        //return true;
+        var mywindow = window.open("Venta/mostrarTiket/?folio=" + folio, '_blank', 'height=700,width=420');
+    
     }
     
     $('#btnCancelarPago').click(function (e) {
