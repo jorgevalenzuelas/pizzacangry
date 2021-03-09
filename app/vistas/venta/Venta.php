@@ -480,9 +480,9 @@ width: 150px;
             "info"      : true,
             "bLengthChange": false,
             "columnDefs": [
-                {"width": "20%","className": "text-center","targets": 0},
-                {"width": "20%","className": "text-center","targets": 1},
-                {"width": "20%","className": "text-center","targets": 2},
+                {"width": "10%","className": "text-center","targets": 0},
+                {"width": "10%","className": "text-center","targets": 1},
+                {"width": "10%","className": "text-center","targets": 2},
                 {"width": "10%","className": "text-center","targets": 4},
                 {"width": "10%","className": "text-center","targets": 5},
                 {"width": "10%","className": "text-center","targets": 6},
