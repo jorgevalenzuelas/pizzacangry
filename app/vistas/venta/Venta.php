@@ -156,6 +156,7 @@
                                             <th>Hr. pedido</th>
                                             <th>Tipo</th>
                                             <th>Editar</th>
+                                            <th>Ticket</th>
                                             <th>Estatus</th>
                                         </tr>
                                     </thead>
@@ -484,6 +485,7 @@ width: 150px;
                 {"width": "20%","className": "text-center","targets": 2},
                 {"width": "10%","className": "text-center","targets": 4},
                 {"width": "10%","className": "text-center","targets": 5},
+                {"width": "10%","className": "text-center","targets": 6},
             ],
 
             "bJQueryUI":true,"oLanguage": {
@@ -744,6 +746,7 @@ width: 150px;
                         
 
                         var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar comanda' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
+                        var btn_ticket = "<i class='fa fa-ticket' style='font-size:18px; cursor: pointer;' title='Editar comanda' onclick=\"ticket('" + val.folio_venta  + "')\"></i>";
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
                         tableFolio.row.add([
@@ -752,6 +755,7 @@ width: 150px;
                             val.fechaalta_deventa ,
                             val.tipo_venta ,
                             btn_editar,
+                            btn_ticket,
                             btn_status,
                         ]).draw();
                     })

@@ -145,7 +145,7 @@ class VentaModelo
         $c_folio = $this->conexion->query($query);
         $r_folio = $this->conexion->consulta_array($c_folio);
 
-        return $query;
+        return $r_folio;
     }
 
     public function guardarVenta($datosVenta)

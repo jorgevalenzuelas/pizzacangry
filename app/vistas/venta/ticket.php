@@ -36,7 +36,8 @@ td{
 	color: #000;
 }
 @page{
-   margin: 0;
+    size: auto;/* es el valor por defecto */
+  margin: 0;
 }
 </style>
 
