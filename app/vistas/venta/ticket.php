@@ -74,7 +74,11 @@ td{
 			 <!-- <td width=\"100\" align=\"right\" ><b>". $_REQUEST["folio"]."</b></td>--> 
 			</tr>
             <tr>
-				<td align=\"left\" >VENTA:</td>
+				<td align=\"left\" >FOLIO:</td>
+				<td align=\"left\" colspan='2'>".$response[0]["folioventa_deventa"]."</td>
+			</tr>
+            <tr>
+				<td align=\"left\" >SERVICIO:</td>
 				<td align=\"left\" colspan='2'>".$tipo_venta."</td>
 			</tr>
             <tr>
@@ -91,8 +95,8 @@ td{
                     <tr> 
                         <td width=\"27\" align=\"left\" cellpadding=\"5\" >CANT</td>
                         <td width=\"200\" align=\"left\" >DESCRIPCI&Oacute;N</td>
-                        <td width=\"137\" align=\"left\" >COSTO UNIT.</td>
-                        <td width=\"26\" align=\"center\" >MONTO</td> 
+                        <td width=\"137\" align=\"left\" >C. UNIT.</td>
+                        <td width=\"26\" align=\"center\" >IMPORTE</td> 
                     </tr>";
             $totalServicio = 0;
             $total = 0;
@@ -114,7 +118,10 @@ td{
                 echo "</td> 
                     </tr>";		
             }
-            echo " <br><tr><td></td><td></td><td align=\"right\" style=\"font-size:13pt;\">TOTAL:</td><td align=\"right\" style=\"font-size:13pt;\">$".number_format($response[0]["total_venta"], 2, '.', ',')."</td></tr>";
+            $cambio =  $response[0]["pagocon_venta"] - $response[0]["total_venta"];
+            echo " <br><tr><td></td><td></td><td width=\"200\" align=\"right\" style=\"font-size:13pt;\">TOTAL:</td><td align=\"right\" style=\"font-size:13pt;\"><b>$".number_format($response[0]["total_venta"], 2, '.', ',')."</b></td></tr>";
+            echo " <br><tr><td></td><td></td><td width=\"200\" align=\"right\" style=\"font-size:13pt;\">PAGO CON:</td><td align=\"right\" style=\"font-size:13pt;\"><b>$".number_format($response[0]["pagocon_venta"], 2, '.', ',')."</b></td></tr>";
+            echo " <br><tr><td></td><td></td><td width=\"200\" align=\"right\" style=\"font-size:13pt;\">CAMBIO:</td><td align=\"right\" style=\"font-size:13pt;\"><b>$".number_format($cambio, 2, '.', ',')."</b></td></tr>";
             echo "</table>";
         }
 

@@ -746,7 +746,10 @@ width: 150px;
                         
 
                         var btn_editar = "<i class='fa fa-edit' style='font-size:18px; cursor: pointer;' title='Editar comanda' onclick=\"consultarComanda('" + val.folio_venta  + "')\"></i>";
-                        var btn_ticket = "<i class='fa fa-ticket' style='font-size:18px; cursor: pointer;' title='Editar comanda' onclick=\"ticket('" + val.folio_venta  + "')\"></i>";
+                        btn_ticket = '';
+                        if(val.estatuspago_venta == 1){
+                            var btn_ticket = "<i class='fa fa-ticket' style='font-size:18px; cursor: pointer;' title='Editar comanda' onclick=\"ticket('" + val.folio_venta  + "')\"></i>";
+                        }
                         var btn_status = "<i class='" + icon + "' style='font-size:14px; " + color_icon + " cursor: pointer;' title='" + title + "' onclick=\"" + accion + "\"></i>";
 
                         tableFolio.row.add([
