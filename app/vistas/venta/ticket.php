@@ -119,6 +119,10 @@ td{
                     </tr>";		
             }
             $cambio =  $response[0]["pagocon_venta"] - $response[0]["total_venta"];
+            
+            if($cambio < 0){
+               $cambio = 0;
+            }
             echo " <br><tr><td></td><td></td><td width=\"200\" align=\"right\" style=\"font-size:13pt;\">TOTAL:</td><td align=\"right\" style=\"font-size:13pt;\"><b>$".number_format($response[0]["total_venta"], 2, '.', ',')."</b></td></tr>";
             echo " <br><tr><td></td><td></td><td width=\"200\" align=\"right\" style=\"font-size:13pt;\">PAGO CON:</td><td align=\"right\" style=\"font-size:13pt;\"><b>$".number_format($response[0]["pagocon_venta"], 2, '.', ',')."</b></td></tr>";
             echo " <br><tr><td></td><td></td><td width=\"200\" align=\"right\" style=\"font-size:13pt;\">CAMBIO:</td><td align=\"right\" style=\"font-size:13pt;\"><b>$".number_format($cambio, 2, '.', ',')."</b></td></tr>";
