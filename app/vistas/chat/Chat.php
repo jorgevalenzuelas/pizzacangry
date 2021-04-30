@@ -15,8 +15,8 @@
                 console.log("conexion exitosa!");
             };
 
-            conn.onerror = function (error) {
-                console.log('WebSocket Error ' + error);
+            conn.onerror = function (e) {
+                console.log('WebSocket Error ' + e);
             };
             conn.onmessage = function(e) {
                 console.log(e.data);
