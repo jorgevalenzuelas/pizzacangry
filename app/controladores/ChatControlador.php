@@ -20,7 +20,6 @@ else
 		}
 
 		
-
 		//Todo controlador debe tener un metodo index
 		public function index()
 		{
