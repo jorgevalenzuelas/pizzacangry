@@ -479,7 +479,7 @@
                         document.getElementById("cmbPerfil").selectedIndex = "0";
                         document.getElementById("cmbSucursal").selectedIndex = "0";
                         document.getElementById("cmbPuesto").selectedIndex = "0";
-                        $('#txtcveUsuario').val('');
+                        $('#txtcveUsuario').val('0');
 
                         $("#cmbSucursal").prop('disabled', false);
                         $("#btnGuardar").prop('disabled', false);
@@ -619,7 +619,7 @@
         document.getElementById("cmbPerfil").selectedIndex = "0";
         document.getElementById("cmbSucursal").selectedIndex = "0";
         document.getElementById("cmbPuesto").selectedIndex = "0";
-        $('#txtcveUsuario').val('');
+        $('#txtcveUsuario').val('0');
 
         $("#cmbSucursal").prop('disabled', false);
         $("#btnGuardar").prop('disabled', false);
