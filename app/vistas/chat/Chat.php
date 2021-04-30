@@ -9,7 +9,7 @@
 
     <script>
         $(document).ready(function (e){
-            var conn = new WebSocket('wss://www.pizzaloscangry.tk/phpchat/');//conectara
+            var conn = new WebSocket('ws://www.pizzaloscangry.tk:6001');//conectara
 
             conn.onopen = function(e) {
                 console.log("conexion exitosa!");
