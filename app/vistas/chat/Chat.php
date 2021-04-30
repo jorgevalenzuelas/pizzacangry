@@ -15,6 +15,9 @@
                 console.log("conexion exitosa!");
             };
 
+            conn.onerror = function (error) {
+                console.log('WebSocket Error ' + error);
+            };
             conn.onmessage = function(e) {
                 console.log(e.data);
                 var respuesta = JSON.parse(e.data);
