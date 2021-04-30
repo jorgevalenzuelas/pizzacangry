@@ -9,7 +9,7 @@
 
     <script>
         $(document).ready(function (e){
-            var conn = new WebSocket('wss://www.pizzaloscangry.tk:80');//conectara
+            var conn = new WebSocket('wss://www.pizzaloscangry.tk:443');//conectara
 
             conn.onopen = function(e) {
                 console.log("conexion exitosa!");
